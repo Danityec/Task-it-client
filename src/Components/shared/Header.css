@@ -1,0 +1,45 @@
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    --header-height: calc(12%);
+    height: 12%;
+    background-color: #84BCFF;
+}
+
+.header .header-content {
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    background-image: url('logo220.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 20%;
+    height: 65%;
+}
+
+.user-avatar {
+    cursor: pointer;
+}
+
+.menu-list-text {
+    text-decoration: none;
+    color: #EDF5FF;
+}
+
+#menu-list-grow {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    background-color: transparent;
+}
+
+.user-menu-block {
+    background-color: #2A73CC
+}
