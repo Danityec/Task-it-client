@@ -28,18 +28,14 @@
     cursor: pointer;
 }
 
-.menu-list-text {
-    text-decoration: none;
-    color: #EDF5FF;
-}
-
-#menu-list-grow {
+#menu-list {
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-end;
     background-color: transparent;
 }
 
-.user-menu-block {
-    background-color: #2A73CC
+.menu-list-item {
+    text-decoration: none;
+    color: #EDF5FF;
 }
