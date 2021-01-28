@@ -23,7 +23,7 @@ const Chat = (props) => {
             </div>
             <div className={'chat-window'}>
                 <div className={'message-area'}>
-                    {props.messageList.map(eachMessage)}
+                    {props.chat['messages'].map(eachMessage)}
                 </div>
                 <div className={'input-area'}>
                     <input type={'text'} name={'message'} value={inputMessage}
@@ -38,3 +38,20 @@ const Chat = (props) => {
 }
 
 export default Chat
+
+//
+// fetch("http://127.0.0.1:3000/api/users", 'GET')
+//     .then(response => response.json())
+//     .then(result => {})
+
+// let data = [];
+//  const fetchData = () => {
+//     try {
+//         data = fetch("http://127.0.0.1:3000/api/users")
+//             .then(res => res.json());
+//     } catch (err) {
+//         console.log(`Error while fetching data from server: ( ${err})`);
+//     }
+//     data.map(item => this.add({ id: item.id, txt: item.idea, grp: item.group }));
+// }
+// fetchData();

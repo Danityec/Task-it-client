@@ -1,0 +1,35 @@
+.menu-bar {
+    position: fixed;
+    top: 12%;
+    width: 100%;
+    height: 8%;
+}
+
+.menu-bar-wrapper {
+    height: 100%;
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-btn-area {
+    margin-right: 6%;
+}
+
+.menu-btn-area button {
+    padding: 3%;
+    border-radius: 5px;
+    width: 150%;
+    margin-right: 2%;
+    background-color: #34B467;
+    color: #EDF5FF;
+    font-size: 150%;
+    font-weight: 300;
+}
+
+.menu-back {
+    margin-left: 2%;
+}
