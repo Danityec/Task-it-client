@@ -3,9 +3,10 @@ import Menu from "../shared/Menu";
 import {Button, IconButton} from "@material-ui/core";
 import List from "../shared/List";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
+import Chat from "./Chat";
 
 const ChatList = (props) => {
-    const new_chat_popup = () => {
+    const newChatPopup = () => {
         return (
             <div>
                 {/*<Popup></Popup>*/}
@@ -13,14 +14,20 @@ const ChatList = (props) => {
         )
     }
 
+    const goToChat = () => {
+        return (
+            <Chat messageList={null}/>
+        )
+    }
+
     return (
         <>
             <Menu goBack={true} goTo={'/'}>
-                <Button onClick={new_chat_popup}>New Chat</Button>
+                <Button onClick={newChatPopup}>New Chat</Button>
             </Menu>
             <div>
                 <List dataList={null} >
-                    <IconButton onClick={'/chat'}>
+                    <IconButton onClick={goToChat}>
                         <ArrowForwardIosRoundedIcon/>
                     </IconButton>
                 </List>
