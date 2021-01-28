@@ -5,7 +5,11 @@ import Button from '@material-ui/core/Button';
 
 
 const Template = (props) => {
-   
+    
+
+    const eachSubTask = (index) => {
+        return  <div className="nameSubTask">{index.name}</div>
+    }
    
     return (
         <div className="template">
@@ -20,7 +24,9 @@ const Template = (props) => {
             </div>
 
             <div className="titleSubTask">
-                {/* <div className="nameSubTask" >{props.item.subTask}</div> */}
+                {props.item.subTask.map(eachSubTask)}
+                {props.children}
+                <div className="nameSubTask" ></div>
             </div>
             
         </div>
