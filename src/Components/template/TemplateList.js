@@ -3,7 +3,6 @@ import Template from './Template';
 import './TemplateList.css';
 
 
-
 const TemplateList = (props) => {
     const [templateList, setTemplateList] = useState([]);
 
