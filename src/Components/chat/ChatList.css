@@ -1,0 +1,6 @@
+.chat-list {
+    margin: 0 auto;
+    position: fixed;
+    top: calc(12% + 8% + 2%);
+    width: 100%;
+}

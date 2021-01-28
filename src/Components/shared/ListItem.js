@@ -1,17 +1,21 @@
 import React from 'react';
-import {Card, CardActions, CardContent, ListItem as MuiListItem, Typography} from "@material-ui/core";
+import './ListItem.css'
+import {Card, CardActions, CardContent, ListItem as MuiListItem} from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 const ListItem = (props) => {
     return (
-        <MuiListItem>
-            <Card>
+        <MuiListItem className={'list-item'}>
+            <Card elevation={0} className={'list-item card'}>
                 <CardContent>
-                    <Typography>
+                    <p>
                         {props.itemTitle}
-                    </Typography>
+                    </p>
                 </CardContent>
                 <CardActions>
-                    {props.children}
+                    <Link to={{pathname: props.pathName, data: props.item}}>
+                        {props.children}
+                    </Link>
                 </CardActions>
             </Card>
         </MuiListItem>

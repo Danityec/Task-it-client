@@ -1,20 +1,30 @@
 import React from 'react';
-import {List as MuiList, ListItem as MuiListItem} from '@material-ui/core';
+import './List.css'
 import ListItem from "./ListItem";
 
 const List = (props) => {
+
     const eachItem = (item, index) => {
+        let name = ''
+        if (props.titleList[item.userID1])
+            name = props.titleList[item.userID1]
+        else
+            name = props.titleList[item.userID2]
+
         return (
-            <ListItem key={item._id} itemTitle={props.titleList[index]}>
+            <ListItem key={item._id} item={item} itemTitle={name} pathName={props.pathName}>
                 {props.children}
             </ListItem>
         )
     }
+    console.log(props.titleList)
+    // console.log(props.dataList)
+
 
     return (
-        <MuiList>
+        <div className={'list'}>
             {props.dataList.map(eachItem)}
-        </MuiList>
+        </div>
     )
 }
 

@@ -5,8 +5,11 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Message from "./Message";
 
 const Chat = (props) => {
-    const [inputMessage, setInputMessage] = useState('');
+    // const { _id, messages, userID1, userID2 } = (props.location && props.location.result) || {};
+    const chat =  props.location.data
 
+    console.log(chat)
+    const [inputMessage, setInputMessage] = useState('');
     const eachMessage = (message) => {
         return (
             <Message key={message._id} message={message.message} timestamp={message.timestamp}/>
@@ -19,11 +22,11 @@ const Chat = (props) => {
                 <IconButton to={'/chats'}>
                     <ArrowBackIosRoundedIcon/>
                 </IconButton>
-                <h2>{'name'}</h2>
+                <h2>{chat.userID1}</h2>
             </div>
             <div className={'chat-window'}>
                 <div className={'message-area'}>
-                    {props.chat['messages'].map(eachMessage)}
+                    {chat.messages.map(eachMessage)}
                 </div>
                 <div className={'input-area'}>
                     <input type={'text'} name={'message'} value={inputMessage}
