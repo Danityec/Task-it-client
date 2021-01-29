@@ -3,6 +3,8 @@ import {Route} from 'react-router-dom';
 import Header from "../Components/shared/Header";
 import Footer from "../Components/shared/Footer";
 // import Menu from "../Components/shared/Menu";
+import Popup from "../Components/shared/Popup";
+
 // import HomePage from "../Components/homePage/HomePage";
 import TemplateList from "../Components/template/TemplateList";
 // import ChatList from "../Components/chat/ChatList";
@@ -18,9 +20,11 @@ const ReactRouter = () => {
             
             {/* <Route exact path='/' component={HomePage}/> */}
             <Route path='/new-task' component={TemplateList}/>
-            {/* <Route path='/chats' component={ChatList}/>
-            <Route path='/chat' component={Chat}/>
-            <Route path='/task' component={Task}/> */}
+            <Route path='/new-task-popup' component={Popup}/>
+
+            {/* <Route path='/chats' component={ChatList}/> */}
+            {/* <Route path='/chat' component={Chat}/> */}
+            {/* <Route path='/task' component={Task}/>  */}
 
             <Footer/>
         </>

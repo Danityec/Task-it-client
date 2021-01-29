@@ -8,8 +8,8 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /* overflow-x: hidden;
+    overflow-y: auto; */
    
 }
 
