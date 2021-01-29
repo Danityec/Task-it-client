@@ -1,0 +1,36 @@
+.admin-template-page {
+    margin: 0 auto;
+    position: fixed;
+    top: calc(12% + 8% + 2%);
+    width: 100%;
+}
+
+.admin-template-list {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.template-card {
+    width: 15%;
+    min-width: fit-content;
+    margin: 1%;
+    border: 8px solid #EDF5FF;
+    border-radius: 10px;
+    padding: 1%;
+    font-size: 110%;
+    color: #25265E;
+}
+
+.card-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 120%;
+}
+
+.card-header svg {
+    color: #2A73CC;
+}

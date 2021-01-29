@@ -30,16 +30,18 @@ const AdminHomePage = (props) => {
 
     const eachTemplate = (item) => {
         return (
-            <div>
-                <div>
+            <div key={item._id} className={'template-card'}>
+                <div className={'card-header'}>
                     <div>{item.name}</div>
-                    <Link to='/admin/template'>
+                    <Link to={{pathname: '/admin/template', id: item._id}}>
                         <IconButton>
                             <ArrowForwardIosRoundedIcon/>
                         </IconButton>
                     </Link>
                 </div>
-                <div>{lengthList[item._id]} Reviews</div>
+                <div>
+                    {lengthList[item._id]} Reviews
+                </div>
             </div>
         )
     }
@@ -47,10 +49,12 @@ const AdminHomePage = (props) => {
     return (
         <>
             <Menu goBack={false}>
-                <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Template</p></ButtonBase>
+                <ButtonBase centerRipple={true}><p style={{width: '200px'}}>Create New Template</p></ButtonBase>
             </Menu>
-            <div className={'admin-template-list'}>
-                { templateList.map(eachTemplate) }
+            <div className={'admin-template-page'}>
+                <div className={'admin-template-list'}>
+                    { templateList.map(eachTemplate) }
+                </div>
             </div>
         </>)
 }
