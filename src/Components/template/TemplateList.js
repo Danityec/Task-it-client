@@ -4,6 +4,10 @@ import Popup from "../shared/Popup";
 import './TemplateList.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Menu from "../shared/Menu";
+import {ButtonBase, IconButton} from "@material-ui/core";
+
+
 
 
 const userId = '5fecb592690ca7935ccfd762'
@@ -52,10 +56,10 @@ const TemplateList = (props) => {
 
     return (
             <div className="templateList">
+                <Menu goBack={true}>
+                <ButtonBase centerRipple={true} onClick={handleClickOpen}><p style={{width: '220px'}}>Creat Task from Scratch</p></ButtonBase>
+                </Menu>
                 {templateList.map(eachTemplate)}
-                <Button variant="contained" color="primary" onClick={handleClickOpen}>
-                    Creat Task from Scratch
-                </Button>
 
                 <Popup onSubmit={addNewTask} title={"New Task"} text={"Add subTask later in the task page"} open={open}>
                     <TextField key={1} className="inputNameTask"
