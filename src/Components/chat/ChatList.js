@@ -44,18 +44,18 @@ const ChatList = (props) => {
     }, [chatList])
 
    
-    // const addNewChat = () => { 
-    //     const data = { email: emailChat, userID: userID1, userID: userID2};
-    //     console.log(data)
-    //         fetch(`http://localhost:3000/api/chats/`, {
-    //             method: 'POST',
-    //             headers: {'Content-Type': 'application/json'},
-    //             body: JSON.stringify(data),
-    //         })
-    //             .then(response => response.json())
-    //             .then(result => {handleClose()});
+    const addNewChat = () => { 
+        const data = { email: emailChat, userID: userID1, userID: userID2};
+        console.log(data)
+            fetch(`http://localhost:3000/api/chats/`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(result => {handleClose()});
 
-    // }
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -77,7 +77,7 @@ const ChatList = (props) => {
                     </IconButton>
                 </List>
 
-                {/* <Popup onSubmit={addNewChat} title={"New Chat"} text={"Open a new chat with another TaskIt user"} open={open}>
+                <Popup onSubmit={addNewChat} title={"New Chat"} text={"Open a new chat with another TaskIt user"} open={open}>
                     <TextField key={1} className="inputEmail"
                             autoFocus
                             margin="dense"
@@ -88,7 +88,7 @@ const ChatList = (props) => {
                             fullWidth
                             value={emailChat}>
                     </TextField>
-                </Popup> */}
+                </Popup>
             </div>
         </>
     )
