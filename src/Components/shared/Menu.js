@@ -19,7 +19,7 @@ const Menu = (props) => {
         <div className={'menu-bar'}>
             <div className={`menu-bar-wrapper ${props.title ? " title" : ""}`}>
                 <div className={'menu-back'}>
-                    {props.goBack ? goBackBtn() : null}
+                    {props.goBack ? goBackBtn() : null }
                 </div>
                 <div className={'menu-btn-area'}>
                     {props.children}

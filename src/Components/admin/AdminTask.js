@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './AdminHomePage.css'
+import './AdminTask.css'
 import Menu from "../shared/Menu";
 import {ButtonBase, IconButton} from "@material-ui/core";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
@@ -13,17 +13,19 @@ const AdminTask = (props) => {
         fetch(`http://127.0.0.1:3000/api/tasks/${props.location.id}`)
             .then(response => response.json())
             .then(result => {
-                console.log(result)
+                // console.log(result)
                 setTemplate(result)})
     }, [])
 
     return (
         <>
             <Menu goBack={true}>
+                <Link to={{pathname: '/admin/reviews', template: template}}>
+                    <ButtonBase centerRipple={true} style={{ backgroundColor:'#2A73CC'}}><p style={{width: '100px'}}>Reviews</p></ButtonBase>
+                </Link>
                 <ButtonBase centerRipple={true}><p style={{width: '200px'}}>Create New Subtask</p></ButtonBase>
-                <ButtonBase centerRipple={true}><p style={{width: '100px', backgroundColor:'#2A73CC'}}>Reviews</p></ButtonBase>
             </Menu>
-            <div className={''}>
+            <div className={'admin-task-page'}>
                 <div className={''}>
                     {template.name}
                 </div>

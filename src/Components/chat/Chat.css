@@ -1,9 +1,11 @@
 .chat-title{
     font-weight: 300;
-    font-size: 200%;
-    width: 100%;
-    margin-left: 20%;
+    font-size: 150%;
+    width: 600px;
+    min-width: fit-content;
+    margin-left: 10px;
     color: #25265E;
+    display: block;
 }
 
 .chat-container {

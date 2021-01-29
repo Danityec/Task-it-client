@@ -46,7 +46,7 @@ const HomePage = (props) => {
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
                 </Link>
                 <Link to='/chats'>
-                    <ButtonBase centerRipple={true} onClick={null}><p style={{width: '100px', backgroundColor:'#2A73CC'}}>Chat</p></ButtonBase>
+                    <ButtonBase centerRipple={true} onClick={null} style={{ backgroundColor:'#2A73CC'}}><p style={{width: '100px'}}>Chat</p></ButtonBase>
                 </Link>
             </Menu>
             <div className={'task-list'}>
