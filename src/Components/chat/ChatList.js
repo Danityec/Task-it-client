@@ -26,12 +26,12 @@ const ChatList = (props) => {
                 users.push(chat['userID1'])
         })
 
-        users.forEach(user => {
+        users.forEach((user, index) => {
             fetch(`http://127.0.0.1:3000/api/users/${user}`)
                 .then(response => response.json())
                 .then(result => {
                     setTitleList(prevState => ({
-                        ...prevState, [user]: `${result.firstName} ${result.lastName}`
+                        ...prevState, [chatList[index]._id]: `${result.firstName} ${result.lastName}`
                     }));
                 })
         })
@@ -48,7 +48,7 @@ const ChatList = (props) => {
     return (
         <>
             <Menu goBack={true}>
-                <ButtonBase onClick={newChatPopup}>New Chat</ButtonBase>
+                <ButtonBase centerRipple={true} onClick={newChatPopup}><p style={{width: '150px'}}>New Chat</p></ButtonBase>
             </Menu>
             <div className={'chat-list'}>
                 <List dataList={chatList} titleList={titleList} pathName={'/chat'}>

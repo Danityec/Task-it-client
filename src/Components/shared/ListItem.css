@@ -1,7 +1,7 @@
 .list-item {
     margin: 0 auto;
     width: 100%;
-    height: 12%;
+    /*height: 12%;*/
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -17,4 +17,9 @@
 
 .list-item.card:hover {
     background-color: #d6e6ff;
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
 }

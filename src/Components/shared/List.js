@@ -4,15 +4,9 @@ import ListItem from "./ListItem";
 
 const List = (props) => {
 
-    const eachItem = (item, index) => {
-        let name = ''
-        if (props.titleList[item.userID1])
-            name = props.titleList[item.userID1]
-        else
-            name = props.titleList[item.userID2]
-
+    const eachItem = (item) => {
         return (
-            <ListItem key={item._id} item={item} itemTitle={name} pathName={props.pathName}>
+            <ListItem checkboxes={props.checkboxes} checkboxeToggle={props.checkboxToggle} key={item._id} item={item} itemTitle={props.titleList[item._id]} pathName={props.pathName}>
                 {props.children}
             </ListItem>
         )

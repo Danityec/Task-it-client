@@ -9,18 +9,18 @@ const Menu = (props) => {
 
     const goBackBtn = () => {
         return (
-            <div className={'menu-back'}>
-                <IconButton onClick={() => history.goBack()} style={{ color: '#2A73CC'}}>
-                    <ArrowBackIosRoundedIcon/>
-                </IconButton>
-            </div>
+            <IconButton onClick={() => history.goBack()} style={{color: '#2A73CC'}}>
+                <ArrowBackIosRoundedIcon/>
+            </IconButton>
         )
     }
 
     return (
         <div className={'menu-bar'}>
-            <div className={`menu-bar-wrapper ${props.title ? " title" : ""}`} >
-                {props.goBack ? goBackBtn() : null}
+            <div className={`menu-bar-wrapper ${props.title ? " title" : ""}`}>
+                <div className={'menu-back'}>
+                    {props.goBack ? goBackBtn() : null}
+                </div>
                 <div className={'menu-btn-area'}>
                     {props.children}
                 </div>
