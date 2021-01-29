@@ -3,9 +3,8 @@ import Template from './Template';
 import Popup from "../shared/Popup";
 import './TemplateList.css';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Menu from "../shared/Menu";
-import {ButtonBase, IconButton} from "@material-ui/core";
+import {ButtonBase} from "@material-ui/core";
 
 
 
