@@ -42,7 +42,9 @@ const HomePage = (props) => {
     return (
         <>
             <Menu goBack={false}>
-                <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
+                <Link to='/new-task'>
+                    <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
+                </Link>
                 <Link to='/chats'>
                     <ButtonBase centerRipple={true} onClick={null}><p style={{width: '100px'}}>Chat</p></ButtonBase>
                 </Link>
