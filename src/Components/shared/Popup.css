@@ -1,0 +1,43 @@
+.popup{
+    display: flex;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    border: 20px solid #EDF5FF;
+    width: 25%;
+    height: 25%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+.titlePopupNewTask{
+    font-family: 'Kanit', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: large;
+    font: bold;
+    color: #2A73CC;
+}
+.inputNameTask, .inputCategory{
+    color: #2A73CC;
+
+}
+
+.popupTextNewTask{
+    display: flex;
+    flex-flow: row;
+    justify-content:center;
+    font-family: 'Kanit', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    color: #25265E;
+}
+
+.buttonOK{
+    color:#34B467 ;
+}
+
+.buttonCANCEL{
+    color: #FF5C5C;
+}
+
