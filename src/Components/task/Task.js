@@ -8,7 +8,7 @@ const Task = (props) => {
 
     return (
             <div className="Task">
-
+                <
             </div> 
         )
 }
