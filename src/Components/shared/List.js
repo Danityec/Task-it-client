@@ -17,9 +17,6 @@ const List = (props) => {
             </ListItem>
         )
     }
-    console.log(props.titleList)
-    // console.log(props.dataList)
-
 
     return (
         <div className={'list'}>

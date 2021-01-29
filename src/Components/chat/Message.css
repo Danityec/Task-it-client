@@ -1,0 +1,33 @@
+.message {
+    margin: 1%;
+    width: 60%;
+}
+
+.message.outgoing {
+    align-self: flex-end;
+    margin-right: 2%;
+}
+
+.message.incoming {
+    align-self: flex-start;
+    margin-left: 2%;
+}
+
+.text {
+    background-color: brown;
+    padding: 1%;
+    border-radius: 10px;
+    color: #25265E;
+}
+
+.text.outgoing {
+    background-color: #84BCFF;
+}
+
+.text.incoming {
+    background-color: #EDF5FF;
+}
+
+.timestamp {
+    font-size: 70%;
+}

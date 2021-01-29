@@ -4,15 +4,15 @@ import Menu from "../shared/Menu";
 import {ButtonBase, CardActions, IconButton} from "@material-ui/core";
 import List from "../shared/List";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
-import Chat from "./Chat";
 import {Link, Redirect} from "react-router-dom";
+const userId = '5fecb592690ca7935ccfd762'
 
 const ChatList = (props) => {
     const [chatList, setChatList] = useState([]);
     const [titleList, setTitleList] = useState({});
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:3000/api/chats?userID=${'5fecb592690ca7935ccfd762'}`)
+        fetch(`http://127.0.0.1:3000/api/chats?userID=${userId}`)
             .then(response => response.json())
             .then(result => setChatList(result))
     }, [])
@@ -20,10 +20,9 @@ const ChatList = (props) => {
     useEffect(() => {
         let users = []
         let chatIDs = []
-        let i = 0
         chatList.forEach(chat => {
             chatIDs.push(chat._id)
-            if (chat['userID1'] == '5fecb592690ca7935ccfd762')
+            if (chat['userID1'] == userId)
                 users.push(chat['userID2'])
             else
                 users.push(chat['userID1'])
@@ -36,14 +35,7 @@ const ChatList = (props) => {
                     setTitleList(prevState => ({
                         ...prevState, [user]: `${result.firstName} ${result.lastName}`
                     }));
-                    i += 1
                 })
-            // setTitleList(prevState => ({
-            //     ...prevState, [chatIDs[i]]: `${result.firstName} ${result.lastName}`
-            //     // setTitleList( titleList[chatIDs[i]] = `${result.firstName} ${result.lastName}`)
-            // })
-
-            // })
         })
     }, [chatList])
 
@@ -65,22 +57,16 @@ const ChatList = (props) => {
             })
     }
 
-
-    // console.log(titleList)
-    // console.log(chatList)
-
     return (
         <>
-            <Menu goBack={true} goTo={'/'}>
+            <Menu goBack={true}>
                 <ButtonBase onClick={newChatPopup}>New Chat</ButtonBase>
             </Menu>
             <div className={'chat-list'}>
                 <List dataList={chatList} titleList={titleList} pathName={'/chat'}>
-                    {/*<Link to={{pathname: "/chat", chat: chatList[0]}}>*/}
                     <IconButton>
                         <ArrowForwardIosRoundedIcon/>
                     </IconButton>
-                    {/*</Link>*/}
                 </List>
             </div>
         </>

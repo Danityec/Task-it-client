@@ -15,6 +15,10 @@
     align-items: center;
 }
 
+.menu-bar-wrapper.title {
+    justify-content: unset;
+}
+
 .menu-btn-area {
     margin-right: 6%;
 }

@@ -13,7 +13,7 @@ const ListItem = (props) => {
                     </p>
                 </CardContent>
                 <CardActions>
-                    <Link to={{pathname: props.pathName, data: props.item}}>
+                    <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}}>
                         {props.children}
                     </Link>
                 </CardActions>

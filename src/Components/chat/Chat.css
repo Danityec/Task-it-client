@@ -1,0 +1,79 @@
+.chat-title{
+    font-weight: 300;
+    font-size: 200%;
+    width: 100%;
+    margin-left: 20%;
+    color: #25265E;
+}
+
+.chat-container {
+    position: fixed;
+    top: calc(12% + 8% + 2%);
+    width: 100%;
+    height: 80%;
+}
+
+.chat-window {
+    border-radius: 20px;
+    margin: 0 auto;
+    width: 80%;
+    height: 80%;
+}
+
+.message-area {
+    width: 100%;
+    height: 85%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 110%;
+    font-weight: 300;
+    color: #25265E;
+    border-right: 8px solid #EDF5FF;
+    border-left: 8px solid #EDF5FF;
+    border-top: 8px solid #EDF5FF;
+    border-radius: 15px 15px 0px 0px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.message-area::-webkit-scrollbar {
+    width: 5px;
+}
+
+.message-area::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: none;
+    border-radius: 50px;
+}
+
+.input-area {
+    position: fixed;
+    height: 10%;
+    width: 80%;
+    border: 8px solid #EDF5FF;
+    border-radius: 0px 0px 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-area input{
+    height: 100%;
+    width: 90%;
+    padding-left: 10px;
+    font-size: 190%;
+    font-family: 'Kanit', sans-serif;
+    color: #2A73CC;
+    border: none;
+    border-right: 8px solid #EDF5FF;
+    background-color: transparent;
+}
+
+.input-area button {
+    width: 10%;
+}
+.input-area button svg {
+    color: #2A73CC;
+    width: 70%;
+    height: 70%;
+}

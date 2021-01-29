@@ -19,7 +19,7 @@ const Menu = (props) => {
 
     return (
         <div className={'menu-bar'}>
-            <div className={'menu-bar-wrapper'}>
+            <div className={`menu-bar-wrapper ${props.title ? " title" : ""}`} >
                 {props.goBack ? goBackBtn() : null}
                 <div className={'menu-btn-area'}>
                     {props.children}
