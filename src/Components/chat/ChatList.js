@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './ChatList.css'
 import Menu from "../shared/Menu";
-import {ButtonBase, CardActions, IconButton} from "@material-ui/core";
+import {ButtonBase, IconButton} from "@material-ui/core";
 import List from "../shared/List";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
-import {Link, Redirect} from "react-router-dom";
+
 const userId = '5fecb592690ca7935ccfd762'
 
 const ChatList = (props) => {
@@ -19,10 +19,8 @@ const ChatList = (props) => {
 
     useEffect(() => {
         let users = []
-        let chatIDs = []
         chatList.forEach(chat => {
-            chatIDs.push(chat._id)
-            if (chat['userID1'] == userId)
+            if (chat['userID1'] === userId)
                 users.push(chat['userID2'])
             else
                 users.push(chat['userID1'])
@@ -45,16 +43,6 @@ const ChatList = (props) => {
                 {/*<Popup></Popup>*/}
             </div>
         )
-    }
-
-    const goToChat = (id) => {
-        fetch(`http://127.0.0.1:3000/api/chats/${id}`)
-            .then(response => response.json())
-            .then(result => {
-                // console.log(result)
-                // return (<Link to={{pathname: "/chat", result}}/>)
-                return <Redirect to={{pathname: "/chat", result}}/>
-            })
     }
 
     return (

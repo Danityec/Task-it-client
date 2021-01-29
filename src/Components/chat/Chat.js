@@ -10,8 +10,6 @@ const userId = '5fecb592690ca7935ccfd762'
 const Chat = (props) => {
     const [inputMessage, setInputMessage] = useState('');
     const [chat, setChat] = useState(props.location.data);
-    const [name, setName] = useState(props.location.name);
-
     const messagesEndRef = useRef(null)
 
     const scrollToBottom = () => {
@@ -21,16 +19,6 @@ const Chat = (props) => {
     useEffect(() => {
         scrollToBottom()
     }, [chat]);
-
-    const eachMessage = (message) => {
-        let messageType = 'incoming'
-        if (message.senderID === userId)
-            messageType = 'outgoing'
-        return (
-            <Message key={message._id} messageType={messageType} message={message.message}
-                     timestamp={message.timestamp}/>
-        )
-    }
 
     const sendMessage = () => {
         const body = {
@@ -46,10 +34,19 @@ const Chat = (props) => {
             })
     }
 
+    const eachMessage = (message) => {
+        let messageType = 'incoming'
+        if (message.senderID === userId)
+            messageType = 'outgoing'
+        return (
+            <Message key={message._id} messageType={messageType} message={message.message} timestamp={message.timestamp}/>
+        )
+    }
+
     return (
         <div>
             <Menu goBack={true} title={true}>
-                <h2 className={'chat-title'}>{name}</h2>
+                <h2 className={'chat-title'}>{props.location.name}</h2>
             </Menu>
             <div className={'chat-container'}>
                 <div className={'chat-window'}>
