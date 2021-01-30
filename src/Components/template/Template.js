@@ -1,38 +1,26 @@
 import React from 'react';
-import './TemplateList.css';
 import './Template.css';
-import Button from '@material-ui/core/Button';
-
+import {ButtonBase} from "@material-ui/core";
 
 const Template = (props) => {
-    
-
     const eachSubTask = (index) => {
-        return  <div className="nameSubTask">{index.name}</div>
+        return <div className="subtask-name">{index.name}</div>
     }
-   
+
     return (
-        <div className="template">
-            
-            <div className="titleTask">
-                <div className="nameTask">{props.item.name}</div>
-                <Button className="iconeChoose" aria-label="edit" variant="contained" style={{ padding: "1px"}, { backgroundColor:'#2A73CC'}} >Choose</Button >
+        <div className="template-card">
+            <div className="template-card-title">
+                <p>{props.item.name}</p>
+                <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Choose</p></ButtonBase>
             </div>
-
-            <div className="titleCategory">
-                <div className="nameCategory" >{props.item.category}</div>
+            <div className="template-card-category">
+                {props.item.category}
             </div>
-
-            <div className="titleSubTask">
+            <div className="template-card-subtasks">
                 {props.item.subTask.map(eachSubTask)}
-                {props.children}
-                <div className="nameSubTask" ></div>
             </div>
-            
         </div>
-        )   
-    
-    
+    )
 }
 
 export default Template;
