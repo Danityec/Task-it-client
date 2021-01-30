@@ -8,6 +8,10 @@
     font-family: 'Kanit', sans-serif;
 }
 
+.list-item a {
+    color: #25265E;
+}
+
 li:last-of-type{
     margin-bottom: 7%;
     padding-bottom: 7%;

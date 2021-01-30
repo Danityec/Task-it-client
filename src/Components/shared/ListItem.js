@@ -15,10 +15,10 @@ const ListItem = (props) => {
         <MuiListItem className={'list-item'}>
             <Card elevation={0} className={'list-item card'}>
                 <CardContent className={'card-content'}>
-                    { props.checkboxes ? <Checkbox checked={checked} onChange={handleChange}/> : null }
-                    <p>
-                        {props.itemTitle}
-                    </p>
+                    {props.checkboxes ? <Checkbox color="primary" checked={checked} onChange={handleChange}/> : null}
+                    <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}}>
+                            {props.itemTitle}
+                    </Link>
                 </CardContent>
                 <CardActions>
                     <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}}>
