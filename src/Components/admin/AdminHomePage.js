@@ -1,14 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminHomePage.css'
 import Menu from "../shared/Menu";
-import {ButtonBase, IconButton} from "@material-ui/core";
+import { ButtonBase, IconButton } from "@material-ui/core";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
+import Popup from "../shared/Popup";
 
 
 const AdminHomePage = (props) => {
     const [templateList, setTemplateList] = useState([]);
     const [lengthList, setLength] = useState({});
+    const [openAddTemplate, setOpenAddTemplate] = useState(false);
+    const [templateName, setTemplateName] = useState("");
+    const [templateCategory, setTemplateCategory] = useState("");
 
     useEffect(() => {
         fetch(`http://127.0.0.1:3000/api/tasks?templates=true`)
@@ -33,9 +38,9 @@ const AdminHomePage = (props) => {
             <div key={item._id} className={'template-card'}>
                 <div className={'card-header'}>
                     <div>{item.name}</div>
-                    <Link to={{pathname: '/admin/template', id: item._id}}>
+                    <Link to={{ pathname: '/admin/template', id: item._id }}>
                         <IconButton>
-                            <ArrowForwardIosRoundedIcon/>
+                            <ArrowForwardIosRoundedIcon />
                         </IconButton>
                     </Link>
                 </div>
@@ -46,14 +51,35 @@ const AdminHomePage = (props) => {
         )
     }
 
+    const addNewTemaplate = () => {
+        const data = { name: templateName, category: templateCategory };
+        console.log(data)
+        fetch(``, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setOpenAddTemplate(false);
+            });
+    }
+
     return (
         <>
             <Menu goBack={false}>
-                <ButtonBase centerRipple={true}><p style={{width: '200px'}}>Create New Template</p></ButtonBase>
+                <ButtonBase centerRipple={true} onClick={() => {setOpenAddTemplate(true) }}><p style={{ width: '200px' }}>Create New Template</p></ButtonBase>
             </Menu>
+            <Popup onSubmit={addNewTemaplate} title={"New Template"} open={openAddTemplate}>
+                <TextField className="template-name-input" label="Name" onChange={e => setTemplateName(e.target.value)}
+                    fullWidth value={templateName} />
+                <TextField className="template-category-input" label="Category"
+                    onChange={e => setTemplateCategory(e.target.value)} fullWidth value={templateCategory} />
+            </Popup>
             <div className={'admin-template-page'}>
                 <div className={'admin-template-list'}>
-                    { templateList.map(eachTemplate) }
+                    {templateList.map(eachTemplate)}
                 </div>
             </div>
         </>)

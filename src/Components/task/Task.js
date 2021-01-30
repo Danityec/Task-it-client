@@ -165,8 +165,6 @@ const Task = (props) => {
                     <h3 className="infoShared"></h3>
                 </div>
 
-                
-
                 <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAdd}>
                     <TextField key={1} className="inputNameSubTask"
                         autoFocus
