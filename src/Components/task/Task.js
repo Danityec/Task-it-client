@@ -129,8 +129,8 @@ const Task = (props) => {
                 <div className="infoTask">
                     <h1 className="infoTitle"  >
                         
-                        {/* <EditIcon fontSize="large" style={{ color: '#FFDD65' }} onClick={handleClickOpen}></EditIcon>
-                        <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={handleClickOpen}></DeleteIcon> */}
+                        <EditIcon fontSize="large" style={{ color: '#FFDD65' }} onClick={handleClickOpen}></EditIcon>
+                        <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={handleClickOpen}></DeleteIcon>
                     </h1>
                     <h2 className="infoCategory"></h2>
                     <h3 className="infoShared"></h3>
