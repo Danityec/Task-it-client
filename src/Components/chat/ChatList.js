@@ -9,7 +9,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 
 const userId = '5fecb592690ca7935ccfd762'
-const userID2 = '5fea10ee690ca7935c117922'
 
 const ChatList = (props) => {
     const [chatList, setChatList] = useState([]);
@@ -33,7 +32,6 @@ const ChatList = (props) => {
                 })
             })
     }, [chatList])
-
 
     useEffect(() => {
         let users = []
@@ -71,8 +69,6 @@ const ChatList = (props) => {
                         setChatList(result)
                     });
             })
-
-
     }
 
     return (
@@ -87,20 +83,13 @@ const ChatList = (props) => {
                         <ArrowForwardIosRoundedIcon/>
                     </IconButton>
                 </List>
-                <Popup onSubmit={addNewChat} closePopup={() => {
-                    setOpen(false)
-                }} title={"New Chat"} open={open} isDelete={false}>
+                <Popup onSubmit={addNewChat} closePopup={() => setOpen(false)} title={"New Chat"} open={open} isDelete={false}>
                     <p>open a new chat with another TaskIt user</p>
-                    {/*<TextField className="chat-email-input" label="Email" onChange={e => setEmailChat(e.target.value)}*/}
-                    {/*           fullWidth value={emailChat}/>*/}
                     <Autocomplete
                         style={{width: '100%', paddingTop: '5%'}}
-                        options={emailList}
-                        getOptionLabel={(emailList) => emailList.title}
-                        value={emailValue}
+                        options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailValue}
                         onChange={(e, newValue) => {setEmailValue(newValue)}}
-                        renderInput={(params) => <TextField {...params} label="Email"/>}
-                    />
+                        renderInput={(params) => <TextField {...params} label="Email"/>}/>
                 </Popup>
             </div>
         </>

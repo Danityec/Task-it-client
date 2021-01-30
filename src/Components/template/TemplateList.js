@@ -47,7 +47,7 @@ const TemplateList = (props) => {
                     {templateList.map(eachTemplate)}
                 </div>
             </div>
-            <Popup onSubmit={addNewTask} closePopup={() => {setOpen(false)}} title={"New Task"} open={open} isDelete={false}>
+            <Popup onSubmit={addNewTask} closePopup={() =>setOpen(false)} title={"New Task"} open={open} isDelete={false}>
                 <TextField className="task-name-input" label="Name" onChange={e => setTaskName(e.target.value)}
                            fullWidth value={taskName}/>
                 <TextField className="task-category-input" label="Category"
