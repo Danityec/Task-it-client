@@ -67,11 +67,11 @@
     color: #2A73CC;
 }
 
-.modal-close-btn {
+.review-page .modal-close-btn {
     width: 20%;
 }
 
-.modal-close-btn svg {
+.review-page .modal-close-btn svg {
     height: 40px;
     width: 100%;
     color: #25265E;

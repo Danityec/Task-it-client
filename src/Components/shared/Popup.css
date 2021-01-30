@@ -1,35 +1,55 @@
-.popup{
-    display: flex;
-    border-radius: 20px;
+.popup-modal {
+    background-color: #EDF5FF;
     width: 25%;
-    height: 25%;
+    margin: 10% auto;
+    border-radius: 10px;
+    padding: 1%;
+    outline: none;
+}
+
+.popup-modal .modal-title-area {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.popup-modal .modal-title-area .modal-close-btn {
+    width: 10%;
+}
+
+.popup-modal .modal-title-area h1 {
+    font-weight: 400;
+}
+
+.popup-modal .modal-content-area {
+    padding-top: 5%;
+    padding-left: 2%;
+    width: 80%;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: flex-start;
+    align-items: center;
+    margin: 0 auto;
 }
 
-.titlePopupNewTask{
-    font-family: 'Kanit', sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: large;
-    font: bold;
-    color: #2A73CC;
-}
-.inputNameTask, .inputCategory{
-    color: #2A73CC;
-
+.popup-modal .modal-content-area p {
+    padding-top: 5%;
 }
 
-.popupTextNewTask{
+.popup-modal .modal-btn-area {
+    padding-top: 10%;
+    width: 100%;
     display: flex;
-    flex-flow: row;
-    justify-content:center;
-    font-family: 'Kanit', sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    color: #25265E;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
 }
 
-
-
+.popup-modal .ok-btn {
+    background-color: #34B467;
+    border: none;
+    border-radius: 5px;
+    color: #EDF5FF;
+    font-weight: 300;
+    font-size: 110%;
+    padding: 1% 3%;
+}

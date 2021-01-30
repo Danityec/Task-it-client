@@ -27,16 +27,13 @@ const HomePage = (props) => {
     }, [taskList])
 
     const checkboxToggle = (id, completed) => {
-        console.log('checkboxToggle: ' + id)
         const body = {
             completed: completed
         }
         fetch(`http://127.0.0.1:3000/api/tasks/${id}`,
             {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
             .then(response => response.json())
-            .then(result => {
-                console.log(result)
-            })
+            .then(result => {})
     }
 
     return (

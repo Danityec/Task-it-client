@@ -1,33 +1,58 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Popup.css';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContentText from '@material-ui/core/DialogContentText';
-
+import {ButtonBase, Modal} from "@material-ui/core";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import {Link} from "react-router-dom";
 
 const Popup = (props) => {
-   
+    const deleteBtn = () => {
+        return (
+            <>
+                <ButtonBase className={'ok-btn'} centerRipple={true} onClick={props.closePopup}>
+                    <p style={{width: '120px'}}>No, Go back</p>
+                </ButtonBase>
+                <ButtonBase className={'delete-btn'} centerRipple={true} onClick={props.onSubmit}>
+                    <p style={{width: '120px'}}>Yes, Delete</p>
+                </ButtonBase>
+            </>
+        )
+    }
+
+    const okBtn = () => {
+        return (
+            <ButtonBase className={'ok-btn'} centerRipple={true} onClick={props.onSubmit}>
+                <p style={{width: '30px'}}>OK</p>
+            </ButtonBase>
+        )
+    }
+
+    const renderModal = () => {
+        return (
+            <div className={'popup-modal'}>
+                <div className={'modal-title-area'}>
+                    <h1>
+                        {props.title}
+                    </h1>
+                    <ButtonBase className={'modal-close-btn'} onClick={props.closePopup}>
+                        <CloseRoundedIcon/>
+                    </ButtonBase>
+                </div>
+                <div className={'modal-content-area'}>
+                    {props.children}
+                </div>
+                <div className={'modal-btn-area'}>
+                    {props.isDelete ? deleteBtn() : okBtn()}
+                </div>
+            </div>
+        )
+    }
 
     return (
-        <div className="popup">
-                <Dialog open={props.open} aria-labelledby="form-dialog-title">
-                    <DialogTitle className="titlePopupNewTask" id="form-dialog-title" >{props.title}</DialogTitle>
-                    <DialogContent>
-                        {props.children}
-                    </DialogContent>
-                    <DialogContentText className="popupTextNewTask">{props.text}</DialogContentText>
-                    <DialogActions>
-                        <Button className="buttonOK" variant="contained" style={{ backgroundColor:'#34B467'}} onClick={props.onSubmit} >
-                            OK
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-        </div>
+        <Modal open={props.open} onClose={props.closePopup}>
+            {renderModal()}
+        </Modal>
     )
-
 }
 
 export default Popup;

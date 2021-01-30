@@ -21,30 +21,19 @@ const TemplateList = (props) => {
     }, [])
 
     const addNewTask = () => {
-        const data = {name: taskName, category: taskCategory, userID: userId};
-        console.log(data)
+        const body = {name: taskName, category: taskCategory, userID: userId};
         fetch(`http://localhost:3000/api/tasks`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data),
+            body: JSON.stringify(body),
         })
             .then(response => response.json())
-            .then(result => {
-                handleClose()
-            });
+            .then(result => setOpen(false));
     }
 
     const eachTemplate = (item) => {
-        return (<Template key={item._id} item={item} id={item._id}/>)
+        return (<Template key={item._id} item={item}/>)
     }
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
 
     return (
         <>
@@ -58,27 +47,12 @@ const TemplateList = (props) => {
                     {templateList.map(eachTemplate)}
                 </div>
             </div>
-            <Popup onSubmit={addNewTask} title={"New Task"} text={"Add subTask later in the task page"} open={open}>
-                <TextField key={1} className="inputNameTask"
-                           autoFocus
-                           margin="dense"
-                           id="name"
-                           label="Name"
-                           type="Name"
-                           onChange={e => setTaskName(e.target.value)}
-                           fullWidth
-                           value={taskName}>
-                </TextField>
-                <TextField key={2} className="inputCategory"
-                           autoFocus
-                           margin="dense"
-                           id="Category"
-                           label="Category"
-                           type="Category"
-                           fullWidth
-                           onChange={e => setTaskCategory(e.target.value)}
-                           value={taskCategory}>
-                </TextField>
+            <Popup onSubmit={addNewTask} closePopup={() => {setOpen(false)}} title={"New Task"} open={open} isDelete={false}>
+                <TextField className="task-name-input" label="Name" onChange={e => setTaskName(e.target.value)}
+                           fullWidth value={taskName}/>
+                <TextField className="task-category-input" label="Category"
+                           onChange={e => setTaskCategory(e.target.value)} fullWidth value={taskCategory}/>
+                <p>Add subtasks later in the task page</p>
             </Popup>
         </>
     )
