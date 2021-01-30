@@ -165,12 +165,12 @@ const Task = (props) => {
                         </Popup>
                     </EditIcon>
 
-                    {/* <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={handleClickOpen} >
+                    <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={handleClickOpen} >
                         <Popup onSubmit={DeleteSubTask} title={"Delete Subtask"} open={openDelete} text={"Are you sure you want to delete this subtask?"}>
                             <text>the action cannot be undone!</text>
                             <Button className="buttonOK" variant="contained" style={{ backgroundColor: '#FF5C5C' }} onClick={props.onSubmit}>No, Save my subtask</Button>
                         </Popup>
-                    </DeleteIcon> */}
+                    </DeleteIcon>
                 </List>
             </div>
         </div>
