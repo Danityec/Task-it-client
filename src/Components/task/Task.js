@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import { TramRounded } from '@material-ui/icons';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 
 const userId = '5fecb592690ca7935ccfd762'
@@ -189,16 +190,14 @@ const Task = (props) => {
                         fullWidth
                         value={titleReview}>
                     </TextField>
-                    <TextField key={2}
-                        autoFocus
-                        margin="dense"
-                        id="Review"
-                        label="Review"
-                        type="Review"
+                    <TextareaAutosize key={2} className="bodyReview"
+                        rowsMax={4}
+                        aria-label="maximum height"
+                        placeholder="Reviews"
                         onChange={e => setBodyReview(e.target.value)}
                         fullWidth
                         value={bodyReview}>
-                    </TextField>
+                    </TextareaAutosize>
                 </Popup>
                 <Popup onSubmit={DeleteSubTask} title={"Delete Subtask"} open={openDelete} text={"Are you sure you want to delete this subtask?"}>
                     <text>the action cannot be undone!</text>
