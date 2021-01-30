@@ -8,12 +8,18 @@ import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
+import { TramRounded } from '@material-ui/icons';
 
+
+const userId = '5fecb592690ca7935ccfd762'
 
 const Task = (props) => {
-    const [open, setOpen] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
+    const [openReview, setOpenReview] = useState(false);
+    const [openEditTask, setOpenEditTask] = useState(false);
+    const [openDeleteTask, setOpenDeleteTask] = useState(false);
 
     const [nameSubTask, setNameSubTask] = useState("");
     const [task, setTask] = useState(props.location.data);
@@ -23,6 +29,11 @@ const Task = (props) => {
     const [newNameSubTask, setNewNameSubTask] = useState("");
     // const [subTask, setSubTask] = useState(props.location.data);
 
+    const [taskName, setTaskName] = useState("");
+    const [taskCategory, setTaskCategory] = useState("");
+
+    const [titleReview, setTitleReview] = useState("");
+    const [bodyReview, setBodyReview] = useState("");
 
     useEffect(() => {
         setTask(props.location.data)
@@ -41,6 +52,35 @@ const Task = (props) => {
     //     setSubTask(props.location.data)
     // }, [])
 
+    const addReview = () => {
+        const data = { title: titleReview, reviewBody: bodyReview, userID: userId , templateID: task.templateID };
+        console.log(data)
+        fetch(`http://localhost:3000/api/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setOpenReview(false);
+            });
+    }
+    const editTask = () => {
+        const data = { name: taskName, category: taskCategory, userID: userId };
+        console.log(data)
+        fetch(`http://localhost:3000/api/subtasks/${task._id}/${task.subTask._id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setOpenEdit(false);
+                // setSubTask(result);
+            });
+    }
 
     const addNewSubTask = () => {
         const data = { name: nameSubTask };
@@ -52,7 +92,7 @@ const Task = (props) => {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                handleClose();
+                setOpenAdd(false);
                 setTask(result);
             });
 
@@ -69,7 +109,7 @@ const Task = (props) => {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                handleClose();
+                setOpenEdit(false);
                 // setSubTask(result);
             });
     }
@@ -85,21 +125,10 @@ const Task = (props) => {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                handleClose();
+                setOpenDelete(false);
+
             });
     }
-
-    const handleClose = () => {
-        setOpen(false);
-        setOpenEdit(false);
-        setOpenDelete(false);
-
-    };
-    const handleClickOpen = () => {
-        setOpen(true);
-        setOpenEdit(true);
-        setOpenDelete(true);
-    };
 
     const checkboxToggle = (id, completed) => {
         const body = {
@@ -119,24 +148,25 @@ const Task = (props) => {
 
         <div className="Task">
             <Menu goBack={true}>
-                <ButtonBase centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Creat New SubTask</p></ButtonBase>
+                <ButtonBase centerRipple={true} onClick={() => { setOpenAdd(true) }}><p style={{ width: '200px' }}>Creat New SubTask</p></ButtonBase>
                 {task.templateID ? (
-                    <ButtonBase style={{ backgroundColor: '#2A73CC' }} centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Write a Review</p></ButtonBase>
+                    <ButtonBase style={{ backgroundColor: '#2A73CC' }} centerRipple={true} onClick={() => { setOpenReview(true) }}><p style={{ width: '200px' }}>Write a Review</p></ButtonBase>
                 ) : null}
             </Menu>
 
             <div className="taskList">
                 <div className="infoTask">
                     <h1 className="infoTitle"  >
-                        
-                        <EditIcon fontSize="large" style={{ color: '#FFDD65' }} onClick={handleClickOpen}></EditIcon>
-                        <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={handleClickOpen}></DeleteIcon>
+                        <EditIcon onSubmit={editTask} fontSize="large" style={{ color: '#FFDD65' }} title={"Create Subtask"} text={"Share the task with TaskIt users"} onClick={openEditTask}></EditIcon>
+                        <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={openDeleteTask}></DeleteIcon>
                     </h1>
                     <h2 className="infoCategory"></h2>
                     <h3 className="infoShared"></h3>
                 </div>
 
-                <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={open}>
+                
+
+                <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAdd}>
                     <TextField key={1} className="inputNameSubTask"
                         autoFocus
                         margin="dense"
@@ -148,29 +178,47 @@ const Task = (props) => {
                         value={nameSubTask}>
                     </TextField>
                 </Popup>
-
+                <Popup onSubmit={addReview} title={"Review the task Template"} open={openReview}>
+                    <TextField key={1}
+                        autoFocus
+                        margin="dense"
+                        id="Title"
+                        label="Title"
+                        type="Title"
+                        onChange={e => setTitleReview(e.target.value)}
+                        fullWidth
+                        value={titleReview}>
+                    </TextField>
+                    <TextField key={2}
+                        autoFocus
+                        margin="dense"
+                        id="Review"
+                        label="Review"
+                        type="Review"
+                        onChange={e => setBodyReview(e.target.value)}
+                        fullWidth
+                        value={bodyReview}>
+                    </TextField>
+                </Popup>
+                <Popup onSubmit={DeleteSubTask} title={"Delete Subtask"} open={openDelete} text={"Are you sure you want to delete this subtask?"}>
+                    <text>the action cannot be undone!</text>
+                    <Button className="buttonOK" variant="contained" style={{ backgroundColor: '#FF5C5C' }} onClick={props.onSubmit}>No, Save my subtask</Button>
+                </Popup>
+                <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEdit}>
+                    <TextField key={2} className="inputEditSubTask"
+                        autoFocus
+                        margin="dense"
+                        id="Name"
+                        label="Name"
+                        type="Name"
+                        value={newNameSubTask}
+                        onChange={e => setNewNameSubTask(e.target.value)}
+                        fullWidth>
+                    </TextField>
+                </Popup>
                 <List checkboxes={true} checkboxeToggle={checkboxToggle} dataList={task.subTask} titleList={titleList}>
-                    <EditIcon fontSize="large" style={{ color: '#FFDD65' }} onClick={handleClickOpen}>
-                        <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEdit}>
-                            <TextField key={2} className="inputEditSubTask"
-                                autoFocus
-                                margin="dense"
-                                id="Name"
-                                label="Name"
-                                type="Name"
-                                value={newNameSubTask}
-                                onChange={e => setNewNameSubTask(e.target.value)}
-                                fullWidth>
-                            </TextField>
-                        </Popup>
-                    </EditIcon>
-
-                    <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={handleClickOpen} >
-                        <Popup onSubmit={DeleteSubTask} title={"Delete Subtask"} open={openDelete} text={"Are you sure you want to delete this subtask?"}>
-                            <text>the action cannot be undone!</text>
-                            <Button className="buttonOK" variant="contained" style={{ backgroundColor: '#FF5C5C' }} onClick={props.onSubmit}>No, Save my subtask</Button>
-                        </Popup>
-                    </DeleteIcon>
+                    <EditIcon fontSize="large" style={{ color: '#FFDD65' }} onClick={() => setOpenEdit(true)}></EditIcon>
+                    <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} onClick={() => setOpenDelete(true)}></DeleteIcon>
                 </List>
             </div>
         </div>
