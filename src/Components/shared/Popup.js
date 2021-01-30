@@ -20,8 +20,11 @@ const Popup = (props) => {
                     </DialogContent>
                     <DialogContentText className="popupTextNewTask">{props.text}</DialogContentText>
                     <DialogActions>
-                        <Button className="buttonOK" variant="contained" color="primary" onClick={props.onSubmit} >
+                        <Button className="buttonOK" variant="contained" style={{ backgroundColor:'#34B467'}} onClick={props.onSubmit} >
                             OK
+                        </Button>
+                        <Button className="buttonOK" variant="contained" style={{ backgroundColor:'#FF5C5C'}} onClick={props.onSubmit} >
+                            CANCLE
                         </Button>
                     </DialogActions>
                 </Dialog>

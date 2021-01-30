@@ -16,7 +16,7 @@ const Template = (props) => {
             
             <div className="titleTask">
                 <div className="nameTask">{props.item.name}</div>
-                <Button className="iconeChoose" fontSize="small" aria-label="edit" variant="contained" style={{ padding: "1px"}} color="primary">Choose</Button >
+                <Button className="iconeChoose" aria-label="edit" variant="contained" style={{ padding: "1px"}, { backgroundColor:'#2A73CC'}} >Choose</Button >
             </div>
 
             <div className="titleCategory">
