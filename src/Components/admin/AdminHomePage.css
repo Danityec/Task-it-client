@@ -10,6 +10,18 @@
     margin: 0 auto;
     display: flex;
     flex-flow: row wrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.admin-template-list::-webkit-scrollbar {
+    width: 5px;
+
+}
+.admin-template-list::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: none;
+    border-radius: 50px;
+
 }
 
 .admin-template-list .template-card {

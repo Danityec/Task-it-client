@@ -4,3 +4,14 @@
     top: calc(12% + 8% + 2%);
     width: 100%;
 }
+
+.chat-list::-webkit-scrollbar {
+    width: 5px;
+
+}
+.chat-list::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: none;
+    border-radius: 50px;
+
+}
