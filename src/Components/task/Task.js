@@ -71,10 +71,10 @@ const Task = (props) => {
 
         <div className="Task">
             <Menu goBack={true}>
-                {/* <ButtonBase centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Creat New SubTask</p></ButtonBase>
+                <ButtonBase centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Creat New SubTask</p></ButtonBase>
                 {task.templateID ? (
                 <ButtonBase style={{ backgroundColor:'#2A73CC'}} centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Write a Review</p></ButtonBase>
-                ): null } */}
+                ): null }
             </Menu>
 
             <div className="taskList">
