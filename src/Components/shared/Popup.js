@@ -23,9 +23,6 @@ const Popup = (props) => {
                         <Button className="buttonOK" variant="contained" style={{ backgroundColor:'#34B467'}} onClick={props.onSubmit} >
                             OK
                         </Button>
-                        <Button className="buttonOK" variant="contained" style={{ backgroundColor:'#FF5C5C'}} onClick={props.onSubmit} >
-                            CANCLE
-                        </Button>
                     </DialogActions>
                 </Dialog>
         </div>
