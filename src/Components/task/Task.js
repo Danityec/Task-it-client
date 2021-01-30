@@ -30,7 +30,7 @@ const Task = (props) => {
 
 
     const addNewSubTask = () => {
-        const data = { name: nameSubTask  };
+        const data = { name: nameSubTask };
         console.log(data)
         fetch(`http://localhost:3000/api/subtasks/${task._id}`, {
             method: 'POST',
@@ -38,7 +38,7 @@ const Task = (props) => {
             body: JSON.stringify(data),
         })
             .then(response => response.json())
-            .then(result => { 
+            .then(result => {
                 console.log(result)
                 handleClose();
                 setTask(result);
@@ -73,17 +73,16 @@ const Task = (props) => {
             <Menu goBack={true}>
                 <ButtonBase centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Creat New SubTask</p></ButtonBase>
                 {task.templateID ? (
-                <ButtonBase style={{ backgroundColor:'#2A73CC'}} centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Write a Review</p></ButtonBase>
-                ): null }
+                    <ButtonBase style={{ backgroundColor: '#2A73CC' }} centerRipple={true} onClick={handleClickOpen}><p style={{ width: '200px' }}>Write a Review</p></ButtonBase>
+                ) : null}
             </Menu>
 
             <div className="taskList">
-
+                <TextField className="infoTask"></TextField>
                 <List checkboxes={true} checkboxeToggle={checkboxToggle} dataList={task.subTask} titleList={titleList}>
-                    <EditIcon fontSize="large" style={{ color:'#FFDD65'}}/>
-                    <DeleteIcon fontSize="large" style={{ color:'#FF5C5C'}}/>
+                    <EditIcon fontSize="large" style={{ color: '#FFDD65' }} />
+                    <DeleteIcon fontSize="large" style={{ color: '#FF5C5C' }} />
                 </List>
-
                 <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={open}>
                     <TextField key={1} className="inputNameSubTask"
                         autoFocus
