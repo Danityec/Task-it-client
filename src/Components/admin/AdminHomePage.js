@@ -71,7 +71,7 @@ const AdminHomePage = (props) => {
             <Menu goBack={false}>
                 <ButtonBase centerRipple={true} onClick={() => {setOpenAddTemplate(true) }}><p style={{ width: '200px' }}>Create New Template</p></ButtonBase>
             </Menu>
-            <Popup onSubmit={addNewTemaplate} title={"New Template"} open={openAddTemplate}>
+            <Popup onSubmit={addNewTemaplate} title={"New Template"} open={openAddTemplate} closePopup={() =>setOpenAddTemplate(false)} >
                 <TextField className="template-name-input" label="Name" onChange={e => setTemplateName(e.target.value)}
                     fullWidth value={templateName} />
                 <TextField className="template-category-input" label="Category"

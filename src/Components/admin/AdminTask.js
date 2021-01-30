@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminTask.css'
 import Menu from "../shared/Menu";
-import {ButtonBase, Modal} from "@material-ui/core";
+import { ButtonBase, Modal } from "@material-ui/core";
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import TextField from '@material-ui/core/TextField';
 import Popup from "../shared/Popup";
@@ -13,7 +13,7 @@ const AdminTask = (props) => {
     const [openAddSubTask, setOpenAddSubTask] = useState(false);
     const [nameSubTask, setNameSubTask] = useState("");
     const [task, setTask] = useState(props.location.data);
-    
+
 
     useEffect(() => {
         setTask(props.location.data)
@@ -25,7 +25,8 @@ const AdminTask = (props) => {
             .then(response => response.json())
             .then(result => {
                 // console.log(result)
-                setTemplate(result)})
+                setTemplate(result)
+            })
     }, [])
 
     useEffect(() => {
@@ -51,8 +52,8 @@ const AdminTask = (props) => {
 
     const modalBody = (
         <div className={'review-page'}>
-            <ButtonBase className={'modal-close-btn'} onClick={()=>setOpenReview(false)}>
-                <CloseRoundedIcon/>
+            <ButtonBase className={'modal-close-btn'} onClick={() => setOpenReview(false)}>
+                <CloseRoundedIcon />
             </ButtonBase>
             <div className={'review-list'}>
                 {reviewList.map(eachReview)}
@@ -79,15 +80,15 @@ const AdminTask = (props) => {
     return (
         <>
             <Menu goBack={true}>
-                <ButtonBase centerRipple={true} style={{ backgroundColor:'#2A73CC'}} onClick={()=>setOpenReview(true)}><p style={{width: '100px'}}>Reviews</p></ButtonBase>
-                <ButtonBase centerRipple={true}><p style={{width: '200px'}}onClick={()=>setOpenAddSubTask(true)} >Create New Subtask</p></ButtonBase>
+                    <ButtonBase centerRipple={true} style={{ backgroundColor: '#2A73CC' }} onClick={() => setOpenReview(true)}><p style={{ width: '100px' }}>Reviews</p></ButtonBase>
+                <ButtonBase centerRipple={true}><p style={{ width: '200px' }} onClick={() => setOpenAddSubTask(true)} >Create New Subtask</p></ButtonBase>
             </Menu>
             <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask}>
-                    <TextField className="inputNameSubTask" label="Name"onChange={e => setNameSubTask(e.target.value)}
-                        fullWidth value={nameSubTask}>
-                    </TextField>
-                </Popup>
-            <Modal className={'review-modal'} open={openReview} onClose={()=>setOpenReview(false)}>
+                <TextField className="inputNameSubTask" label="Name" onChange={e => setNameSubTask(e.target.value)}
+                    fullWidth value={nameSubTask}>
+                </TextField>
+            </Popup>
+            <Modal className={'review-modal'} open={openReview} onClose={() => setOpenReview(false)}>
                 {modalBody}
             </Modal>
             <div className={'admin-task-page'}>
