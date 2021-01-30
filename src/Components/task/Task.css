@@ -33,5 +33,6 @@
 .infoTitle,.infoCategory,.infoShared{
     height: 30%;
     width: 100%;
-    /* background-color: burlywood; */
+    background-color: burlywood;
 }
+
