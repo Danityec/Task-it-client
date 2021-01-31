@@ -4,7 +4,7 @@ import './Task.css';
 import Menu from "../shared/Menu";
 import List from "../shared/List";
 import Popup from "../shared/Popup";
-import {TextareaAutosize, TextField, ButtonBase} from '@material-ui/core';
+import {TextField, ButtonBase} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -60,20 +60,25 @@ const Task = (props) => {
             });
     }
     const editTask = () => {
-        const body = {name: nameInput, category: categoryInput, userID: userId};
-        console.log(body)
-        fetch(`http://localhost:3000/api/tasks/${task._id}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-        })
+        fetch(`http://127.0.0.1:3000/api/users?email=${emailInput.title}`)
             .then(response => response.json())
             .then(result => {
-                setOpenEditTask(false);
-                setTask(result);
-                setNameInput('')
-                setCategoryInput('')
-                setEmailInput('')
-            });
-    }       // add email!!
+                let shared = task.sharedWith
+                shared.push(`${result['firstName']} ${result['lastName']}`)
+                const body = {name: nameInput, category: categoryInput, sharedWith: shared};
+                fetch(`http://localhost:3000/api/tasks/${task._id}`, {
+                    method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        setOpenEditTask(false);
+                        setTask(result);
+                        setNameInput('')
+                        setCategoryInput('')
+                        setEmailInput('')
+                    });
+            })
+    }
     const deleteTask = () => {
         fetch(`http://localhost:3000/api/tasks/${task._id}`, {method: 'DELETE'})
             .then(response => {})
@@ -130,41 +135,44 @@ const Task = (props) => {
     }
 
     return (
-        <div className="Task">
+        <div>
             <Menu goBack={true}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}><p style={{width: '200px'}}>Creat New SubTask</p></ButtonBase>
                 {task.templateID ? ( <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true} onClick={() => setOpenReview(true)}><p style={{width: '200px'}}>Write a Review</p></ButtonBase> ) : null}
             </Menu>
-            <div className="taskList">
-                <div className="infoTask">
-                    <Popup onSubmit={deleteTask} title={"Delete Task"} open={openDeleteTask} closePopup={() => setOpenDeleteTask(false)} isDelete={true}>
-                        <p style={{width: '340px'}}>Are you sure you want to delete this Task?</p>
-                        <p>the action cannot be undone!</p>
-                    </Popup>
-                    <Popup onSubmit={editTask} title={"Edit Task"} open={openEditTask} closePopup={() => setOpenEditTask(false)} isDelete={false}>
-                        <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                   fullWidth/>
-                        <TextField label="Category" value={categoryInput}
-                                   onChange={e => setCategoryInput(e.target.value)} fullWidth/>
-                        <Autocomplete
-                            style={{width: '100%', paddingTop: '5%'}}
-                            options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailInput}
-                            onChange={(e, newValue) => {
-                                setEmailInput(newValue)
-                            }}
-                            renderInput={(params) => <TextField {...params} label="Email"/>}/>
-                    </Popup>
-                    <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => setOpenEditTask(true)}/>
-                    <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => setOpenDeleteTask(true)}/>
-                    <h1 className="infoTitle">
-                        {task.name}
-                    </h1>
-                    <h2 className="infoCategory">
+            <div className="task-page">
+                <div className="task-info">
+                    <div className="task-title">
+                        <h1>{task.name}</h1>
+                        <div className={'task-btn-area'}>
+                            <Popup onSubmit={deleteTask} title={"Delete Task"} open={openDeleteTask} closePopup={() => setOpenDeleteTask(false)} isDelete={true}>
+                                <p style={{width: '340px'}}>Are you sure you want to delete this Task?</p>
+                                <p>the action cannot be undone!</p>
+                            </Popup>
+                            <Popup onSubmit={editTask} title={"Edit Task"} open={openEditTask} closePopup={() => setOpenEditTask(false)} isDelete={false}>
+                                <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)}
+                                           fullWidth/>
+                                <TextField label="Category" value={categoryInput}
+                                           onChange={e => setCategoryInput(e.target.value)} fullWidth/>
+                                <Autocomplete
+                                    style={{width: '100%', paddingTop: '5%'}}
+                                    options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailInput}
+                                    onChange={(e, newValue) => {
+                                        setEmailInput(newValue)
+                                    }}
+                                    renderInput={(params) => <TextField {...params} label="Email"/>}/>
+                            </Popup>
+                            <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => setOpenEditTask(true)}/>
+                            <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => setOpenDeleteTask(true)}/>
+                        </div>
+                    </div>
+                    <h2 className="task-category">
                         {task.category}
                     </h2>
-                    <h3 className="infoShared">
-                        {task.sharedWith}
-                    </h3>
+                    <div className="task-shared-list">
+                        <h3>Shared with:</h3>
+                        {task.sharedWith.map((item, i)=> <span key={i}>{item}</span>)}
+                    </div>
                 </div>
                 <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask} closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
                     <TextField label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
@@ -172,8 +180,6 @@ const Task = (props) => {
                 <Popup onSubmit={addReview} title={"Review the task Template"} open={openReview} closePopup={() => setOpenReview(false)} isDelete={false}>
                     <TextField label="Title" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
                     <TextField style={{marginTop: '5%'}} label="Type here..." multiline rows={3} variant="outlined" onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
-                    {/*<TextareaAutosize rowsMax={4} placeholder="Type here..."*/}
-                    {/*                  onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>*/}
                 </Popup>
                 <Popup onSubmit={deleteSubTask} title={"Delete Subtask"} open={openDeleteSubTask} closePopup={() => setOpenDeleteSubTask(false)} isDelete={true}>
                     <p style={{width: '340px'}}>Are you sure you want to delete this subtask?</p>
