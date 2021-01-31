@@ -77,12 +77,12 @@ const ChatList = (props) => {
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}><p style={{width: '150px'}}>New Chat</p>
                 </ButtonBase>
             </Menu>
-            <div className={'chat-list'}>
-                <List dataList={chatList} titleList={titleList} pathName={'/chat'}>
-                    <IconButton>
-                        <ArrowForwardIosRoundedIcon/>
-                    </IconButton>
-                </List>
+            <div className={'chat-list-page'}>
+                <div className={'chat-list'}>
+                    <List dataList={chatList} titleList={titleList} pathName={'/chat'}>
+                        <IconButton><ArrowForwardIosRoundedIcon/></IconButton>
+                    </List>
+                </div>
                 <Popup onSubmit={addNewChat} closePopup={() => setOpen(false)} title={"New Chat"} open={open} isDelete={false}>
                     <p>open a new chat with another TaskIt user</p>
                     <Autocomplete

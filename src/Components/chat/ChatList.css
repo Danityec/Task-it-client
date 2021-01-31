@@ -1,8 +1,15 @@
-.chat-list {
+.chat-list-page {
     margin: 0 auto;
     position: fixed;
     top: calc(12% + 8% + 2%);
     width: 100%;
+    height: 100%;
+}
+
+.chat-list {
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .chat-list::-webkit-scrollbar {

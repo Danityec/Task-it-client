@@ -138,7 +138,7 @@ const Task = (props) => {
             <div className="taskList">
                 <div className="infoTask">
                     <Popup onSubmit={deleteTask} title={"Delete Task"} open={openDeleteTask} closePopup={() => setOpenDeleteTask(false)} isDelete={true}>
-                        <p>Are you sure you want to delete this Task?</p>
+                        <p style={{width: '340px'}}>Are you sure you want to delete this Task?</p>
                         <p>the action cannot be undone!</p>
                     </Popup>
                     <Popup onSubmit={editTask} title={"Edit Task"} open={openEditTask} closePopup={() => setOpenEditTask(false)} isDelete={false}>
@@ -171,11 +171,12 @@ const Task = (props) => {
                 </Popup>
                 <Popup onSubmit={addReview} title={"Review the task Template"} open={openReview} closePopup={() => setOpenReview(false)} isDelete={false}>
                     <TextField label="Title" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
-                    <TextareaAutosize rowsMax={4} placeholder="Type here..."
-                                      onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
+                    <TextField style={{marginTop: '5%'}} label="Type here..." multiline rows={3} variant="outlined" onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
+                    {/*<TextareaAutosize rowsMax={4} placeholder="Type here..."*/}
+                    {/*                  onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>*/}
                 </Popup>
                 <Popup onSubmit={deleteSubTask} title={"Delete Subtask"} open={openDeleteSubTask} closePopup={() => setOpenDeleteSubTask(false)} isDelete={true}>
-                    <p>Are you sure you want to delete this subtask?</p>
+                    <p style={{width: '340px'}}>Are you sure you want to delete this subtask?</p>
                     <p>the action cannot be undone!</p>
                 </Popup>
                 <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask} closePopup={() => setOpenEditSubTask(false)} isDelete={false}>

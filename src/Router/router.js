@@ -19,9 +19,9 @@ const ReactRouter = () => {
             <Route path='/new-task' component={TemplateList}/>
             <Route path='/chats' component={ChatList}/>
             <Route path='/chat' component={Chat}/>
-            <Route path='/task' component={Task}/> 
+            <Route path='/task' component={Task}/>
             <Route exact path='/admin' component={AdminHomePage}/>
-            <Route path='/admin/template' component={AdminTask}/>  
+            <Route path='/admin/template' component={AdminTask}/>
 
             <Footer/>
         </>

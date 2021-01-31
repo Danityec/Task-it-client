@@ -3,25 +3,27 @@
     position: fixed;
     top: calc(12% + 8% + 2%);
     width: 100%;
+    height: 100%;
 }
 
 .admin-template-list {
     width: 90%;
+    height: 90%;
     margin: 0 auto;
     display: flex;
     flex-flow: row wrap;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
 .admin-template-list::-webkit-scrollbar {
     width: 5px;
-
 }
+
 .admin-template-list::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline: none;
     border-radius: 50px;
-
 }
 
 .admin-template-list .template-card {
@@ -33,6 +35,11 @@
     padding: 1%;
     font-size: 110%;
     color: #25265E;
+}
+
+.admin-template-list .spacer {
+    width: 100%;
+    margin-bottom: 12%;
 }
 
 .admin-template-list .template-card .card-header {

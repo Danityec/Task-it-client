@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Popup from "../shared/Popup";
 
-
 const AdminHomePage = (props) => {
     const [templateList, setTemplateList] = useState([]);
     const [lengthList, setLength] = useState({});
@@ -51,7 +50,7 @@ const AdminHomePage = (props) => {
         )
     }
 
-    const addNewTemaplate = () => {
+    const addNewTemplate = () => {
         const data = { name: templateName, category: templateCategory, };
         console.log(data)
         fetch(`http://localhost:3000/api/tasks/`, {
@@ -71,7 +70,7 @@ const AdminHomePage = (props) => {
             <Menu goBack={false}>
                 <ButtonBase centerRipple={true} onClick={() => {setOpenAddTemplate(true) }}><p style={{ width: '200px' }}>Create New Template</p></ButtonBase>
             </Menu>
-            <Popup onSubmit={addNewTemaplate} title={"New Template"} open={openAddTemplate} closePopup={() =>setOpenAddTemplate(false)} >
+            <Popup onSubmit={addNewTemplate} title={"New Template"} open={openAddTemplate} closePopup={() =>setOpenAddTemplate(false)} >
                 <TextField className="template-name-input" label="Name" onChange={e => setTemplateName(e.target.value)}
                     fullWidth value={templateName} />
                 <TextField className="template-category-input" label="Category"
@@ -80,9 +79,11 @@ const AdminHomePage = (props) => {
             <div className={'admin-template-page'}>
                 <div className={'admin-template-list'}>
                     {templateList.map(eachTemplate)}
+                    <div className={'spacer'}/>
                 </div>
             </div>
-        </>)
+        </>
+    )
 }
 
 export default AdminHomePage
