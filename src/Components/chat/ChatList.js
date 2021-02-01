@@ -74,7 +74,8 @@ const ChatList = (props) => {
     return (
         <>
             <Menu goBack={true}>
-                <ButtonBase centerRipple={true} onClick={() => setOpen(true)}><p style={{width: '150px'}}>New Chat</p>
+                <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
+                    <p style={{width: '150px'}}>New Chat</p>
                 </ButtonBase>
             </Menu>
             <div className={'chat-list-page'}>

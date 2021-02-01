@@ -59,25 +59,33 @@ const Task = (props) => {
                 setNameInput('')
             });
     }
-    const editTask = () => {
-        fetch(`http://127.0.0.1:3000/api/users?email=${emailInput.title}`)
+    const getUserEmail = () => {
+        if (emailInput != null ) {
+            fetch(`http://127.0.0.1:3000/api/users?email=${emailInput.title}`)
+                .then(response => response.json())
+                .then(result => {
+                    let shared = task.sharedWith
+                    shared.push(`${result['firstName']} ${result['lastName']}`)
+                    editTask(shared)
+                })
+        }
+        else {
+            editTask(null)
+        }
+    }
+    const editTask = (shared) => {
+        const body = {name: nameInput, category: categoryInput, sharedWith: shared};
+        fetch(`http://localhost:3000/api/tasks/${task._id}`, {
+            method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+        })
             .then(response => response.json())
             .then(result => {
-                let shared = task.sharedWith
-                shared.push(`${result['firstName']} ${result['lastName']}`)
-                const body = {name: nameInput, category: categoryInput, sharedWith: shared};
-                fetch(`http://localhost:3000/api/tasks/${task._id}`, {
-                    method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-                })
-                    .then(response => response.json())
-                    .then(result => {
-                        setOpenEditTask(false);
-                        setTask(result);
-                        setNameInput('')
-                        setCategoryInput('')
-                        setEmailInput('')
-                    });
-            })
+                setOpenEditTask(false);
+                setTask(result);
+                setNameInput('')
+                setCategoryInput('')
+                setEmailInput(null)
+            });
     }
     const deleteTask = () => {
         fetch(`http://localhost:3000/api/tasks/${task._id}`, {method: 'DELETE'})
@@ -96,7 +104,6 @@ const Task = (props) => {
                 setTask(result);
                 setNameInput('')
             });
-
     }
     const editSubTask = () => {
         const body = {name: nameInput};
@@ -149,7 +156,7 @@ const Task = (props) => {
                                 <p style={{width: '340px'}}>Are you sure you want to delete this Task?</p>
                                 <p>the action cannot be undone!</p>
                             </Popup>
-                            <Popup onSubmit={editTask} title={"Edit Task"} open={openEditTask} closePopup={() => setOpenEditTask(false)} isDelete={false}>
+                            <Popup onSubmit={getUserEmail} title={"Edit Task"} open={openEditTask} closePopup={() => setOpenEditTask(false)} isDelete={false}>
                                 <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)}
                                            fullWidth/>
                                 <TextField label="Category" value={categoryInput}
@@ -169,10 +176,13 @@ const Task = (props) => {
                     <h2 className="task-category">
                         {task.category}
                     </h2>
-                    <div className="task-shared-list">
+                    { task.sharedWith.length ? (
+                        <div className="task-shared-list">
                         <h3>Shared with:</h3>
                         {task.sharedWith.map((item, i)=> <span key={i}>{item}</span>)}
                     </div>
+                    ) : null }
+
                 </div>
                 <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask} closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
                     <TextField label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>

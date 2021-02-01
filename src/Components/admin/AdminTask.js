@@ -80,13 +80,11 @@ const AdminTask = (props) => {
     return (
         <>
             <Menu goBack={true}>
-                    <ButtonBase centerRipple={true} style={{ backgroundColor: '#2A73CC' }} onClick={() => setOpenReview(true)}><p style={{ width: '100px' }}>Reviews</p></ButtonBase>
-                <ButtonBase centerRipple={true}><p style={{ width: '200px' }} onClick={() => setOpenAddSubTask(true)} >Create New Subtask</p></ButtonBase>
+                <ButtonBase centerRipple={true} onClick={() => setOpenReview(true)} style={{ backgroundColor: '#2A73CC' }}><p style={{ width: '100px' }}>Reviews</p></ButtonBase>
+                <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}><p style={{ width: '200px' }}>Create New Subtask</p></ButtonBase>
             </Menu>
             <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask}>
-                <TextField className="inputNameSubTask" label="Name" onChange={e => setNameSubTask(e.target.value)}
-                    fullWidth value={nameSubTask}>
-                </TextField>
+                <TextField className="inputNameSubTask" label="Name" onChange={e => setNameSubTask(e.target.value)} fullWidth value={nameSubTask}/>
             </Popup>
             <Modal className={'review-modal'} open={openReview} onClose={() => setOpenReview(false)}>
                 {modalBody}
@@ -96,7 +94,8 @@ const AdminTask = (props) => {
                     {template.name}
                 </div>
             </div>
-        </>)
+        </>
+    )
 }
 
 export default AdminTask

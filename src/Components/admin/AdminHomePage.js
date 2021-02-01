@@ -32,6 +32,21 @@ const AdminHomePage = (props) => {
         })
     }, [templateList])
 
+    const addNewTemplate = () => {
+        const data = { name: templateName, category: templateCategory, };
+        console.log(data)
+        fetch(`http://localhost:3000/api/tasks/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setOpenAddTemplate(false);
+            });
+    }
+
     const eachTemplate = (item) => {
         return (
             <div key={item._id} className={'template-card'}>
@@ -48,21 +63,6 @@ const AdminHomePage = (props) => {
                 </div>
             </div>
         )
-    }
-
-    const addNewTemplate = () => {
-        const data = { name: templateName, category: templateCategory, };
-        console.log(data)
-        fetch(`http://localhost:3000/api/tasks/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                setOpenAddTemplate(false);
-            });
     }
 
     return (
