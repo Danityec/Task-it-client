@@ -19,8 +19,8 @@ const Template = (props) => {
             });
     }
 
-    const eachSubTask = (index) => {
-        return <div key={index} className="subtask-name">{index.name}</div>
+    const eachSubTask = (item) => {
+        return <div className="subtask-name">{item.name}</div>
     }
 
     return (

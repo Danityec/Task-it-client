@@ -76,3 +76,7 @@
     width: 100%;
     color: #25265E;
 }
+
+button:disabled p {
+    color: #a9a9a9;
+}

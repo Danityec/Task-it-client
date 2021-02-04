@@ -3,7 +3,7 @@
     position: fixed;
     top: calc(12% + 8% + 2%);
     width: 100%;
-    height: 100%;
+    height: 90%;
 }
 
 .task-info{
@@ -11,6 +11,15 @@
     display: flex;
     flex-flow: column nowrap;
     width: 75%;
+}
+
+.subtask-list {
+    height: 40%;
+}
+
+.subtask-list li:last-of-type {
+    padding-bottom: 2%;
+    margin-bottom: 2%;
 }
 
 h1, h2, h3 {
@@ -21,6 +30,7 @@ h1, h2, h3 {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    width: 95%;
 }
 
 .task-shared-list {

@@ -80,7 +80,7 @@ const AdminTask = (props) => {
     return (
         <>
             <Menu goBack={true}>
-                <ButtonBase centerRipple={true} onClick={() => setOpenReview(true)} style={{ backgroundColor: '#2A73CC' }}><p style={{ width: '100px' }}>Reviews</p></ButtonBase>
+                <ButtonBase centerRipple={true} disabled={reviewList.length <= 0} onClick={() => setOpenReview(true)} style={{ backgroundColor: '#2A73CC' }}><p style={{ width: '100px' }}>Reviews</p></ButtonBase>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}><p style={{ width: '200px' }}>Create New Subtask</p></ButtonBase>
             </Menu>
             <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask}>

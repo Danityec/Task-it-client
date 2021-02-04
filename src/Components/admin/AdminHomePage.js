@@ -21,7 +21,7 @@ const AdminHomePage = (props) => {
     }, [])
 
     useEffect(() => {
-        templateList.forEach((template, index) => {
+        templateList.forEach((template) => {
             fetch(`http://127.0.0.1:3000/api/reviews?templateID=${template.templateID}`)
                 .then(response => response.json())
                 .then(result => {
@@ -52,7 +52,7 @@ const AdminHomePage = (props) => {
             <div key={item._id} className={'template-card'}>
                 <div className={'card-header'}>
                     <div>{item.name}</div>
-                    <Link to={{ pathname: '/admin/template', id: item._id }}>
+                    <Link to={{ pathname: '/task', data: item }}>
                         <IconButton>
                             <ArrowForwardIosRoundedIcon />
                         </IconButton>

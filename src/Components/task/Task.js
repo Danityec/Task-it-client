@@ -145,7 +145,7 @@ const Task = (props) => {
         <div>
             <Menu goBack={true}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}><p style={{width: '200px'}}>Creat New SubTask</p></ButtonBase>
-                {task.templateID ? ( <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true} onClick={() => setOpenReview(true)}><p style={{width: '200px'}}>Write a Review</p></ButtonBase> ) : null}
+                {task.templateID && task.userID ? ( <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true} onClick={() => setOpenReview(true)}><p style={{width: '200px'}}>Write a Review</p></ButtonBase> ) : null}
             </Menu>
             <div className="task-page">
                 <div className="task-info">
@@ -161,13 +161,15 @@ const Task = (props) => {
                                            fullWidth/>
                                 <TextField label="Category" value={categoryInput}
                                            onChange={e => setCategoryInput(e.target.value)} fullWidth/>
-                                <Autocomplete
-                                    style={{width: '100%', paddingTop: '5%'}}
-                                    options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailInput}
-                                    onChange={(e, newValue) => {
-                                        setEmailInput(newValue)
-                                    }}
-                                    renderInput={(params) => <TextField {...params} label="Email"/>}/>
+                                { task.userID ? (
+                                    <Autocomplete
+                                        style={{width: '100%', paddingTop: '5%'}}
+                                        options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailInput}
+                                        onChange={(e, newValue) => {
+                                            setEmailInput(newValue)
+                                        }}
+                                        renderInput={(params) => <TextField {...params} label="Email"/>}/>
+                                ) : null}
                             </Popup>
                             <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => setOpenEditTask(true)}/>
                             <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => setOpenDeleteTask(true)}/>
@@ -184,6 +186,9 @@ const Task = (props) => {
                     ) : null }
 
                 </div>
+                <div className={'subtask-list'}>
+                    <List checkboxes={true} action={getCurrentSubTask} checkboxeToggle={checkboxToggle} dataList={task.subTask} titleList={titleList}/>
+                </div>
                 <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask} closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
                     <TextField label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
                 </Popup>
@@ -198,7 +203,6 @@ const Task = (props) => {
                 <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask} closePopup={() => setOpenEditSubTask(false)} isDelete={false}>
                     <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)} fullWidth/>
                 </Popup>
-                <List checkboxes={true} action={getCurrentSubTask} checkboxeToggle={checkboxToggle} dataList={task.subTask} titleList={titleList}/>
             </div>
         </div>
     )

@@ -5,10 +5,13 @@ import './TemplateList.css';
 import TextField from '@material-ui/core/TextField';
 import Menu from "../shared/Menu";
 import {ButtonBase} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 
 const userId = '5fecb592690ca7935ccfd762'
 
 const TemplateList = (props) => {
+    let history = useHistory()
+
     const [templateList, setTemplateList] = useState([]);
     const [open, setOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
@@ -28,7 +31,7 @@ const TemplateList = (props) => {
             body: JSON.stringify(body),
         })
             .then(response => response.json())
-            .then(result => setOpen(false));
+            .then(result => history.goBack());
     }
 
     const eachTemplate = (item) => {
