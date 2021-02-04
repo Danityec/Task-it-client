@@ -18,6 +18,7 @@ const Task = (props) => {
     const [currentSubTask, setCurrentSubTask] = useState(null);
     const [titleList, setTitleList] = useState({});
     const [emailList, setEmailList] = useState([]);
+    const [reviewBtnMessage, setReviewBtnMessage] = useState('Write a Review');
 
     const [openEditTask, setOpenEditTask] = useState(false);
     const [openDeleteTask, setOpenDeleteTask] = useState(false);
@@ -54,13 +55,14 @@ const Task = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                setOpenReview(false);
+                setOpenReview(false)
+                setReviewBtnMessage('Thank You!')
                 setCategoryInput('')
                 setNameInput('')
             });
     }
     const getUserEmail = () => {
-        if (emailInput != null ) {
+        if (emailInput != null) {
             fetch(`http://127.0.0.1:3000/api/users?email=${emailInput.title}`)
                 .then(response => response.json())
                 .then(result => {
@@ -68,8 +70,7 @@ const Task = (props) => {
                     shared.push(`${result['firstName']} ${result['lastName']}`)
                     editTask(shared)
                 })
-        }
-        else {
+        } else {
             editTask(null)
         }
     }
@@ -89,7 +90,8 @@ const Task = (props) => {
     }
     const deleteTask = () => {
         fetch(`http://localhost:3000/api/tasks/${task._id}`, {method: 'DELETE'})
-            .then(response => {})
+            .then(response => {
+            })
             .then(result => history.goBack());
     }
 
@@ -133,7 +135,8 @@ const Task = (props) => {
         fetch(`http://localhost:3000/api/subtasks/${task._id}/${id}`,
             {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
             .then(response => response.json())
-            .then(result => {})
+            .then(result => {
+            })
     }
     const getCurrentSubTask = (subTask, num) => {
         setCurrentSubTask(subTask)
@@ -144,63 +147,77 @@ const Task = (props) => {
     return (
         <div>
             <Menu goBack={true}>
-                <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}><p style={{width: '200px'}}>Creat New SubTask</p></ButtonBase>
-                {task.templateID && task.userID ? ( <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true} onClick={() => setOpenReview(true)}><p style={{width: '200px'}}>Write a Review</p></ButtonBase> ) : null}
+                <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}><p
+                    style={{width: '200px'}}>Creat New SubTask</p></ButtonBase>
+                {task.templateID && task.userID ? (<ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true}
+                                                               onClick={() => setOpenReview(true)}><p
+                    style={{width: '200px'}}>{reviewBtnMessage}</p></ButtonBase>) : null}
             </Menu>
             <div className="task-page">
                 <div className="task-info">
                     <div className="task-title">
                         <h1>{task.name}</h1>
                         <div className={'task-btn-area'}>
-                            <Popup onSubmit={deleteTask} title={"Delete Task"} open={openDeleteTask} closePopup={() => setOpenDeleteTask(false)} isDelete={true}>
+                            <Popup onSubmit={deleteTask} title={"Delete Task"} open={openDeleteTask}
+                                   closePopup={() => setOpenDeleteTask(false)} isDelete={true}>
                                 <p style={{width: '340px'}}>Are you sure you want to delete this Task?</p>
                                 <p>the action cannot be undone!</p>
                             </Popup>
-                            <Popup onSubmit={getUserEmail} title={"Edit Task"} open={openEditTask} closePopup={() => setOpenEditTask(false)} isDelete={false}>
+                            <Popup onSubmit={getUserEmail} title={"Edit Task"} open={openEditTask}
+                                   closePopup={() => setOpenEditTask(false)} isDelete={false}>
                                 <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)}
                                            fullWidth/>
                                 <TextField label="Category" value={categoryInput}
                                            onChange={e => setCategoryInput(e.target.value)} fullWidth/>
-                                { task.userID ? (
+                                {task.userID ? (
                                     <Autocomplete
                                         style={{width: '100%', paddingTop: '5%'}}
-                                        options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailInput}
+                                        options={emailList} getOptionLabel={(emailList) => emailList.title}
+                                        value={emailInput}
                                         onChange={(e, newValue) => {
                                             setEmailInput(newValue)
                                         }}
                                         renderInput={(params) => <TextField {...params} label="Email"/>}/>
                                 ) : null}
                             </Popup>
-                            <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => setOpenEditTask(true)}/>
-                            <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => setOpenDeleteTask(true)}/>
+                            <EditIcon fontSize="large" style={{color: '#FFDD65'}}
+                                      onClick={() => setOpenEditTask(true)}/>
+                            <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}}
+                                        onClick={() => setOpenDeleteTask(true)}/>
                         </div>
                     </div>
                     <h2 className="task-category">
                         {task.category}
                     </h2>
-                    { task.sharedWith.length ? (
+                    {task.sharedWith.length ? (
                         <div className="task-shared-list">
-                        <h3>Shared with:</h3>
-                        {task.sharedWith.map((item, i)=> <span key={i}>{item}</span>)}
-                    </div>
-                    ) : null }
+                            <h3>Shared with:</h3>
+                            {task.sharedWith.map((item, i) => <span key={i}>{item}</span>)}
+                        </div>
+                    ) : null}
 
                 </div>
                 <div className={'subtask-list'}>
-                    <List checkboxes={true} action={getCurrentSubTask} checkboxeToggle={checkboxToggle} dataList={task.subTask} titleList={titleList}/>
+                    <List checkboxes={true} action={getCurrentSubTask} checkboxeToggle={checkboxToggle}
+                          dataList={task.subTask} titleList={titleList}/>
                 </div>
-                <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask} closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
+                <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask}
+                       closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
                     <TextField label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
                 </Popup>
-                <Popup onSubmit={addReview} title={"Review the task Template"} open={openReview} closePopup={() => setOpenReview(false)} isDelete={false}>
+                <Popup onSubmit={addReview} title={"Review the task Template"} open={openReview}
+                       closePopup={() => setOpenReview(false)} isDelete={false}>
                     <TextField label="Title" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
-                    <TextField style={{marginTop: '5%'}} label="Type here..." multiline rows={3} variant="outlined" onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
+                    <TextField style={{marginTop: '5%'}} label="Type here..." multiline rows={3} variant="outlined"
+                               onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
                 </Popup>
-                <Popup onSubmit={deleteSubTask} title={"Delete Subtask"} open={openDeleteSubTask} closePopup={() => setOpenDeleteSubTask(false)} isDelete={true}>
+                <Popup onSubmit={deleteSubTask} title={"Delete Subtask"} open={openDeleteSubTask}
+                       closePopup={() => setOpenDeleteSubTask(false)} isDelete={true}>
                     <p style={{width: '340px'}}>Are you sure you want to delete this subtask?</p>
                     <p>the action cannot be undone!</p>
                 </Popup>
-                <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask} closePopup={() => setOpenEditSubTask(false)} isDelete={false}>
+                <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask}
+                       closePopup={() => setOpenEditSubTask(false)} isDelete={false}>
                     <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)} fullWidth/>
                 </Popup>
             </div>
