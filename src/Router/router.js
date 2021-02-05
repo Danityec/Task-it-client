@@ -8,7 +8,6 @@ import ChatList from "../Components/chat/ChatList";
 import Chat from "../Components/chat/Chat";
 import Task from "../Components/task/Task";
 import AdminHomePage from "../Components/admin/AdminHomePage";
-// import AdminTask from "../Components/admin/AdminTask";
 import Login from "../Components/login/Login";
 
 const ReactRouter = () => {

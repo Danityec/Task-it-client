@@ -5,7 +5,7 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Message from "./Message";
 import Menu from "../shared/Menu";
 
-const userId = '5fecb592690ca7935ccfd762'
+const userId = '106859904573047383930'
 
 const Chat = (props) => {
     const [inputMessage, setInputMessage] = useState('');
