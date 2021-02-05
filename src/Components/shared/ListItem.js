@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './ListItem.css'
-import {Card, CardActions, CardContent, Checkbox, ListItem as MuiListItem} from "@material-ui/core";
+import {Card, CardActions, CardContent, Checkbox, IconButton, ListItem as MuiListItem} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 
 const ListItem = (props) => {
     const [checked, setChecked] = useState(props.item.completed);
@@ -25,12 +26,18 @@ const ListItem = (props) => {
                 <CardActions>
                     {props.action ? (
                         <>
-                            <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => {props.action(props.item._id, 2)}}/>
-                            <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => {props.action(props.item._id, 1)}}/>
+                            <IconButton>
+                                <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => {props.action(props.item._id, 2)}}/>
+                            </IconButton>
+                            <IconButton>
+                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => {props.action(props.item._id, 1)}}/>
+                            </IconButton>
                         </>
                         ) : (
                         <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}} >
-                            {props.children}
+                            <IconButton>
+                                <ArrowForwardIosRoundedIcon/>
+                            </IconButton>
                         </Link>
                         ) }
 

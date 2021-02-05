@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './HomePage.css'
 import Menu from "../shared/Menu";
-import {ButtonBase, CardActions, IconButton} from "@material-ui/core";
+import {ButtonBase} from "@material-ui/core";
 import List from "../shared/List";
-import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import {Link} from "react-router-dom";
 
 const userId = '5fecb592690ca7935ccfd762'
@@ -48,11 +47,7 @@ const HomePage = (props) => {
             </Menu>
             <div className={'task-list'}>
                 <List checkboxes={true} checkboxToggle={checkboxToggle} dataList={taskList} titleList={titleList}
-                      pathName={'/task'}>
-                    <IconButton>
-                        <ArrowForwardIosRoundedIcon/>
-                    </IconButton>
-                </List>
+                      pathName={'/task'}/>
             </div>
         </>)
 }

@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './Popup.css';
-import Button from '@material-ui/core/Button';
 import {ButtonBase, Modal} from "@material-ui/core";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import {Link} from "react-router-dom";
 
 const Popup = (props) => {
     const deleteBtn = () => {
