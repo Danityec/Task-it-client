@@ -52,7 +52,7 @@ const AdminHomePage = (props) => {
             <div key={item._id} className={'template-card'}>
                 <div className={'card-header'}>
                     <div>{item.name}</div>
-                    <Link to={{ pathname: '/task', data: item }}>
+                    <Link to={{ pathname: '/admin/template', data: item }}>
                         <IconButton>
                             <ArrowForwardIosRoundedIcon />
                         </IconButton>

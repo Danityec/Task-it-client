@@ -8,20 +8,22 @@ import ChatList from "../Components/chat/ChatList";
 import Chat from "../Components/chat/Chat";
 import Task from "../Components/task/Task";
 import AdminHomePage from "../Components/admin/AdminHomePage";
-import AdminTask from "../Components/admin/AdminTask";
+// import AdminTask from "../Components/admin/AdminTask";
+import Login from "../Components/login/Login";
 
 const ReactRouter = () => {
     return (
         <>
-            <Header/>  
+            <Header userId={null}/>
 
-            <Route exact path='/' component={HomePage}/>
+            <Route exact path='/' component={Login}/>
+            <Route path='/dashboard' component={HomePage}/>
             <Route path='/new-task' component={TemplateList}/>
             <Route path='/chats' component={ChatList}/>
             <Route path='/chat' component={Chat}/>
             <Route path='/task' component={Task}/>
             <Route exact path='/admin' component={AdminHomePage}/>
-            <Route path='/admin/template' component={AdminTask}/>
+            <Route path='/admin/template' component={Task}/>
 
             <Footer/>
         </>
