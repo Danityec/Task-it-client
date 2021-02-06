@@ -5,21 +5,30 @@ import {ButtonBase} from "@material-ui/core";
 import List from "../shared/List";
 import {Link} from "react-router-dom";
 import Header from "../shared/Header";
+import axios from "axios";
 
 // const userId = '106859904573047383930'
 
 const HomePage = (props) => {
     const [taskList, setTaskList] = useState([]);
     const [titleList, setTitleList] = useState({});
-    const [userId, serUserId] = useState(null)
+    const [userId, setUserId] = useState(null)
 
     useEffect(() => {
-        serUserId(props.location.data.googleID)
-        console.log("userId: "+userId)
-        fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
-            .then(response => response.json())
-            .then(result => setTaskList(result))
-    }, [])
+        setUserId(props.location.data.googleID)
+        console.log("userId: "+props.location.data.googleID)
+    })
+
+    useEffect(() => {
+        // fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
+        //     .then(response => response.json())
+        //     .then(result => setTaskList(result))
+        axios.get('http://127.0.0.1:3000/api/tasks?userID=${userId}', {withCredentials: true, credentials: 'include'})
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => console.log(err))
+    }, [userId])
 
     useEffect(() => {
         taskList.forEach((task) => {
@@ -42,7 +51,7 @@ const HomePage = (props) => {
     return (
         <>
             <Header userId={userId}/>
-            <Menu goBack={false}>
+            <Menu goBack={false} userId={userId}>
                 <Link to='/new-task'>
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
                 </Link>
