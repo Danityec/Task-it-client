@@ -13,6 +13,7 @@ const googleSuccess = async (response) => {
     .then(res => {
       console.log(res);
       console.log(res.data)
+        // redirect to dashboard
     })
     .catch(err => console.log(err))
 }
@@ -27,7 +28,7 @@ const Login = (props) => {
           <GoogleLogin className={'login-btn'}
             clientId='554171649210-i97q2kqu31t4hg021qdpmjn9kbobor0h.apps.googleusercontent.com'
             onSuccess={googleSuccess}
-            onFailure={()=>console.log('failure')}
+            onFailure={googleFailure}
           />
         </div>
      )
