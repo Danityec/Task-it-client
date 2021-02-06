@@ -6,13 +6,16 @@ import List from "../shared/List";
 import {Link} from "react-router-dom";
 import Header from "../shared/Header";
 
-const userId = '106859904573047383930'
+// const userId = '106859904573047383930'
 
 const HomePage = (props) => {
     const [taskList, setTaskList] = useState([]);
     const [titleList, setTitleList] = useState({});
+    const [userId, serUserId] = useState(null)
 
     useEffect(() => {
+        serUserId(props.location.data.googleID)
+        console.log("userId: "+userId)
         fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
             .then(response => response.json())
             .then(result => setTaskList(result))
