@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Menu from "../shared/Menu";
 import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import Header from "../shared/Header";
 
 const userId = '106859904573047383930'
 
@@ -40,6 +41,7 @@ const TemplateList = (props) => {
 
     return (
         <>
+            <Header userId={userId}/>
             <Menu goBack={true}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '220px'}}>Creat Task from Scratch</p>

@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import Header from "../shared/Header";
 
 const userId = '106859904573047383930'
 
@@ -232,7 +233,8 @@ const Task = (props) => {
     )
 
     return (
-        <div>
+        <>
+            <Header userId={userId}/>
             <Menu goBack={true}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}>
                     <p style={{width: '200px'}}>Creat New SubTask</p>
@@ -287,7 +289,7 @@ const Task = (props) => {
                 {createReviewModal}
                 {reviewListModal}
             </div>
-        </div>
+        </>
     )
 }
 

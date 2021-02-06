@@ -13,8 +13,6 @@ import Login from "../Components/login/Login";
 const ReactRouter = () => {
     return (
         <>
-            <Header userId={'106859904573047383930'}/>
-
             <Route exact path='/' component={Login}/>
             <Route path='/dashboard' component={HomePage}/>
             <Route path='/new-task' component={TemplateList}/>

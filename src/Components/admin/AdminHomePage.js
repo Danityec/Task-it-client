@@ -6,6 +6,9 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Popup from "../shared/Popup";
+import Header from "../shared/Header";
+
+const userId = '106859904573047383930'
 
 const AdminHomePage = (props) => {
     const [templateList, setTemplateList] = useState([]);
@@ -67,6 +70,7 @@ const AdminHomePage = (props) => {
 
     return (
         <>
+            <Header userId={userId}/>
             <Menu goBack={false}>
                 <ButtonBase centerRipple={true} onClick={() => {setOpenAddTemplate(true) }}><p style={{ width: '200px' }}>Create New Template</p></ButtonBase>
             </Menu>

@@ -4,6 +4,7 @@ import Menu from "../shared/Menu";
 import {ButtonBase} from "@material-ui/core";
 import List from "../shared/List";
 import {Link} from "react-router-dom";
+import Header from "../shared/Header";
 
 const userId = '106859904573047383930'
 
@@ -37,6 +38,7 @@ const HomePage = (props) => {
 
     return (
         <>
+            <Header userId={userId}/>
             <Menu goBack={false}>
                 <Link to='/new-task'>
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>

@@ -6,6 +6,7 @@ import List from "../shared/List";
 import Popup from "../shared/Popup";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Header from "../shared/Header";
 
 const userId = '106859904573047383930'
 
@@ -72,6 +73,7 @@ const ChatList = (props) => {
 
     return (
         <>
+            <Header userId={userId}/>
             <Menu goBack={true}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '150px'}}>New Chat</p>

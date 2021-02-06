@@ -4,6 +4,7 @@ import {IconButton} from "@material-ui/core";
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Message from "./Message";
 import Menu from "../shared/Menu";
+import Header from "../shared/Header";
 
 const userId = '106859904573047383930'
 
@@ -44,7 +45,8 @@ const Chat = (props) => {
     }
 
     return (
-        <div>
+        <>
+            <Header userId={userId}/>
             <Menu goBack={true} title={true}>
                 <h2 className={'chat-title'}>{props.location.name}</h2>
             </Menu>
@@ -63,7 +65,7 @@ const Chat = (props) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

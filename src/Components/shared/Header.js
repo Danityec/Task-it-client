@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { NavLink, Redirect } from "react-router-dom";
-import { Avatar, MenuItem, MenuList, Grow, Popper, ClickAwayListener, Paper } from "@material-ui/core";
+import {NavLink, Redirect, useHistory} from "react-router-dom";
+import {Avatar, MenuItem, MenuList, Grow, Popper, ClickAwayListener, Paper, ButtonBase} from "@material-ui/core";
 import './Header.css'
 // import axios from 'axios';
 import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
@@ -9,6 +9,7 @@ import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
 const Header = (props) => {
     const [open, setOpen] = useState(false);
     const anchorRef = useRef(null);
+    let history = useHistory();
     // const [logout, setLogout] = useState(false);
 
 
@@ -19,9 +20,9 @@ const Header = (props) => {
             method: 'GET',
         })
         .then(res => {
-                console.log(res);
-                  return <Redirect to="/" push={true}/>
-              })            
+            console.log(res);
+            history.push('/')
+        })
         .catch(err => console.log(err))
 }
 
@@ -44,7 +45,7 @@ return (
                                         <MenuList id="menu-list">
                                             <MenuItem><NavLink className={'menu-list-item'} to='/account'>Account</NavLink></MenuItem>
                                             <MenuItem><NavLink className={'menu-list-item'} to='/my-reviews'>My Reviews</NavLink></MenuItem>
-                                            <MenuItem><button className={'menu-list-item'} onClick={logout} >Logout</button></MenuItem>
+                                            <MenuItem><ButtonBase className={'menu-list-item'} style={{color: '#EDF5FF', fontSize: '100%'}} onClick={logout}>Logout</ButtonBase></MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>
                                 </Paper>
