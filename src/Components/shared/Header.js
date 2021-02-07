@@ -1,10 +1,8 @@
 import React, { useRef, useState } from "react";
-import {NavLink, Redirect, useHistory} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {Avatar, MenuItem, MenuList, Grow, Popper, ClickAwayListener, Paper, ButtonBase} from "@material-ui/core";
 import './Header.css'
 // import axios from 'axios';
-import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
-
 
 const Header = (props) => {
     const [open, setOpen] = useState(false);

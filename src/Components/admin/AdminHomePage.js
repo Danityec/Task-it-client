@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Popup from "../shared/Popup";
 import Header from "../shared/Header";
 
-const userId = '106859904573047383930'
+// const userId = '106859904573047383930'
 
 const AdminHomePage = (props) => {
     const [templateList, setTemplateList] = useState([]);
@@ -16,8 +16,10 @@ const AdminHomePage = (props) => {
     const [openAddTemplate, setOpenAddTemplate] = useState(false);
     const [templateName, setTemplateName] = useState("");
     const [templateCategory, setTemplateCategory] = useState("");
+    const [userId, setUserId] = useState(null)
 
     useEffect(() => {
+        setUserId(props.location.userId)
         fetch(`http://127.0.0.1:3000/api/tasks?templates=true`)
             .then(response => response.json())
             .then(result => setTemplateList(result))

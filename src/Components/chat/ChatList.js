@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Header from "../shared/Header";
 
-const userId = '106859904573047383930'
+// const userId = '106859904573047383930'
 
 const ChatList = (props) => {
     const [chatList, setChatList] = useState([]);
@@ -16,14 +16,21 @@ const ChatList = (props) => {
     const [open, setOpen] = useState(false);
     const [emailList, setEmailList] = useState([]);
     const [emailValue, setEmailValue] = useState(null);
+    const [userId, setUserId] = useState(null)
+
+    useEffect(() => {
+        console.log(props.location.userId)
+        setUserId(props.location.userId)
+    }, [])
 
     useEffect(() => {
         fetch(`http://127.0.0.1:3000/api/chats?userID=${userId}`)
             .then(response => response.json())
             .then(result => setChatList(result))
-    }, [])
+    }, [userId])
 
     useEffect(() => {
+        console.log(chatList)
         fetch(`http://127.0.0.1:3000/api/users`)
             .then(response => response.json())
             .then(result => {
@@ -43,9 +50,11 @@ const ChatList = (props) => {
         })
 
         users.forEach((user, index) => {
+            console.log(user)
             fetch(`http://127.0.0.1:3000/api/users/${user}`)
                 .then(response => response.json())
                 .then(result => {
+                    console.log(result)
                     setTitleList(prevState => ({
                         ...prevState, [chatList[index]._id]: `${result.firstName} ${result.lastName}`
                     }));
@@ -74,14 +83,14 @@ const ChatList = (props) => {
     return (
         <>
             <Header userId={userId}/>
-            <Menu goBack={true}>
+            <Menu goBack={true} reroute={{pathname: '/dashboard', userId: userId}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '150px'}}>New Chat</p>
                 </ButtonBase>
             </Menu>
             <div className={'chat-list-page'}>
                 <div className={'chat-list'}>
-                    <List dataList={chatList} titleList={titleList} pathName={'/chat'}/>
+                    <List dataList={chatList} userId={userId} titleList={titleList} pathName={'/chat'}/>
                 </div>
                 <Popup onSubmit={addNewChat} closePopup={() => setOpen(false)} title={"New Chat"} open={open} isDelete={false}>
                     <p>open a new chat with another TaskIt user</p>

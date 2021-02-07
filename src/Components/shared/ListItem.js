@@ -19,7 +19,7 @@ const ListItem = (props) => {
             <Card elevation={0} className={'list-item card'}>
                 <CardContent className={'card-content'}>
                     {props.checkboxes ? <Checkbox color="primary" checked={checked} onChange={handleChange}/> : null}
-                    <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}}>
+                    <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle, userId: props.userId }}>
                             {props.itemTitle}
                     </Link>
                 </CardContent>
@@ -34,7 +34,7 @@ const ListItem = (props) => {
                             </IconButton>
                         </>
                         ) : (
-                        <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}} >
+                        <Link to={{pathname: props.pathName, data: props.item, userId: props.userId, name: props.itemTitle}} >
                             <IconButton>
                                 <ArrowForwardIosRoundedIcon/>
                             </IconButton>

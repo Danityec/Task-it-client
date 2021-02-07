@@ -9,7 +9,7 @@ const Menu = (props) => {
 
     const goBackBtn = () => {
         return (
-            <IconButton onClick={() => history.goBack()} style={{color: '#2A73CC'}}>
+            <IconButton onClick={() => history.push(props.reroute)} style={{color: '#2A73CC'}}>
                 <ArrowBackIosRoundedIcon/>
             </IconButton>
         )

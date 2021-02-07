@@ -6,16 +6,22 @@ import Message from "./Message";
 import Menu from "../shared/Menu";
 import Header from "../shared/Header";
 
-const userId = '106859904573047383930'
+// const userId = '106859904573047383930'
 
 const Chat = (props) => {
     const [inputMessage, setInputMessage] = useState('');
     const [chat, setChat] = useState(props.location.data);
     const messagesEndRef = useRef(null)
+    const [userId, setUserId] = useState(null)
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
+
+    useEffect(() => {
+        setUserId(props.location.userId)
+        setChat(props.location.data)
+    }, []);
 
     useEffect(() => {
         scrollToBottom()
@@ -47,7 +53,7 @@ const Chat = (props) => {
     return (
         <>
             <Header userId={userId}/>
-            <Menu goBack={true} title={true}>
+            <Menu goBack={true} title={true} reroute={{pathname: '/chats', userId: userId}}>
                 <h2 className={'chat-title'}>{props.location.name}</h2>
             </Menu>
             <div className={'chat-container'}>

@@ -11,12 +11,13 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Header from "../shared/Header";
 
-const userId = '106859904573047383930'
+// const userId = '106859904573047383930'
 
 const Task = (props) => {
     let history = useHistory()
 
     const [task, setTask] = useState(props.location.data);
+    const [userId, setUserId] = useState(null)
     const [currentSubTask, setCurrentSubTask] = useState(null);
     const [titleList, setTitleList] = useState({});
     const [emailList, setEmailList] = useState([]);
@@ -36,6 +37,7 @@ const Task = (props) => {
     const [emailInput, setEmailInput] = useState(null);
 
     useEffect(() => {
+        setUserId(props.location.userId)
         setTask(props.location.data)
         fetch(`http://127.0.0.1:3000/api/users`)
             .then(response => response.json())
@@ -235,7 +237,7 @@ const Task = (props) => {
     return (
         <>
             <Header userId={userId}/>
-            <Menu goBack={true}>
+            <Menu goBack={true} reroute={{pathname: '/dashboard', userId: userId}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}>
                     <p style={{width: '200px'}}>Creat New SubTask</p>
                 </ButtonBase>

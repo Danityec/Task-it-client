@@ -8,17 +8,19 @@ import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Header from "../shared/Header";
 
-const userId = '106859904573047383930'
+// const userId = '106859904573047383930'
 
 const TemplateList = (props) => {
     let history = useHistory()
 
     const [templateList, setTemplateList] = useState([]);
+    const [userId, setUserId] = useState(null)
     const [open, setOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [taskCategory, setTaskCategory] = useState("");
 
     useEffect(() => {
+        setUserId(props.location.userId)
         fetch(`http://localhost:3000/api/tasks?templates=true`)
             .then(response => response.json())
             .then(result => setTemplateList(result))
@@ -42,7 +44,7 @@ const TemplateList = (props) => {
     return (
         <>
             <Header userId={userId}/>
-            <Menu goBack={true}>
+            <Menu goBack={true} reroute={{pathname: '/dashboard', userId: userId}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '220px'}}>Creat Task from Scratch</p>
                 </ButtonBase>

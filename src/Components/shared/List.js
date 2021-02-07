@@ -6,7 +6,7 @@ const List = (props) => {
 
     const eachItem = (item) => {
         return (
-            <ListItem action={props.action} checkboxes={props.checkboxes} checkboxeToggle={props.checkboxToggle}
+            <ListItem action={props.action} userId={props.userId} checkboxes={props.checkboxes} checkboxeToggle={props.checkboxToggle}
              key={item._id} item={item} itemTitle={props.titleList[item._id]} pathName={props.pathName}>
                 {props.children}
             </ListItem>
