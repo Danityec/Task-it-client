@@ -2,21 +2,18 @@ import React from 'react';
 import './Template.css';
 import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-
-// const userId = '106859904573047383930'
+import axios from "axios";
 
 const Template = (props) => {
     let history = useHistory()
 
     const addTaskFromTemplate = () => {
         const body = {userID: props.location.userId};
-        fetch(`http://localhost:3000/api/tasks/${props.item.templateID}`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-        })
-            .then(response => {})
-            .then(result => {
+        axios.post(`http://localhost:3000/api/tasks/${props.item.templateID}`, body, {withCredentials: true})
+            .then(res => {
                 history.goBack()
-            });
+            })
+            .catch(err => console.log(err))
     }
 
     const eachSubTask = (item) => {

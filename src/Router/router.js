@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-// import Header from "../Components/shared/Header";
 import Footer from "../Components/shared/Footer";
 import HomePage from "../Components/homePage/HomePage";
 import TemplateList from "../Components/template/TemplateList";

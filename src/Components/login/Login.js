@@ -9,13 +9,9 @@ const Login = (props) => {
     let history = useHistory();
 
     const googleSuccess = async (response) => {
-        const tmp = {
-            token: response.tokenId
-        }
-    console.log(tmp)
-        axios.post('http://localhost:3000/authLogin', tmp, {withCredentials: true})
+        const body = {token: response.tokenId}
+        axios.post('http://localhost:3000/authLogin', body, {withCredentials: true})
             .then(res => {
-                console.log(res.data)
                 history.push({
                     pathname: '/dashboard',
                     userId: res.data.googleID

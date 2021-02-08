@@ -7,34 +7,28 @@ import Menu from "../shared/Menu";
 import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Header from "../shared/Header";
-
-// const userId = '106859904573047383930'
+import axios from "axios";
 
 const TemplateList = (props) => {
     let history = useHistory()
 
     const [templateList, setTemplateList] = useState([]);
-    const [userId, setUserId] = useState(null)
+    const [userId] = useState(props.location.userId)
     const [open, setOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [taskCategory, setTaskCategory] = useState("");
 
     useEffect(() => {
-        setUserId(props.location.userId)
-        fetch(`http://localhost:3000/api/tasks?templates=true`)
-            .then(response => response.json())
-            .then(result => setTemplateList(result))
+        axios.get(`http://localhost:3000/api/tasks?templates=true`, {withCredentials: true})
+            .then(res => setTemplateList(res.data))
+            .catch(err => console.log(err))
     }, [])
 
     const addNewTask = () => {
         const body = {name: taskName, category: taskCategory, userID: userId};
-        fetch(`http://localhost:3000/api/tasks`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(body),
-        })
-            .then(response => response.json())
-            .then(result => history.goBack());
+        axios.post(`http://localhost:3000/api/tasks`, body, {withCredentials: true})
+            .then(res => history.goBack())
+            .catch(err => console.log(err))
     }
 
     const eachTemplate = (item) => {

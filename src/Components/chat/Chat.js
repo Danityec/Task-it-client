@@ -5,6 +5,7 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Message from "./Message";
 import Menu from "../shared/Menu";
 import Header from "../shared/Header";
+import axios from "axios";
 
 // const userId = '106859904573047383930'
 
@@ -12,33 +13,27 @@ const Chat = (props) => {
     const [inputMessage, setInputMessage] = useState('');
     const [chat, setChat] = useState(props.location.data);
     const messagesEndRef = useRef(null)
-    const [userId, setUserId] = useState(null)
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-    }
-
-    useEffect(() => {
-        setUserId(props.location.userId)
-        setChat(props.location.data)
-    }, []);
+    const [userId] = useState(props.location.userId)
 
     useEffect(() => {
         scrollToBottom()
     }, [chat]);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
 
     const sendMessage = () => {
         const body = {
             senderID: userId,
             message: inputMessage
         }
-        fetch(`http://127.0.0.1:3000/api/chats/messages/${chat._id}`,
-            {headers: {'Content-Type': 'application/json'}, method: 'POST', body: JSON.stringify(body)})
-            .then(response => response.json())
-            .then(result => {
-                setChat(result)
+        axios.post(`http://localhost:3000/api/chats/messages/${chat._id}`, body, {withCredentials: true})
+            .then(res => {
+                setChat(res.data)
                 setInputMessage('')
             })
+            .catch(err => console.log(err))
     }
 
     const eachMessage = (message) => {

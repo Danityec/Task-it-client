@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory} from "react-router-dom";
 import './Task.css';
 import Menu from "../shared/Menu";
 import List from "../shared/List";
@@ -10,14 +9,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Header from "../shared/Header";
-
-// const userId = '106859904573047383930'
+import axios from "axios";
 
 const Task = (props) => {
-    let history = useHistory()
-
     const [task, setTask] = useState(props.location.data);
-    const [userId, setUserId] = useState(null)
+    const [userId] = useState(props.location.userId)
     const [currentSubTask, setCurrentSubTask] = useState(null);
     const [titleList, setTitleList] = useState({});
     const [emailList, setEmailList] = useState([]);
@@ -37,22 +33,18 @@ const Task = (props) => {
     const [emailInput, setEmailInput] = useState(null);
 
     useEffect(() => {
-        setUserId(props.location.userId)
-        setTask(props.location.data)
-        fetch(`http://127.0.0.1:3000/api/users`)
-            .then(response => response.json())
-            .then(result => {
-                result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
+       axios.post(`http://localhost:3000/api/users`, {withCredentials: true})
+            .then(res => {
+                res.data.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
             })
+            .catch(err => console.log(err))
     }, [])
 
     useEffect(() => {
         if (task.userID == null) {
-            fetch(`http://127.0.0.1:3000/api/reviews?templateID=${task.templateID}`)
-                .then(response => response.json())
-                .then(result => {
-                    setReviewList(result)
-                })
+            axios.get(`http://localhost:3000/api/reviews?templateID=${task.templateID}`, {withCredentials: true})
+                .then(res => setReviewList(res.data))
+                .catch(err => console.log(err))
         }
 
         task.subTask.forEach((subTask) => {
@@ -64,93 +56,83 @@ const Task = (props) => {
 
     const addReview = () => {
         const body = {title: nameInput, reviewBody: categoryInput, userID: userId, templateID: task.templateID};
-        fetch(`http://localhost:3000/api/reviews`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-        })
-            .then(response => response.json())
-            .then(result => {
+
+        axios.post(`http://localhost:3000/api/reviews`, body, {withCredentials: true})
+            .then(res => {
                 setOpenReview(false)
                 setReviewBtnMessage('Thank You!')
                 setCategoryInput('')
                 setNameInput('')
-            });
+            })
+            .catch(err => console.log(err))
     }
     const getUserEmail = () => {
         if (emailInput != null) {
-            fetch(`http://127.0.0.1:3000/api/users?email=${emailInput.title}`)
-                .then(response => response.json())
-                .then(result => {
+
+            axios.get(`http://localhost:3000/api/users?email=${emailInput.title}`, {withCredentials: true})
+                .then(res => {
                     let shared = task.sharedWith
-                    shared.push(`${result['firstName']} ${result['lastName']}`)
+                    shared.push(`${res.data['firstName']} ${res.data['lastName']}`)
                     editTask(shared)
                 })
+                .catch(err => console.log(err))
         } else {
             editTask(null)
         }
     }
     const editTask = (shared) => {
         const body = {name: nameInput, category: categoryInput, sharedWith: shared};
-        fetch(`http://localhost:3000/api/tasks/${task._id}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-        })
-            .then(response => response.json())
-            .then(result => {
+
+        axios.put(`http://localhost:3000/api/tasks`, body, {withCredentials: true})
+            .then(res => {
                 setOpenEditTask(false);
-                setTask(result);
+                setTask(res.data);
                 setNameInput('')
                 setCategoryInput('')
                 setEmailInput(null)
-            });
+            })
+            .catch(err => console.log(err))
     }
     const deleteTask = () => {
-        fetch(`http://localhost:3000/api/tasks/${task._id}`, {method: 'DELETE'})
-            .then(response => {
-            })
-            .then(result => history.goBack());
+        axios.delete(`http://localhost:3000/api/tasks/${task._id}`, {withCredentials: true})
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
     }
 
     const addNewSubTask = () => {
         const body = {name: nameInput};
-        fetch(`http://localhost:3000/api/subtasks/${task._id}`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-        })
-            .then(response => response.json())
-            .then(result => {
+        axios.post(`http://localhost:3000/api/subtasks/${task._id}`, body, {withCredentials: true})
+            .then(res => {
                 setOpenAddSubTask(false);
-                setTask(result);
+                setTask(res.data);
                 setNameInput('')
-            });
+            })
+            .catch(err => console.log(err))
     }
     const editSubTask = () => {
         const body = {name: nameInput};
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-        })
-            .then(response => response.json())
-            .then(result => {
+        axios.put(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, body, {withCredentials: true})
+            .then(res => {
                 setOpenEditSubTask(false);
-                setTask(result);
+                setTask(res.data);
                 setNameInput('')
-            });
+            })
+            .catch(err => console.log(err))
     }
     const deleteSubTask = () => {
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
-            method: 'DELETE'
-        })
-            .then(response => response.json())
-            .then(result => {
+        axios.delete(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {withCredentials: true})
+            .then(res => {
                 setOpenDeleteSubTask(false);
-                setTask(result)
-            });
+                setTask(res.data)
+            })
+            .catch(err => console.log(err))
     }
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${id}`,
-            {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
-            .then(response => response.json())
-            .then(result => {
-            })
+        axios.put(`http://localhost:3000/api/subtasks/${task._id}/${id}`, body, {withCredentials: true})
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
     }
     const getCurrentSubTask = (subTask, num) => {
         setCurrentSubTask(subTask)
@@ -259,13 +241,11 @@ const Task = (props) => {
                     <div className="task-title">
                         <h1>{task.name}</h1>
                         <div className={'task-btn-area'}>
-                            <IconButton>
-                                <EditIcon fontSize="large" style={{color: '#FFDD65'}}
-                                          onClick={() => setOpenEditTask(true)}/>
+                            <IconButton onClick={() => setOpenEditTask(true)}>
+                                <EditIcon fontSize="large" style={{color: '#FFDD65'}}/>
                             </IconButton>
-                            <IconButton>
-                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}}
-                                            onClick={() => setOpenDeleteTask(true)}/>
+                            <IconButton onClick={() => setOpenDeleteTask(true)}>
+                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}}/>
                             </IconButton>
                         </div>
                     </div>
