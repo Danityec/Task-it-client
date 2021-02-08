@@ -17,18 +17,18 @@ const HomePage = (props) => {
     useEffect(() => {
         setUserId(props.location.userId)
         console.log("userId: "+props.location.userId)
-    }, [])
+}, [])
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
-            .then(response => response.json())
-            .then(result => setTaskList(result))
-        // axios.get(`http://127.0.0.1:3000/api/tasks?userID=${userId}`, {withCredentials: true, credentials: 'include'})
-        //     .then(res => {
-        //         console.log(res.data)
-        //         setTaskList(res.data)
-        //     })
-        //     .catch(err => console.log(err))
+        // fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
+        //     .then(response => response.json())
+        //     .then(result => setTaskList(result))
+        axios.get(`http://localhost:3000/api/tasks?userID=${userId}`, {withCredentials: true})
+            .then(res => {
+                console.log(res.data)
+                setTaskList(res.data)
+            })
+            .catch(err => console.log(err))
     }, [userId])
 
     useEffect(() => {
@@ -42,10 +42,15 @@ const HomePage = (props) => {
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        fetch(`http://127.0.0.1:3000/api/tasks/${id}`,
-            {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
-            .then(response => response.json())
-            .then(result => {})
+        // fetch(`http://localhost:3000/api/tasks/${id}`,
+        //     {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
+        //     .then(response => response.json())
+        //     .then(result => {})
+        axios.post(`http://127.0.0.1:3000/api/tasks/${id}`, body,{withCredentials: true})
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => console.log(err))
     }
 
     return (

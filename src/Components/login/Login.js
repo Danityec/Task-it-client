@@ -13,7 +13,7 @@ const Login = (props) => {
             token: response.tokenId
         }
     console.log(tmp)
-        axios.post('http://localhost:3000/authLogin', tmp, {withCredentials: true, credentials: 'include'})
+        axios.post('http://localhost:3000/authLogin', tmp, {withCredentials: true})
             .then(res => {
                 console.log(res.data)
                 history.push({
