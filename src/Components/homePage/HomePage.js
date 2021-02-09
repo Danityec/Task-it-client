@@ -3,23 +3,36 @@ import './HomePage.css'
 import Menu from "../shared/Menu";
 import {ButtonBase} from "@material-ui/core";
 import List from "../shared/List";
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Header from "../shared/Header";
 import axios from "axios";
 
+// const userId = '106859904573047383930'
+
 const HomePage = (props) => {
-    let history = useHistory();
     const [taskList, setTaskList] = useState([])
     const [titleList, setTitleList] = useState({})
-    const [userId] = useState(props.location.userId)
+    const [userId, setUserId] = useState(null)
 
     useEffect(() => {
+        setUserId(props.location.userId)
+        console.log("userId: "+props.location.userId)
+}, [])
+
+    useEffect(() => {
+        // fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
+        //     .then(response => response.json())
+        //     .then(result => setTaskList(result))
         axios.get(`http://localhost:3000/api/tasks?userID=${userId}`, {withCredentials: true})
-            .then(res => setTaskList(res.data))
-            .catch(err => history.push('/'))
-    }, [])
+            .then(res => {
+                console.log(res.data)
+                setTaskList(res.data)
+            })
+            .catch(err => console.log(err))
+    }, [userId])
 
     useEffect(() => {
+        console.log(taskList)
         taskList.forEach((task) => {
             setTitleList(prevState => ({
                 ...prevState, [task._id]: `${task.name}`
@@ -29,7 +42,11 @@ const HomePage = (props) => {
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        axios.post(`http://localhost:3000/api/tasks/${id}`, body, {withCredentials: true})
+        // fetch(`http://localhost:3000/api/tasks/${id}`,
+        //     {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
+        //     .then(response => response.json())
+        //     .then(result => {})
+        axios.post(`http://127.0.0.1:3000/api/tasks/${id}`, body,{withCredentials: true})
             .then(res => {
                 console.log(res.data)
             })
@@ -44,13 +61,11 @@ const HomePage = (props) => {
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
                 </Link>
                 <Link to={{pathname: '/chats', userId: userId}}>
-                    <ButtonBase centerRipple={true} onClick={null} style={{backgroundColor: '#2A73CC'}}><p
-                        style={{width: '100px'}}>Chat</p></ButtonBase>
+                    <ButtonBase centerRipple={true} onClick={null} style={{ backgroundColor:'#2A73CC'}}><p style={{width: '100px'}}>Chat</p></ButtonBase>
                 </Link>
             </Menu>
             <div className={'task-list'}>
-                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={userId} dataList={taskList}
-                      titleList={titleList} pathName={'/task'}/>
+                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={userId} dataList={taskList} titleList={titleList} pathName={'/task'}/>
             </div>
         </>)
 }

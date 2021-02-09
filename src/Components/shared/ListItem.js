@@ -48,3 +48,5 @@ const ListItem = (props) => {
 }
 
 export default ListItem
+
+// onClick={()=>props.action(props.item._id)}
