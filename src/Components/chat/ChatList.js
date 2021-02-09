@@ -16,22 +16,17 @@ const ChatList = (props) => {
     const [open, setOpen] = useState(false);
     const [emailList, setEmailList] = useState([]);
     const [emailValue, setEmailValue] = useState(null);
-    const [userId, setUserId] = useState(null)
+    const [userId] = useState(props.location.userId)
 
     useEffect(() => {
-        console.log(props.location.userId)
-        setUserId(props.location.userId)
+        fetch(`http://localhost:3000/api/chats?userID=${userId}`, {credentials: 'include'})
+            .then(response => response.json())
+            .then(result => setChatList(result))
     }, [])
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:3000/api/chats?userID=${userId}`)
-            .then(response => response.json())
-            .then(result => setChatList(result))
-    }, [userId])
-
-    useEffect(() => {
         console.log(chatList)
-        fetch(`http://127.0.0.1:3000/api/users`)
+        fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 result.forEach(user => {
@@ -51,7 +46,7 @@ const ChatList = (props) => {
 
         users.forEach((user, index) => {
             console.log(user)
-            fetch(`http://127.0.0.1:3000/api/users/${user}`)
+            fetch(`http://localhost:3000/api/users/${user}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -63,12 +58,13 @@ const ChatList = (props) => {
     }, [chatList])
 
     const addNewChat = () => {
-        fetch(`http://127.0.0.1:3000/api/users?email=${emailValue.title}`)
+        fetch(`http://localhost:3000/api/users?email=${emailValue.title}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 const body = {userID1: userId, userID2: result['_id']};
                 fetch(`http://localhost:3000/api/chats/`, {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(body),
                 })
@@ -92,12 +88,15 @@ const ChatList = (props) => {
                 <div className={'chat-list'}>
                     <List dataList={chatList} userId={userId} titleList={titleList} pathName={'/chat'}/>
                 </div>
-                <Popup onSubmit={addNewChat} closePopup={() => setOpen(false)} title={"New Chat"} open={open} isDelete={false}>
+                <Popup onSubmit={addNewChat} closePopup={() => setOpen(false)} title={"New Chat"} open={open}
+                       isDelete={false}>
                     <p>open a new chat with another TaskIt user</p>
                     <Autocomplete
                         style={{width: '100%', paddingTop: '5%'}}
                         options={emailList} getOptionLabel={(emailList) => emailList.title} value={emailValue}
-                        onChange={(e, newValue) => {setEmailValue(newValue)}}
+                        onChange={(e, newValue) => {
+                            setEmailValue(newValue)
+                        }}
                         renderInput={(params) => <TextField {...params} label="Email"/>}/>
                 </Popup>
             </div>

@@ -5,31 +5,17 @@ import {ButtonBase} from "@material-ui/core";
 import List from "../shared/List";
 import {Link} from "react-router-dom";
 import Header from "../shared/Header";
-import axios from "axios";
-
-// const userId = '106859904573047383930'
 
 const HomePage = (props) => {
     const [taskList, setTaskList] = useState([])
     const [titleList, setTitleList] = useState({})
-    const [userId, setUserId] = useState(null)
+    const [userId] = useState(props.location.userId)
 
     useEffect(() => {
-        setUserId(props.location.userId)
-        console.log("userId: "+props.location.userId)
-}, [])
-
-    useEffect(() => {
-        // fetch(`http://127.0.0.1:3000/api/tasks?userID=${userId}`)
-        //     .then(response => response.json())
-        //     .then(result => setTaskList(result))
-        axios.get(`http://localhost:3000/api/tasks?userID=${userId}`, {withCredentials: true})
-            .then(res => {
-                console.log(res.data)
-                setTaskList(res.data)
-            })
-            .catch(err => console.log(err))
-    }, [userId])
+        fetch(`http://localhost:3000/api/tasks?userID=${userId}`, {credentials: 'include'})
+            .then(response => response.json())
+            .then(result => setTaskList(result))
+    }, [])
 
     useEffect(() => {
         console.log(taskList)
@@ -42,15 +28,14 @@ const HomePage = (props) => {
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        // fetch(`http://localhost:3000/api/tasks/${id}`,
-        //     {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
-        //     .then(response => response.json())
-        //     .then(result => {})
-        axios.post(`http://127.0.0.1:3000/api/tasks/${id}`, body,{withCredentials: true})
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => console.log(err))
+        fetch(`http://localhost:3000/api/tasks/${id}`, {
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            method: 'PUT',
+            body: JSON.stringify(body)
+        })
+            .then(response => response.json())
+            .then(result => {})
     }
 
     return (
@@ -61,11 +46,13 @@ const HomePage = (props) => {
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
                 </Link>
                 <Link to={{pathname: '/chats', userId: userId}}>
-                    <ButtonBase centerRipple={true} onClick={null} style={{ backgroundColor:'#2A73CC'}}><p style={{width: '100px'}}>Chat</p></ButtonBase>
+                    <ButtonBase centerRipple={true} onClick={null} style={{backgroundColor: '#2A73CC'}}><p
+                        style={{width: '100px'}}>Chat</p></ButtonBase>
                 </Link>
             </Menu>
             <div className={'task-list'}>
-                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={userId} dataList={taskList} titleList={titleList} pathName={'/task'}/>
+                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={userId} dataList={taskList}
+                      titleList={titleList} pathName={'/task'}/>
             </div>
         </>)
 }

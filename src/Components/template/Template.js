@@ -3,20 +3,19 @@ import './Template.css';
 import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 
-// const userId = '106859904573047383930'
-
 const Template = (props) => {
     let history = useHistory()
 
     const addTaskFromTemplate = () => {
         const body = {userID: props.location.userId};
         fetch(`http://localhost:3000/api/tasks/${props.item.templateID}`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
         })
             .then(response => {})
-            .then(result => {
-                history.goBack()
-            });
+            .then(result => history.goBack());
     }
 
     const eachSubTask = (item) => {
@@ -27,7 +26,8 @@ const Template = (props) => {
         <div className="template-card" key={props.key}>
             <div className="template-card-title">
                 <p>{props.item.name}</p>
-                <ButtonBase centerRipple={true} onClick={addTaskFromTemplate}><p style={{width: '180px'}}>Choose</p></ButtonBase>
+                <ButtonBase centerRipple={true} onClick={addTaskFromTemplate}><p style={{width: '180px'}}>Choose</p>
+                </ButtonBase>
             </div>
             <div className="template-card-category">
                 {props.item.category}

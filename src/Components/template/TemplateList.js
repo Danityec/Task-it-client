@@ -8,20 +8,17 @@ import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Header from "../shared/Header";
 
-// const userId = '106859904573047383930'
-
 const TemplateList = (props) => {
     let history = useHistory()
 
     const [templateList, setTemplateList] = useState([]);
-    const [userId, setUserId] = useState(null)
+    const [userId] = useState(props.location.userId)
     const [open, setOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [taskCategory, setTaskCategory] = useState("");
 
     useEffect(() => {
-        setUserId(props.location.userId)
-        fetch(`http://localhost:3000/api/tasks?templates=true`)
+        fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTemplateList(result))
     }, [])
@@ -30,6 +27,7 @@ const TemplateList = (props) => {
         const body = {name: taskName, category: taskCategory, userID: userId};
         fetch(`http://localhost:3000/api/tasks`, {
             method: 'POST',
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body),
         })
@@ -54,7 +52,8 @@ const TemplateList = (props) => {
                     {templateList.map(eachTemplate)}
                 </div>
             </div>
-            <Popup onSubmit={addNewTask} closePopup={() =>setOpen(false)} title={"New Task"} open={open} isDelete={false}>
+            <Popup onSubmit={addNewTask} closePopup={() => setOpen(false)} title={"New Task"} open={open}
+                   isDelete={false}>
                 <TextField className="task-name-input" label="Name" onChange={e => setTaskName(e.target.value)}
                            fullWidth value={taskName}/>
                 <TextField className="task-category-input" label="Category"

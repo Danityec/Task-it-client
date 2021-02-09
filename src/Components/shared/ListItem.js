@@ -19,28 +19,37 @@ const ListItem = (props) => {
             <Card elevation={0} className={'list-item card'}>
                 <CardContent className={'card-content'}>
                     {props.checkboxes ? <Checkbox color="primary" checked={checked} onChange={handleChange}/> : null}
-                    <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle, userId: props.userId }}>
-                            {props.itemTitle}
+                    <Link
+                        to={{pathname: props.pathName, data: props.item, name: props.itemTitle, userId: props.userId}}>
+                        {props.itemTitle}
                     </Link>
                 </CardContent>
                 <CardActions>
                     {props.action ? (
                         <>
                             <IconButton>
-                                <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => {props.action(props.item._id, 2)}}/>
+                                <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => {
+                                    props.action(props.item._id, 2)
+                                }}/>
                             </IconButton>
                             <IconButton>
-                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => {props.action(props.item._id, 1)}}/>
+                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => {
+                                    props.action(props.item._id, 1)
+                                }}/>
                             </IconButton>
                         </>
-                        ) : (
-                        <Link to={{pathname: props.pathName, data: props.item, userId: props.userId, name: props.itemTitle}} >
+                    ) : (
+                        <Link to={{
+                            pathname: props.pathName,
+                            data: props.item,
+                            userId: props.userId,
+                            name: props.itemTitle
+                        }}>
                             <IconButton>
                                 <ArrowForwardIosRoundedIcon/>
                             </IconButton>
                         </Link>
-                        ) }
-
+                    )}
                 </CardActions>
             </Card>
         </MuiListItem>
@@ -48,5 +57,3 @@ const ListItem = (props) => {
 }
 
 export default ListItem
-
-// onClick={()=>props.action(props.item._id)}

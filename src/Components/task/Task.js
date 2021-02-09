@@ -11,13 +11,11 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Header from "../shared/Header";
 
-// const userId = '106859904573047383930'
-
 const Task = (props) => {
     let history = useHistory()
 
     const [task, setTask] = useState(props.location.data);
-    const [userId, setUserId] = useState(null)
+    const [userId] = useState(props.location.userId)
     const [currentSubTask, setCurrentSubTask] = useState(null);
     const [titleList, setTitleList] = useState({});
     const [emailList, setEmailList] = useState([]);
@@ -37,9 +35,7 @@ const Task = (props) => {
     const [emailInput, setEmailInput] = useState(null);
 
     useEffect(() => {
-        setUserId(props.location.userId)
-        setTask(props.location.data)
-        fetch(`http://127.0.0.1:3000/api/users`)
+        fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
@@ -48,7 +44,7 @@ const Task = (props) => {
 
     useEffect(() => {
         if (task.userID == null) {
-            fetch(`http://127.0.0.1:3000/api/reviews?templateID=${task.templateID}`)
+            fetch(`http://localhost:3000/api/reviews?templateID=${task.templateID}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     setReviewList(result)
@@ -65,7 +61,10 @@ const Task = (props) => {
     const addReview = () => {
         const body = {title: nameInput, reviewBody: categoryInput, userID: userId, templateID: task.templateID};
         fetch(`http://localhost:3000/api/reviews`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
         })
             .then(response => response.json())
             .then(result => {
@@ -77,7 +76,7 @@ const Task = (props) => {
     }
     const getUserEmail = () => {
         if (emailInput != null) {
-            fetch(`http://127.0.0.1:3000/api/users?email=${emailInput.title}`)
+            fetch(`http://localhost:3000/api/users?email=${emailInput.title}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     let shared = task.sharedWith
@@ -91,7 +90,10 @@ const Task = (props) => {
     const editTask = (shared) => {
         const body = {name: nameInput, category: categoryInput, sharedWith: shared};
         fetch(`http://localhost:3000/api/tasks/${task._id}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
         })
             .then(response => response.json())
             .then(result => {
@@ -103,7 +105,7 @@ const Task = (props) => {
             });
     }
     const deleteTask = () => {
-        fetch(`http://localhost:3000/api/tasks/${task._id}`, {method: 'DELETE'})
+        fetch(`http://localhost:3000/api/tasks/${task._id}`, {credentials: 'include', method: 'DELETE'})
             .then(response => {
             })
             .then(result => history.goBack());
@@ -112,7 +114,10 @@ const Task = (props) => {
     const addNewSubTask = () => {
         const body = {name: nameInput};
         fetch(`http://localhost:3000/api/subtasks/${task._id}`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
         })
             .then(response => response.json())
             .then(result => {
@@ -124,7 +129,10 @@ const Task = (props) => {
     const editSubTask = () => {
         const body = {name: nameInput};
         fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
         })
             .then(response => response.json())
             .then(result => {
@@ -135,7 +143,7 @@ const Task = (props) => {
     }
     const deleteSubTask = () => {
         fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
-            method: 'DELETE'
+            method: 'DELETE', credentials: 'include'
         })
             .then(response => response.json())
             .then(result => {
@@ -146,8 +154,12 @@ const Task = (props) => {
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${id}`,
-            {headers: {'Content-Type': 'application/json'}, method: 'PUT', body: JSON.stringify(body)})
+        fetch(`http://localhost:3000/api/subtasks/${task._id}/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
             .then(response => response.json())
             .then(result => {
             })

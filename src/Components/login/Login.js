@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import './Login.css'
 import {GoogleLogin} from 'react-google-login'
 import Header from "../shared/Header";
@@ -9,19 +8,22 @@ const Login = (props) => {
     let history = useHistory();
 
     const googleSuccess = async (response) => {
-        const tmp = {
+        const body = {
             token: response.tokenId
         }
-    console.log(tmp)
-        axios.post('http://localhost:3000/authLogin', tmp, {withCredentials: true})
-            .then(res => {
-                console.log(res.data)
+        fetch(`http://localhost:3000/authLogin`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
+        })
+            .then(response => response.json())
+            .then(result => {
                 history.push({
                     pathname: '/dashboard',
-                    userId: res.data.googleID
+                    userId: result.googleID
                 })
-            })
-            .catch(err => console.log(err))
+            });
     }
 
     const googleFailure = (response) => {
