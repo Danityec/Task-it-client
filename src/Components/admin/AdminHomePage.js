@@ -14,7 +14,7 @@ const AdminHomePage = (props) => {
     const [openAddTemplate, setOpenAddTemplate] = useState(false);
     const [templateName, setTemplateName] = useState("");
     const [templateCategory, setTemplateCategory] = useState("");
-    const [userId] = useState(props.location.userId)
+    const [user] = useState(props.location.user)
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
@@ -70,7 +70,7 @@ const AdminHomePage = (props) => {
 
     return (
         <>
-            <Header userId={userId}/>
+            <Header userId={user.googleID}/>
             <Menu goBack={false}>
                 <ButtonBase centerRipple={true} onClick={() => {
                     setOpenAddTemplate(true)

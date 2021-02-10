@@ -19,6 +19,7 @@ const Task = (props) => {
     const [currentSubTask, setCurrentSubTask] = useState(null);
     const [titleList, setTitleList] = useState({});
     const [emailList, setEmailList] = useState([]);
+    const [emailNameList, setEmailNameList] = useState([]);
     const [reviewList, setReviewList] = useState([]);
     const [reviewBtnMessage, setReviewBtnMessage] = useState('Write a Review');
 
@@ -56,6 +57,17 @@ const Task = (props) => {
                 ...prevState, [subTask["_id"]]: `${subTask["name"]}`
             }));
         })
+        console.log(task.sharedWith)
+        task.sharedWith.forEach((email, i)=>{
+            console.log(i)
+            fetch(`http://localhost:3000/api/users?email=${email}`, {credentials: 'include'})
+                .then(response => response.json())
+                .then(result => {
+                    setEmailNameList(prevState =>
+                        [...prevState, `${result["firstName"]} ${result["lastName"]}`]
+                    )})
+        })
+
     }, [task])
 
     const addReview = () => {
@@ -74,20 +86,12 @@ const Task = (props) => {
                 setNameInput('')
             });
     }
-    const getUserEmail = () => {
+    const editTask = () => {
+        let shared = []
         if (emailInput != null) {
-            fetch(`http://localhost:3000/api/users?email=${emailInput.title}`, {credentials: 'include'})
-                .then(response => response.json())
-                .then(result => {
-                    let shared = task.sharedWith
-                    shared.push(`${result['firstName']} ${result['lastName']}`)
-                    editTask(shared)
-                })
-        } else {
-            editTask(null)
+            shared = task.sharedWith
+            shared.push(emailInput.title)
         }
-    }
-    const editTask = (shared) => {
         const body = {name: nameInput, category: categoryInput, sharedWith: shared};
         fetch(`http://localhost:3000/api/tasks/${task._id}`, {
             method: 'PUT',
@@ -100,6 +104,7 @@ const Task = (props) => {
                 setOpenEditTask(false);
                 setTask(result);
                 setNameInput('')
+                setEmailNameList([])
                 setCategoryInput('')
                 setEmailInput(null)
             });
@@ -215,7 +220,7 @@ const Task = (props) => {
         </Popup>
     )
     const editTaskModal = (
-        <Popup onSubmit={getUserEmail} title={"Edit Task"} open={openEditTask}
+        <Popup onSubmit={editTask} title={"Edit Task"} open={openEditTask}
                closePopup={() => setOpenEditTask(false)} isDelete={false}>
             <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)}
                        fullWidth/>
@@ -287,7 +292,7 @@ const Task = (props) => {
                     {task.sharedWith.length ? (
                         <div className="task-shared-list">
                             <h3>Shared with:</h3>
-                            {task.sharedWith.map((item, i) => <span key={i}>{item}</span>)}
+                            {emailNameList.map((item, i) => <span key={i}>{item}</span>)}
                         </div>
                     ) : null}
                 </div>

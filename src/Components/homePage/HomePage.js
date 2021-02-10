@@ -9,10 +9,11 @@ import Header from "../shared/Header";
 const HomePage = (props) => {
     const [taskList, setTaskList] = useState([])
     const [titleList, setTitleList] = useState({})
-    const [user] = useState(props.location.user)
+    const [userId] = useState(props.location.userId)
+    const [userImg] = useState(props.location.userImg)
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/tasks?userID=${user.googleID}`, {credentials: 'include'})
+        fetch(`http://localhost:3000/api/tasks?userID=${userId}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTaskList(result))
     }, [])
@@ -40,18 +41,18 @@ const HomePage = (props) => {
 
     return (
         <>
-            <Header user={user}/>
+            <Header userImg={userImg}/>
             <Menu goBack={false}>
-                <Link to={{pathname: '/new-task', userId: user.googleID}}>
+                <Link to={{pathname: '/new-task', userId: userId}}>
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
                 </Link>
-                <Link to={{pathname: '/chats', userId: user.googleID}}>
+                <Link to={{pathname: '/chats', userId: userId}}>
                     <ButtonBase centerRipple={true} onClick={null} style={{backgroundColor: '#2A73CC'}}><p
                         style={{width: '100px'}}>Chat</p></ButtonBase>
                 </Link>
             </Menu>
             <div className={'task-list'}>
-                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={user.googleID} dataList={taskList}
+                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={userId} dataList={taskList}
                       titleList={titleList} pathName={'/task'}/>
             </div>
         </>)

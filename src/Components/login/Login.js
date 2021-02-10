@@ -19,9 +19,12 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
+                let path = '/dashboard'
+                if(result.admin) path = '/admin'
                 history.push({
-                    pathname: '/dashboard',
-                    user: result
+                    pathname: path,
+                    userId: result.googleID,
+                    userImg: result.avatar
                 })
             });
     }

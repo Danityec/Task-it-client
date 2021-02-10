@@ -18,11 +18,11 @@ const Header = (props) => {
         <div className={"header"}>
             <div className={'header-content'}>
                 <NavLink exact to="/" className={'logo'}/>
-                {props.user ? (
+                {props.userId ? (
                     <div>
                         <Avatar className={'user-avatar'}
                                 ref={anchorRef} aria-controls={open ? 'menu-list' : undefined}
-                                src={props.user.avatar}
+                                src={props.userImg}
                                 aria-haspopup="true" onClick={() => setOpen(prevOpen => !prevOpen)}>
                         </Avatar>
                         <Popper open={open} anchorEl={anchorRef.current} placement={'bottom-end'} transition>
