@@ -21,7 +21,7 @@ const Login = (props) => {
             .then(result => {
                 history.push({
                     pathname: '/dashboard',
-                    userId: result.googleID
+                    user: result
                 })
             });
     }
