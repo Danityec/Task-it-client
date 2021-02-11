@@ -18,7 +18,7 @@ const Header = (props) => {
         <div className={"header"}>
             <div className={'header-content'}>
                 <NavLink exact to="/" className={'logo'}/>
-                {props.userId ? (
+                {props.userImg ? (
                     <div>
                         <Avatar className={'user-avatar'}
                                 ref={anchorRef} aria-controls={open ? 'menu-list' : undefined}
