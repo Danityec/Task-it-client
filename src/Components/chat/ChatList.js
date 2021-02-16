@@ -7,6 +7,7 @@ import Popup from "../shared/Popup";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Header from "../shared/Header";
+import {useCookies} from "react-cookie";
 
 const ChatList = (props) => {
     const [chatList, setChatList] = useState([]);
@@ -14,13 +15,13 @@ const ChatList = (props) => {
     const [open, setOpen] = useState(false);
     const [emailList, setEmailList] = useState([]);
     const [emailValue, setEmailValue] = useState(null);
-    const [userId] = useState(props.location.userId)
+    const [cookies] = useCookies(['user']);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/chats?userID=${userId}`, {credentials: 'include'})
+        fetch(`http://localhost:3000/api/chats?userID=${cookies.user.googleID}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setChatList(result))
-    }, [userId])
+    }, [cookies.user.googleID])
 
     useEffect(() => {
         console.log(chatList)
@@ -36,7 +37,7 @@ const ChatList = (props) => {
     useEffect(() => {
         let users = []
         chatList.forEach(chat => {
-            if (chat['userID1'] === userId)
+            if (chat['userID1'] === cookies.user.googleID)
                 users.push(chat['userID2'])
             else
                 users.push(chat['userID1'])
@@ -53,13 +54,13 @@ const ChatList = (props) => {
                     }));
                 })
         })
-    }, [chatList, userId])
+    }, [chatList, cookies.user.googleID])
 
     const addNewChat = () => {
         fetch(`http://localhost:3000/api/users?email=${emailValue.title}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
-                const body = {userID1: userId, userID2: result['_id']};
+                const body = {userID1: cookies.user.googleID, userID2: result['_id']};
                 fetch(`http://localhost:3000/api/chats/`, {
                     method: 'POST',
                     credentials: 'include',
@@ -76,15 +77,15 @@ const ChatList = (props) => {
 
     return (
         <>
-            <Header userId={userId}/>
-            <Menu goBack={true} reroute={{pathname: '/dashboard', userId: userId}}>
+            <Header userImg={cookies.user.avatar}/>
+            <Menu goBack={true} reroute={{pathname: '/dashboard'}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '150px'}}>New Chat</p>
                 </ButtonBase>
             </Menu>
             <div className={'chat-list-page'}>
                 <div className={'chat-list'}>
-                    <List dataList={chatList} userId={userId} titleList={titleList} pathName={'/chat'}/>
+                    <List dataList={chatList} titleList={titleList} pathName={'/chat'}/>
                 </div>
                 <Popup onSubmit={addNewChat} closePopup={() => setOpen(false)} title={"New Chat"} open={open}
                        isDelete={false}>

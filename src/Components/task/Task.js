@@ -10,12 +10,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Header from "../shared/Header";
+import {useCookies} from "react-cookie";
 
 const Task = (props) => {
     let history = useHistory()
 
     const [task, setTask] = useState(props.location.data);
-    const [userId] = useState(props.location.userId)
+    const [cookies] = useCookies(['user']);
     const [currentSubTask, setCurrentSubTask] = useState(null);
     const [titleList, setTitleList] = useState({});
     const [emailList, setEmailList] = useState([]);
@@ -71,7 +72,7 @@ const Task = (props) => {
     }, [task])
 
     const addReview = () => {
-        const body = {title: nameInput, reviewBody: categoryInput, userID: userId, templateID: task.templateID};
+        const body = {title: nameInput, reviewBody: categoryInput, userID: cookies.user.googleID, templateID: task.templateID};
         fetch(`http://localhost:3000/api/reviews`, {
             method: 'POST',
             credentials: 'include',
@@ -253,8 +254,8 @@ const Task = (props) => {
 
     return (
         <>
-            <Header userId={userId}/>
-            <Menu goBack={true} reroute={{pathname: '/dashboard', userId: userId}}>
+            <Header userId={cookies.user.avatar}/>
+            <Menu goBack={true} reroute={{pathname: '/dashboard'}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}>
                     <p style={{width: '200px'}}>Creat New SubTask</p>
                 </ButtonBase>

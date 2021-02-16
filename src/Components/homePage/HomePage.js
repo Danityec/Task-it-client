@@ -5,18 +5,18 @@ import {ButtonBase} from "@material-ui/core";
 import List from "../shared/List";
 import {Link} from "react-router-dom";
 import Header from "../shared/Header";
+import {useCookies} from "react-cookie";
 
 const HomePage = (props) => {
     const [taskList, setTaskList] = useState([])
     const [titleList, setTitleList] = useState({})
-    const [userId] = useState(props.location.userId)
-    const [userImg] = useState(props.location.userImg)
+    const [cookies] = useCookies(['user']);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/tasks?userID=${userId}`, {credentials: 'include'})
+        fetch(`http://localhost:3000/api/tasks?userID=${cookies.user.googleID}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTaskList(result))
-    }, [userId])
+    }, [cookies.user.googleID])
 
     useEffect(() => {
         console.log(taskList)
@@ -41,18 +41,18 @@ const HomePage = (props) => {
 
     return (
         <>
-            <Header userImg={userImg}/>
+            <Header userImg={cookies.user.avatar}/>
             <Menu goBack={false}>
-                <Link to={{pathname: '/new-task', userId: userId}}>
+                <Link to={{pathname: '/new-task'}}>
                     <ButtonBase centerRipple={true}><p style={{width: '180px'}}>Create New Task</p></ButtonBase>
                 </Link>
-                <Link to={{pathname: '/chats', userId: userId}}>
+                <Link to={{pathname: '/chats'}}>
                     <ButtonBase centerRipple={true} onClick={null} style={{backgroundColor: '#2A73CC'}}><p
                         style={{width: '100px'}}>Chat</p></ButtonBase>
                 </Link>
             </Menu>
             <div className={'task-list'}>
-                <List checkboxes={true} checkboxToggle={checkboxToggle} userId={userId} dataList={taskList}
+                <List checkboxes={true} checkboxToggle={checkboxToggle} dataList={taskList}
                       titleList={titleList} pathName={'/task'}/>
             </div>
         </>)

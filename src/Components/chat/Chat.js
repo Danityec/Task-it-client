@@ -5,12 +5,13 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Message from "./Message";
 import Menu from "../shared/Menu";
 import Header from "../shared/Header";
+import {useCookies} from "react-cookie";
 
 const Chat = (props) => {
     const [inputMessage, setInputMessage] = useState('');
     const [chat, setChat] = useState(props.location.data);
     const messagesEndRef = useRef(null)
-    const [userId] = useState(props.location.userId)
+    const [cookies] = useCookies(['user']);
 
     useEffect(() => {
         scrollToBottom()
@@ -21,7 +22,7 @@ const Chat = (props) => {
     }
 
     const sendMessage = () => {
-        const body = {senderID: userId, message: inputMessage}
+        const body = {senderID: cookies.user.googleID, message: inputMessage}
         fetch(`http://localhost:3000/api/chats/messages/${chat._id}`, {
             method: 'POST',
             credentials: 'include',
@@ -37,7 +38,7 @@ const Chat = (props) => {
 
     const eachMessage = (message) => {
         let messageType = 'incoming'
-        if (message.senderID === userId)
+        if (message.senderID === cookies.user.googleID)
             messageType = 'outgoing'
         return (
             <Message key={message._id} messageType={messageType} message={message.message}
@@ -47,8 +48,8 @@ const Chat = (props) => {
 
     return (
         <>
-            <Header userId={userId}/>
-            <Menu goBack={true} title={true} reroute={{pathname: '/chats', userId: userId}}>
+            <Header userImg={cookies.user.avatar}/>
+            <Menu goBack={true} title={true} reroute={{pathname: '/chats'}}>
                 <h2 className={'chat-title'}>{props.location.name}</h2>
             </Menu>
             <div className={'chat-container'}>

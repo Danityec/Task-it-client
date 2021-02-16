@@ -7,12 +7,13 @@ import Menu from "../shared/Menu";
 import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Header from "../shared/Header";
+import {useCookies} from "react-cookie";
 
 const TemplateList = (props) => {
     let history = useHistory()
 
     const [templateList, setTemplateList] = useState([]);
-    const [userId] = useState(props.location.userId)
+    const [cookies] = useCookies(['user']);
     const [open, setOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [taskCategory, setTaskCategory] = useState("");
@@ -24,7 +25,7 @@ const TemplateList = (props) => {
     }, [])
 
     const addNewTask = () => {
-        const body = {name: taskName, category: taskCategory, userID: userId};
+        const body = {name: taskName, category: taskCategory, userID: cookies.user.googleID};
         fetch(`http://localhost:3000/api/tasks`, {
             method: 'POST',
             credentials: 'include',
@@ -41,8 +42,8 @@ const TemplateList = (props) => {
 
     return (
         <>
-            <Header userId={userId}/>
-            <Menu goBack={true} reroute={{pathname: '/dashboard', userId: userId}}>
+            <Header userId={cookies.user.avatar}/>
+            <Menu goBack={true} reroute={{pathname: '/dashboard'}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '220px'}}>Creat Task from Scratch</p>
                 </ButtonBase>

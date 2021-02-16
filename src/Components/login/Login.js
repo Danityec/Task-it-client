@@ -22,11 +22,7 @@ const Login = (props) => {
                 console.log(result)
                 let path = '/dashboard'
                 if(result.admin) path = '/admin'
-                history.push({
-                    pathname: path,
-                    userId: result.googleID,
-                    userImg: result.avatar
-                })
+                history.push(path)
             });
     }
 
