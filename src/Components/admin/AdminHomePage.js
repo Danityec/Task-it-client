@@ -14,9 +14,11 @@ const AdminHomePage = (props) => {
     const [openAddTemplate, setOpenAddTemplate] = useState(false);
     const [templateName, setTemplateName] = useState("");
     const [templateCategory, setTemplateCategory] = useState("");
-    const [user] = useState(props.location.user)
+    // const [userId] = useState(props.location.userId)
+    const [userImg] = useState(props.location.userImg)
 
     useEffect(() => {
+        console.log("ghgh")
         fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTemplateList(result))
@@ -70,7 +72,7 @@ const AdminHomePage = (props) => {
 
     return (
         <>
-            <Header userId={user.googleID}/>
+            <Header userImg={userImg}/>
             <Menu goBack={false}>
                 <ButtonBase centerRipple={true} onClick={() => {
                     setOpenAddTemplate(true)

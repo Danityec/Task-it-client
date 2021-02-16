@@ -16,7 +16,7 @@ const HomePage = (props) => {
         fetch(`http://localhost:3000/api/tasks?userID=${userId}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTaskList(result))
-    }, [])
+    }, [userId])
 
     useEffect(() => {
         console.log(taskList)

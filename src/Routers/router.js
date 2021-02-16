@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-// import Header from "../Components/shared/Header";
 import Footer from "../Components/shared/Footer";
 import HomePage from "../Components/homePage/HomePage";
 import TemplateList from "../Components/template/TemplateList";
@@ -9,18 +8,20 @@ import Chat from "../Components/chat/Chat";
 import Task from "../Components/task/Task";
 import AdminHomePage from "../Components/admin/AdminHomePage";
 import Login from "../Components/login/Login";
+import UserRouter from "./UserRouter";
+import AdminRouter from "./AdminRouter";
 
 const ReactRouter = () => {
     return (
         <>
             <Route exact path='/' component={Login}/>
-            <Route path='/dashboard' component={HomePage}/>
-            <Route path='/new-task' component={TemplateList}/>
-            <Route path='/chats' component={ChatList}/>
-            <Route path='/chat' component={Chat}/>
-            <Route path='/task' component={Task}/>
-            <Route exact path='/admin' component={AdminHomePage}/>
-            <Route path='/admin/template' component={Task}/>
+            <UserRouter path='/dashboard' component={HomePage}/>
+            <UserRouter path='/new-task' component={TemplateList}/>
+            <UserRouter path='/chats' component={ChatList}/>
+            <UserRouter path='/chat' component={Chat}/>
+            <UserRouter path='/task' component={Task}/>
+            <AdminRouter exact path='/admin' component={AdminHomePage}/>
+            <AdminRouter path='/admin/template' component={Task}/>
 
             <Footer/>
         </>

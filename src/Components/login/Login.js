@@ -19,6 +19,7 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
+                console.log(result)
                 let path = '/dashboard'
                 if(result.admin) path = '/admin'
                 history.push({

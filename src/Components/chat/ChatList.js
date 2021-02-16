@@ -8,8 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Header from "../shared/Header";
 
-// const userId = '106859904573047383930'
-
 const ChatList = (props) => {
     const [chatList, setChatList] = useState([]);
     const [titleList, setTitleList] = useState({});
@@ -22,7 +20,7 @@ const ChatList = (props) => {
         fetch(`http://localhost:3000/api/chats?userID=${userId}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setChatList(result))
-    }, [])
+    }, [userId])
 
     useEffect(() => {
         console.log(chatList)
@@ -55,7 +53,7 @@ const ChatList = (props) => {
                     }));
                 })
         })
-    }, [chatList])
+    }, [chatList, userId])
 
     const addNewChat = () => {
         fetch(`http://localhost:3000/api/users?email=${emailValue.title}`, {credentials: 'include'})
