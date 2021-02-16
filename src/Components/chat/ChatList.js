@@ -77,7 +77,7 @@ const ChatList = (props) => {
 
     return (
         <>
-            <Header userImg={cookies.user.avatar}/>
+            <Header/>
             <Menu goBack={true} reroute={{pathname: '/dashboard'}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '150px'}}>New Chat</p>

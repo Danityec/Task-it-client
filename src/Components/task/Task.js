@@ -254,7 +254,7 @@ const Task = (props) => {
 
     return (
         <>
-            <Header userId={cookies.user.avatar}/>
+            <Header/>
             <Menu goBack={true} reroute={{pathname: '/dashboard'}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}>
                     <p style={{width: '200px'}}>Creat New SubTask</p>

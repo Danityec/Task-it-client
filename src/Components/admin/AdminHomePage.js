@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Popup from "../shared/Popup";
 import Header from "../shared/Header";
-import {useCookies} from "react-cookie";
 
 const AdminHomePage = (props) => {
     const [templateList, setTemplateList] = useState([]);
@@ -15,7 +14,6 @@ const AdminHomePage = (props) => {
     const [openAddTemplate, setOpenAddTemplate] = useState(false);
     const [templateName, setTemplateName] = useState("");
     const [templateCategory, setTemplateCategory] = useState("");
-    const [cookies] = useCookies(['user']);
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
@@ -71,7 +69,7 @@ const AdminHomePage = (props) => {
 
     return (
         <>
-            <Header userImg={cookies.user.avatar}/>
+            <Header/>
             <Menu goBack={false}>
                 <ButtonBase centerRipple={true} onClick={() => {
                     setOpenAddTemplate(true)

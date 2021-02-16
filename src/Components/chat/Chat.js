@@ -48,7 +48,7 @@ const Chat = (props) => {
 
     return (
         <>
-            <Header userImg={cookies.user.avatar}/>
+            <Header/>
             <Menu goBack={true} title={true} reroute={{pathname: '/chats'}}>
                 <h2 className={'chat-title'}>{props.location.name}</h2>
             </Menu>

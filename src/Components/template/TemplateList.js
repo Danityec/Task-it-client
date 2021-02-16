@@ -42,7 +42,7 @@ const TemplateList = (props) => {
 
     return (
         <>
-            <Header userId={cookies.user.avatar}/>
+            <Header/>
             <Menu goBack={true} reroute={{pathname: '/dashboard'}}>
                 <ButtonBase centerRipple={true} onClick={() => setOpen(true)}>
                     <p style={{width: '220px'}}>Creat Task from Scratch</p>

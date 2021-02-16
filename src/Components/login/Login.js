@@ -8,9 +8,7 @@ const Login = (props) => {
     let history = useHistory();
 
     const googleSuccess = async (response) => {
-        const body = {
-            token: response.tokenId
-        }
+        const body = {token: response.tokenId}
         fetch(`http://localhost:3000/authLogin`, {
             method: 'POST',
             credentials: 'include',
@@ -19,9 +17,8 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 let path = '/dashboard'
-                if(result.admin) path = '/admin'
+                if (result.admin) path = '/admin'
                 history.push(path)
             });
     }

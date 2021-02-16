@@ -2,11 +2,13 @@ import React, {useRef, useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import {Avatar, MenuItem, MenuList, Grow, Popper, ClickAwayListener, Paper, ButtonBase} from "@material-ui/core";
 import './Header.css'
+import {useCookies} from "react-cookie";
 
 const Header = (props) => {
     const [open, setOpen] = useState(false);
     const anchorRef = useRef(null);
     let history = useHistory();
+    const [cookies] = useCookies(['user']);
 
     const logout = () => {
         fetch(`http://localhost:3000/authLogin/logout`, {credentials: 'include'})
@@ -17,12 +19,15 @@ const Header = (props) => {
     return (
         <div className={"header"}>
             <div className={'header-content'}>
-                <NavLink exact to="/" className={'logo'}/>
-                {props.userImg ? (
+                {cookies.user ? (cookies.user.admin ?
+                    <NavLink exact to="/admin" className={'logo'}/>:<NavLink exact to="/dashboard" className={'logo'}/>)
+                    : null
+                }
+                {cookies.user ? (
                     <div>
                         <Avatar className={'user-avatar'}
                                 ref={anchorRef} aria-controls={open ? 'menu-list' : undefined}
-                                src={props.userImg}
+                                src={cookies.user.avatar}
                                 aria-haspopup="true" onClick={() => setOpen(prevOpen => !prevOpen)}>
                         </Avatar>
                         <Popper open={open} anchorEl={anchorRef.current} placement={'bottom-end'} transition>
