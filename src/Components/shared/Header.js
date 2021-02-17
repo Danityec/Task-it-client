@@ -21,7 +21,7 @@ const Header = (props) => {
             <div className={'header-content'}>
                 {cookies.user ? (cookies.user.admin ?
                     <NavLink exact to="/admin" className={'logo'}/>:<NavLink exact to="/dashboard" className={'logo'}/>)
-                    : null
+                    : <NavLink exact to="/" className={'logo'}/>
                 }
                 {cookies.user ? (
                     <div>
