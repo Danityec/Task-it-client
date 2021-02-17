@@ -11,6 +11,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Header from "../shared/Header";
 import {useCookies} from "react-cookie";
+import Input from '@material-ui/core/Input';
+
 
 const Task = (props) => {
     let history = useHistory()
@@ -204,7 +206,7 @@ const Task = (props) => {
     const editSubTaskModal = (
         <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask}
                closePopup={() => setOpenEditSubTask(false)} isDelete={false}>
-            <TextField label="Name" value={nameInput} onChange={e => setNameInput(e.target.value)} fullWidth/>
+            <TextField label="Name" required value={nameInput} onChange={e => setNameInput(e.target.value)} fullWidth/>
         </Popup>
     )
     const deleteSubTaskModal = (

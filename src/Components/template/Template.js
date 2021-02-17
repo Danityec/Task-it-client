@@ -2,12 +2,14 @@ import React from 'react';
 import './Template.css';
 import {ButtonBase} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const Template = (props) => {
     let history = useHistory()
+    const [cookies] = useCookies(['user']);
 
     const addTaskFromTemplate = () => {
-        const body = {userID: props.location.userId};
+        const body = {userID: cookies.user.googleID};
         fetch(`http://localhost:3000/api/tasks/${props.item.templateID}`, {
             method: 'POST',
             credentials: 'include',
