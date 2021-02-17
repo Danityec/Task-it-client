@@ -23,22 +23,27 @@
     margin-left: 3%;
 }
 
-.buttonDiv{
+.buttonDiv {
     position: fixed;
     right: 3%;
     bottom: 8%;
 }
 
-.buttonBase button{
+.buttonBase button {
     background-color: #34B467;
     border-radius: 5px;
 }
 
-.popper{
-    height: 100px;
-    width: 100%;
-    flex-flow: column;
-    justify-content: space-around;
-    background-color: crimson;
-    margin:0 auto;
+.popper {
+    background-color: #2A73CC;
+    border-radius: 10px;
+}
+
+.popper p {
+    color: #84BCFF;
+    padding: 1%;
+}
+
+.popper .quote {
+    color: #d6e6ff;
 }

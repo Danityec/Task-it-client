@@ -11,27 +11,13 @@ const Footer = () => {
     const [open, setOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
 
-    useEffect(() => {
-        quoteAPI();
-    }, []);
-
-    const quoteAPI = (e) => {
-        fetch(`https://zenquotes.io/api/random`, {
-            headers: {'Content-Type': 'application/json'},
-            // credentials: 'include',
-            mode: 'no-cors',
-            method: 'GET',
-        })
+    const quoteAPI = () => {
+        fetch(`http://localhost:3000/quotes`, {credentials: 'include'})
             .then(response => response.json())
-            .catch(err=>console.log(err))
             .then(result => {
-                console.log(result)
-                setQuote(result.q);
-                setAuthor(result.a);
-                // console.log(result.a)
-                setOpen(!open);
+                setQuote(result[0].q);
+                setAuthor(result[0].a);
             })
-            .catch(err=>console.log(err))
     }
 
     return (
@@ -41,12 +27,17 @@ const Footer = () => {
                 <h6>TaskIt 2021</h6>
             </div>
             <div className={'buttonDiv'}>
-                <ButtonBase id={'btn'} className={'buttonBase'} type="button" style={{backgroundColor: '#34B467'}}
-                            onClick={(e) => { setAnchorEl(e.currentTarget); setOpen(!open); quoteAPI(e);}}>
+                <ButtonBase className={'buttonBase'} type="button" style={{backgroundColor: '#34B467'}}
+                            onClick={(e) => {
+                                quoteAPI();
+                                setAnchorEl(e.currentTarget);
+                                setOpen(!open);
+                            }}>
                     <p>New Quote</p>
                 </ButtonBase>
             </div>
-            <Popper open={open} anchorEl={anchorEl} placement={'top-end'}>
+            <Popper open={open} anchorEl={anchorEl} placement={'top-end'}
+            style={{ minWidth: '200px', width: 'fit-content'}}>
                 <div className={'popper'}>
                     <p>Quote of the Day</p>
                     <p className={'quote'}>{quote}</p>
