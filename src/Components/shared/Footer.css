@@ -1,11 +1,3 @@
-.footer-page{
-    margin: 0 auto;
-    position: fixed;
-    top: calc(12% + 8% + 2%);
-    width: 100%;
-    height: 100%;
-}
-
 .footer {
     position: fixed;
     bottom: 0;
@@ -35,7 +27,6 @@
     position: fixed;
     right: 3%;
     bottom: 8%;
-    /* background-color: darkcyan; */
 }
 
 .buttonBase button{
@@ -44,9 +35,8 @@
 }
 
 .popper{
-    height: 100%;
+    height: 100px;
     width: 100%;
-    display: block;
     flex-flow: column;
     justify-content: space-around;
     background-color: crimson;
