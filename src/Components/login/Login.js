@@ -2,10 +2,12 @@ import React from 'react';
 import './Login.css'
 import {GoogleLogin} from 'react-google-login'
 import Header from "../shared/Header";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const Login = (props) => {
     let history = useHistory();
+    const [cookies, setCookie] = useCookies(['user']);
 
     const googleSuccess = async (response) => {
         const body = {token: response.tokenId}
@@ -17,9 +19,16 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                let path = '/dashboard'
-                if (result.admin) path = '/admin'
-                history.push(path)
+                const cookiePromise = new Promise((resolve, reject) => {
+                    setCookie('user', result)
+                    resolve()
+                });
+                cookiePromise.then(() => {
+                    if (result)
+                        if (result.admin)
+                            history.push('/admin')
+                        else history.push('/dashboard')
+                })
             });
     }
 
@@ -36,9 +45,9 @@ const Login = (props) => {
                     <div className={'login-btn'}>
                         <h1>get productive!</h1>
                         <GoogleLogin
-                                     clientId='554171649210-i97q2kqu31t4hg021qdpmjn9kbobor0h.apps.googleusercontent.com'
-                                     onSuccess={googleSuccess}
-                                     onFailure={googleFailure}
+                            clientId='554171649210-i97q2kqu31t4hg021qdpmjn9kbobor0h.apps.googleusercontent.com'
+                            onSuccess={googleSuccess}
+                            onFailure={googleFailure}
                         />
                     </div>
                     <div className={'login-text'}>
