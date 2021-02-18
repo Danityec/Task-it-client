@@ -23,27 +23,32 @@
     margin-left: 3%;
 }
 
-.buttonDiv {
+.btn-placement {
     position: fixed;
-    right: 3%;
+    right: 2%;
     bottom: 8%;
 }
 
-.buttonBase button {
-    background-color: #34B467;
-    border-radius: 5px;
+.quote-btn p {
+    font-weight: 400;
 }
 
 .popper {
     background-color: #2A73CC;
     border-radius: 10px;
+    padding: 10px;
 }
 
 .popper p {
     color: #84BCFF;
-    padding: 1%;
+    padding: 5px;
 }
 
 .popper .quote {
     color: #d6e6ff;
+    font-style: italic;
+}
+
+.popper .author {
+    text-align: right;
 }

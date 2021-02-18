@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import './Footer.css'
 import Popper from '@material-ui/core/Popper';
-import {ButtonBase, ClickAwayListener} from '@material-ui/core';
+import {ButtonBase, ClickAwayListener, Fab} from '@material-ui/core';
 
 
 const Footer = () => {
@@ -27,22 +27,23 @@ const Footer = () => {
                 <CopyrightIcon className={'copy-right'}/>
                 <h6>TaskIt 2021</h6>
             </div>
-            <div className={'buttonDiv'}>
-                <ButtonBase className={'buttonBase'} type="button" style={{backgroundColor: '#34B467'}}
-                            onClick={(e) => {
-                                setAnchorEl(e.currentTarget);
-                                if (open) setOpen(false)
-                                else quoteAPI();
-                            }}>
-                    <p>New Quote</p>
-                </ButtonBase>
+            <div className={'btn-placement'}>
+                <Fab className={'quote-btn'} variant="extended" size="small"
+                     style={{backgroundColor: '#84BCFF', color: '#25265E'}} aria-label="add"
+                     onClick={(e) => {
+                         setAnchorEl(e.currentTarget);
+                         if (open) setOpen(false)
+                         else quoteAPI();
+                     }}>
+                    <p> inspire me ! </p>
+                </Fab>
             </div>
             <ClickAwayListener onClickAway={() => setOpen(false)}>
                 <Popper open={open} anchorEl={anchorEl} placement={'top-end'}
-                        style={{minWidth: '200px', width: 'fit-content'}}>
+                        style={{minWidth: '200px', width: 'fit-content', marginBottom: '0.5%', maxHeight: '125px'}}>
                     <div className={'popper'}>
                         <p>Quote of the Day</p>
-                        <p className={'quote'}>{quote}</p>
+                        <p className={'quote'}>"{quote}"</p>
                         <p className={'author'}>{author}</p>
                     </div>
                 </Popper>
