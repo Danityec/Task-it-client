@@ -17,6 +17,7 @@ const TemplateList = (props) => {
     const [open, setOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [taskCategory, setTaskCategory] = useState("");
+    const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
@@ -25,6 +26,10 @@ const TemplateList = (props) => {
     }, [])
 
     const addNewTask = () => {
+        if (taskName === "" || taskCategory === "") {
+            setInputError(true)
+            return
+        }
         const body = {name: taskName, category: taskCategory, userID: cookies.user.googleID};
         fetch(`http://localhost:3000/api/tasks`, {
             method: 'POST',
@@ -55,10 +60,11 @@ const TemplateList = (props) => {
             </div>
             <Popup onSubmit={addNewTask} closePopup={() => setOpen(false)} title={"New Task"} open={open}
                    isDelete={false}>
-                <TextField className="task-name-input" label="Name" onChange={e => setTaskName(e.target.value)}
+                <TextField required className="task-name-input" label="Name" onChange={e => setTaskName(e.target.value)}
                            fullWidth value={taskName}/>
-                <TextField className="task-category-input" label="Category"
+                <TextField required className="task-category-input" label="Category"
                            onChange={e => setTaskCategory(e.target.value)} fullWidth value={taskCategory}/>
+                { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
                 <p>Add subtasks later in the task page</p>
             </Popup>
         </>

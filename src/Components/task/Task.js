@@ -11,8 +11,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Header from "../shared/Header";
 import {useCookies} from "react-cookie";
-import Input from '@material-ui/core/Input';
-
 
 const Task = (props) => {
     let history = useHistory()
@@ -37,8 +35,10 @@ const Task = (props) => {
     const [nameInput, setNameInput] = useState("");
     const [categoryInput, setCategoryInput] = useState("");
     const [emailInput, setEmailInput] = useState(null);
+    const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
+        console.log(props.location.data)
         fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
@@ -60,9 +60,7 @@ const Task = (props) => {
                 ...prevState, [subTask["_id"]]: `${subTask["name"]}`
             }));
         })
-        console.log(task.sharedWith)
         task.sharedWith.forEach((email, i)=>{
-            console.log(i)
             fetch(`http://localhost:3000/api/users?email=${email}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
@@ -74,6 +72,10 @@ const Task = (props) => {
     }, [task])
 
     const addReview = () => {
+        if (nameInput === "" || categoryInput === "") {
+            setInputError(true)
+            return
+        }
         const body = {title: nameInput, reviewBody: categoryInput, userID: cookies.user.googleID, templateID: task.templateID};
         fetch(`http://localhost:3000/api/reviews`, {
             method: 'POST',
@@ -87,6 +89,7 @@ const Task = (props) => {
                 setReviewBtnMessage('Thank You!')
                 setCategoryInput('')
                 setNameInput('')
+                setInputError(false)
             });
     }
     const editTask = () => {
@@ -120,6 +123,10 @@ const Task = (props) => {
     }
 
     const addNewSubTask = () => {
+        if (nameInput === "") {
+            setInputError(true)
+            return
+        }
         const body = {name: nameInput};
         fetch(`http://localhost:3000/api/subtasks/${task._id}`, {
             method: 'POST',
@@ -132,9 +139,14 @@ const Task = (props) => {
                 setOpenAddSubTask(false);
                 setTask(result);
                 setNameInput('')
+                setInputError(false)
             });
     }
     const editSubTask = () => {
+        if (nameInput === "") {
+            setInputError(true)
+            return
+        }
         const body = {name: nameInput};
         fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
             method: 'PUT',
@@ -147,6 +159,7 @@ const Task = (props) => {
                 setOpenEditSubTask(false);
                 setTask(result);
                 setNameInput('')
+                setInputError(false)
             });
     }
     const deleteSubTask = () => {
@@ -207,6 +220,7 @@ const Task = (props) => {
         <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask}
                closePopup={() => setOpenEditSubTask(false)} isDelete={false}>
             <TextField label="Name" required value={nameInput} onChange={e => setNameInput(e.target.value)} fullWidth/>
+            { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
         </Popup>
     )
     const deleteSubTaskModal = (
@@ -219,7 +233,8 @@ const Task = (props) => {
     const createSubTaskModal = (
         <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask}
                closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
-            <TextField label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
+            <TextField required label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
+            { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
         </Popup>
     )
     const editTaskModal = (
@@ -248,11 +263,34 @@ const Task = (props) => {
     const createReviewModal = (
         <Popup onSubmit={addReview} title={"Review the task Template"} open={openReview}
                closePopup={() => setOpenReview(false)} isDelete={false}>
-            <TextField label="Title" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
-            <TextField style={{marginTop: '5%'}} label="Type here..." multiline rows={3} variant="outlined"
+            <TextField required label="Title" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
+            <TextField style={{marginTop: '5%'}} required label="Type here..." multiline rows={3} variant="outlined"
                        onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
+            { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
         </Popup>
     )
+
+    const reviewBtn = () => {
+        if(task.userID) {
+            if(task.templateID) {
+                return (
+                    <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true}
+                                     onClick={() => setOpenReview(true)}>
+                        <p style={{width: '200px'}}>{reviewBtnMessage}</p>
+                    </ButtonBase>
+                )
+            } else {
+                return null
+            }
+        } else {
+            return (
+                <ButtonBase centerRipple={true} disabled={reviewList.length <= 0}
+                            onClick={() => setOpenReviewList(true)} style={{backgroundColor: '#2A73CC'}}>
+                    <p style={{width: '100px'}}>Reviews</p>
+                </ButtonBase>
+            )
+        }
+    }
 
     return (
         <>
@@ -261,31 +299,18 @@ const Task = (props) => {
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}>
                     <p style={{width: '200px'}}>Creat New SubTask</p>
                 </ButtonBase>
-                {task.templateID && task.userID ?
-                    (
-                        <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true}
-                                    onClick={() => setOpenReview(true)}>
-                            <p style={{width: '200px'}}>{reviewBtnMessage}</p>
-                        </ButtonBase>
-                    ) : (
-                        <ButtonBase centerRipple={true} disabled={reviewList.length <= 0}
-                                    onClick={() => setOpenReviewList(true)} style={{backgroundColor: '#2A73CC'}}>
-                            <p style={{width: '100px'}}>Reviews</p>
-                        </ButtonBase>
-                    )}
+                {reviewBtn()}
             </Menu>
             <div className="task-page">
                 <div className="task-info">
                     <div className="task-title">
                         <h1>{task.name}</h1>
                         <div className={'task-btn-area'}>
-                            <IconButton>
-                                <EditIcon fontSize="large" style={{color: '#FFDD65'}}
-                                          onClick={() => setOpenEditTask(true)}/>
+                            <IconButton onClick={() => setOpenEditTask(true)}>
+                                <EditIcon fontSize="large" style={{color: '#FFDD65'}}/>
                             </IconButton>
-                            <IconButton>
-                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}}
-                                            onClick={() => setOpenDeleteTask(true)}/>
+                            <IconButton onClick={() => setOpenDeleteTask(true)}>
+                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}}/>
                             </IconButton>
                         </div>
                     </div>

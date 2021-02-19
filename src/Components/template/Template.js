@@ -20,8 +20,8 @@ const Template = (props) => {
             .then(result => history.goBack());
     }
 
-    const eachSubTask = (item) => {
-        return <div className="subtask-name">{item.name}</div>
+    const eachSubTask = (item, index) => {
+        return <div key={index} className="subtask-name">{item.name}</div>
     }
 
     return (

@@ -2,7 +2,7 @@ import React from 'react';
 import './Login.css'
 import {GoogleLogin} from 'react-google-login'
 import Header from "../shared/Header";
-import {Redirect, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
 const Login = (props) => {

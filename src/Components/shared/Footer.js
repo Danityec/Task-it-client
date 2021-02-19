@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import './Footer.css'
 import Popper from '@material-ui/core/Popper';
-import {ButtonBase, ClickAwayListener, Fab} from '@material-ui/core';
+import {ClickAwayListener, Fab} from '@material-ui/core';
 
 
 const Footer = () => {
