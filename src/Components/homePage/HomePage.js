@@ -13,9 +13,18 @@ const HomePage = (props) => {
     const [cookies] = useCookies(['user']);
 
     useEffect(() => {
+        let tasks = []
         fetch(`http://localhost:3000/api/tasks?userID=${cookies.user.googleID}`, {credentials: 'include'})
             .then(response => response.json())
-            .then(result => setTaskList(result))
+            .then(result => {
+                tasks = tasks.concat(result)
+                fetch(`http://localhost:3000/api/tasks?email=${cookies.user.email}`, {credentials: 'include'})
+                    .then(response => response.json())
+                    .then(resultTwo => {
+                        tasks = tasks.concat(resultTwo)
+                        setTaskList(tasks)
+                    })
+            })
     }, [cookies.user.googleID])
 
     useEffect(() => {

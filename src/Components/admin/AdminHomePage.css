@@ -11,6 +11,7 @@
     height: 90%;
     margin: 0 auto;
     display: flex;
+    align-items: flex-start;
     flex-flow: row wrap;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -29,6 +30,7 @@
 .admin-template-list .template-card {
     width: 15%;
     min-width: fit-content;
+    height: fit-content;
     margin: 1%;
     border: 8px solid #EDF5FF;
     border-radius: 10px;
