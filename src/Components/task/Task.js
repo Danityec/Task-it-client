@@ -63,9 +63,10 @@ const Task = (props) => {
             fetch(`http://localhost:3000/api/users?email=${email}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
-                    setEmailNameList(prevState =>
-                        [...prevState, `${result["firstName"]} ${result["lastName"]}`]
-                    )})
+                    if (!emailNameList.includes(`${result["firstName"]} ${result["lastName"]}`))
+                        setEmailNameList(prevState =>
+                            [...prevState, `${result["firstName"]} ${result["lastName"]}`]
+                        )})
         })
 
     }, [task])
