@@ -14,11 +14,11 @@ const HomePage = (props) => {
 
     useEffect(() => {
         let tasks = []
-        fetch(`http://localhost:3000/api/tasks?userID=${cookies.user.googleID}`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 tasks = tasks.concat(result)
-                fetch(`http://localhost:3000/api/tasks?email=${cookies.user.email}`, {credentials: 'include'})
+                fetch(`https://task--it.herokuapp.com/api/tasks?email=${cookies.user.email}`, {credentials: 'include'})
                     .then(response => response.json())
                     .then(resultTwo => {
                         tasks = tasks.concat(resultTwo)
@@ -37,7 +37,7 @@ const HomePage = (props) => {
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        fetch(`http://localhost:3000/api/tasks/${id}`, {
+        fetch(`https://task--it.herokuapp.com/api/tasks/${id}`, {
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
             method: 'PUT',

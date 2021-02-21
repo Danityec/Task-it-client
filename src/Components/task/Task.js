@@ -38,7 +38,7 @@ const Task = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
@@ -47,7 +47,7 @@ const Task = (props) => {
 
     useEffect(() => {
         if (task.userID == null) {
-            fetch(`http://localhost:3000/api/reviews?templateID=${task.templateID}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/reviews?templateID=${task.templateID}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     setReviewList(result)
@@ -60,7 +60,7 @@ const Task = (props) => {
             }));
         })
         task.sharedWith.forEach((email, i)=>{
-            fetch(`http://localhost:3000/api/users?email=${email}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/users?email=${email}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     if (!emailNameList.includes(`${result["firstName"]} ${result["lastName"]}`))
@@ -77,7 +77,7 @@ const Task = (props) => {
             return
         }
         const body = {title: nameInput, reviewBody: categoryInput, userID: cookies.user.googleID, templateID: task.templateID};
-        fetch(`http://localhost:3000/api/reviews`, {
+        fetch(`https://task--it.herokuapp.com/api/reviews`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -99,7 +99,7 @@ const Task = (props) => {
             shared.push(emailInput.title)
         }
         const body = {name: nameInput, category: categoryInput, sharedWith: shared};
-        fetch(`http://localhost:3000/api/tasks/${task._id}`, {
+        fetch(`https://task--it.herokuapp.com/api/tasks/${task._id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -116,7 +116,7 @@ const Task = (props) => {
             });
     }
     const deleteTask = () => {
-        fetch(`http://localhost:3000/api/tasks/${task._id}`, {credentials: 'include', method: 'DELETE'})
+        fetch(`https://task--it.herokuapp.com/api/tasks/${task._id}`, {credentials: 'include', method: 'DELETE'})
             .then(response => {
             })
             .then(result => history.goBack());
@@ -128,7 +128,7 @@ const Task = (props) => {
             return
         }
         const body = {name: nameInput};
-        fetch(`http://localhost:3000/api/subtasks/${task._id}`, {
+        fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -148,7 +148,7 @@ const Task = (props) => {
             return
         }
         const body = {name: nameInput};
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
+        fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${currentSubTask}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -163,7 +163,7 @@ const Task = (props) => {
             });
     }
     const deleteSubTask = () => {
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${currentSubTask}`, {
+        fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${currentSubTask}`, {
             method: 'DELETE', credentials: 'include'
         })
             .then(response => response.json())
@@ -175,7 +175,7 @@ const Task = (props) => {
 
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
-        fetch(`http://localhost:3000/api/subtasks/${task._id}/${id}`, {
+        fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},

@@ -20,7 +20,7 @@ const TemplateList = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/tasks?templates=true`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTemplateList(result))
     }, [])
@@ -31,7 +31,7 @@ const TemplateList = (props) => {
             return
         }
         const body = {name: taskName, category: taskCategory, userID: cookies.user.googleID};
-        fetch(`http://localhost:3000/api/tasks`, {
+        fetch(`https://task--it.herokuapp.com/api/tasks`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},

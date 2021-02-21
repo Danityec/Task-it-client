@@ -19,14 +19,14 @@ const AdminHomePage = (props) => {
 
     useEffect(() => {
         setRefresh(false)
-        fetch(`http://localhost:3000/api/tasks?templates=true`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/tasks?templates=true`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setTemplateList(result))
     }, [refresh])
 
     useEffect(() => {
         templateList.forEach((template) => {
-            fetch(`http://localhost:3000/api/reviews?templateID=${template.templateID}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/reviews?templateID=${template.templateID}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     setLength(prevState => ({
@@ -42,7 +42,7 @@ const AdminHomePage = (props) => {
             return
         }
         const data = {name: templateName, category: templateCategory};
-        fetch(`http://localhost:3000/api/tasks/`, {
+        fetch(`https://task--it.herokuapp.com/api/tasks/`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},

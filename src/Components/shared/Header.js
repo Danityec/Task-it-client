@@ -11,7 +11,7 @@ const Header = (props) => {
     const [cookies] = useCookies(['user']);
 
     const logout = () => {
-        fetch(`http://localhost:3000/authLogin/logout`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/authLogin/logout`, {credentials: 'include'})
             .then(result => history.push('/'))
             .catch(err => console.log(err))
     }

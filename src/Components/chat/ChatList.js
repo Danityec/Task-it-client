@@ -18,13 +18,13 @@ const ChatList = (props) => {
     const [cookies] = useCookies(['user']);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/chats?userID=${cookies.user.googleID}`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/chats?userID=${cookies.user.googleID}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => setChatList(result))
     }, [cookies.user.googleID])
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 result.forEach(user => {
@@ -43,7 +43,7 @@ const ChatList = (props) => {
         })
 
         users.forEach((user, index) => {
-            fetch(`http://localhost:3000/api/users/${user}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/users/${user}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
                     setTitleList(prevState => ({
@@ -54,11 +54,11 @@ const ChatList = (props) => {
     }, [chatList, cookies.user.googleID])
 
     const addNewChat = () => {
-        fetch(`http://localhost:3000/api/users?email=${emailValue.title}`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/users?email=${emailValue.title}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 const body = {userID1: cookies.user.googleID, userID2: result['_id']};
-                fetch(`http://localhost:3000/api/chats/`, {
+                fetch(`https://task--it.herokuapp.com/api/chats/`, {
                     method: 'POST',
                     credentials: 'include',
                     headers: {'Content-Type': 'application/json'},

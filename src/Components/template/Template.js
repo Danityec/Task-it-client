@@ -10,7 +10,7 @@ const Template = (props) => {
 
     const addTaskFromTemplate = () => {
         const body = {userID: cookies.user.googleID};
-        fetch(`http://localhost:3000/api/tasks/${props.item.templateID}`, {
+        fetch(`https://task--it.herokuapp.com/api/tasks/${props.item.templateID}`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},

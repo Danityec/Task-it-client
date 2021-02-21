@@ -12,7 +12,7 @@ const Footer = () => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const quoteAPI = () => {
-        fetch(`http://localhost:3000/quotes`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/quotes`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
                 setQuote(result[0].q)

@@ -11,7 +11,7 @@ const Login = (props) => {
 
     const googleSuccess = async (response) => {
         const body = {token: response.tokenId}
-        fetch(`http://localhost:3000/authLogin`, {
+        fetch(`https://task--it.herokuapp.com/authLogin`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -19,6 +19,7 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
+                console.log("nbhhb")
                 const cookiePromise = new Promise((resolve, reject) => {
                     setCookie('user', result)
                     resolve()

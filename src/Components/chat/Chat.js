@@ -23,7 +23,7 @@ const Chat = (props) => {
 
     const sendMessage = () => {
         const body = {senderID: cookies.user.googleID, message: inputMessage}
-        fetch(`http://localhost:3000/api/chats/messages/${chat._id}`, {
+        fetch(`https://task--it.herokuapp.com/api/chats/messages/${chat._id}`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
