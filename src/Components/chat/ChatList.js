@@ -24,7 +24,6 @@ const ChatList = (props) => {
     }, [cookies.user.googleID])
 
     useEffect(() => {
-        console.log(chatList)
         fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
@@ -44,11 +43,9 @@ const ChatList = (props) => {
         })
 
         users.forEach((user, index) => {
-            console.log(user)
             fetch(`http://localhost:3000/api/users/${user}`, {credentials: 'include'})
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
                     setTitleList(prevState => ({
                         ...prevState, [chatList[index]._id]: `${result.firstName} ${result.lastName}`
                     }));

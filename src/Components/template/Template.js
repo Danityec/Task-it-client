@@ -20,12 +20,12 @@ const Template = (props) => {
             .then(result => history.goBack());
     }
 
-    const eachSubTask = (item, index) => {
-        return <div key={index} className="subtask-name">{item.name}</div>
+    const eachSubTask = (item, i) => {
+        return <div key={i} className="subtask-name">{item.name}</div>
     }
 
     return (
-        <div className="template-card" key={props.key}>
+        <div className="template-card">
             <div className="template-card-title">
                 <p>{props.item.name}</p>
                 <ButtonBase centerRipple={true} onClick={addTaskFromTemplate}><p style={{width: '180px'}}>Choose</p>

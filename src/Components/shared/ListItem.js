@@ -27,15 +27,15 @@ const ListItem = (props) => {
                 <CardActions>
                     {props.action ? (
                         <>
-                            <IconButton>
-                                <EditIcon fontSize="large" style={{color: '#FFDD65'}} onClick={() => {
-                                    props.action(props.item._id, 2)
-                                }}/>
+                            <IconButton onClick={() => {
+                                props.action(props.item._id, 2)
+                            }}>
+                                <EditIcon fontSize="large" style={{color: '#FFDD65'}} />
                             </IconButton>
-                            <IconButton>
-                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} onClick={() => {
-                                    props.action(props.item._id, 1)
-                                }}/>
+                            <IconButton onClick={() => {
+                                props.action(props.item._id, 1)
+                            }}>
+                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} />
                             </IconButton>
                         </>
                     ) : (

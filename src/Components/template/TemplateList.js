@@ -41,8 +41,8 @@ const TemplateList = (props) => {
             .then(result => history.goBack());
     }
 
-    const eachTemplate = (item) => {
-        return (<Template key={item._id} item={item}/>)
+    const eachTemplate = (item, i) => {
+        return (<Template key={i} item={item}/>)
     }
 
     return (

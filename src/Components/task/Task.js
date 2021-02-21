@@ -38,7 +38,6 @@ const Task = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
-        console.log(props.location.data)
         fetch(`http://localhost:3000/api/users`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {

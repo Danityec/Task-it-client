@@ -25,10 +25,9 @@ const HomePage = (props) => {
                         setTaskList(tasks)
                     })
             })
-    }, [cookies.user.googleID])
+    }, [cookies.user.email, cookies.user.googleID])
 
     useEffect(() => {
-        console.log(taskList)
         taskList.forEach((task) => {
             setTitleList(prevState => ({
                 ...prevState, [task._id]: `${task.name}`
