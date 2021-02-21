@@ -6,7 +6,7 @@ const AdminRouter = ({component: Component, ...rest}) => {
     const [cookies] = useCookies(['user']);
 
     const isAuthenticated = () => {
-        if(cookies.user) return !!cookies.user.admin
+        if(cookies.user.googleID) return !!cookies.user.admin
         else return false
     }
 

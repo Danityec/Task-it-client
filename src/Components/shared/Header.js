@@ -4,26 +4,30 @@ import {Avatar, MenuItem, MenuList, Grow, Popper, ClickAwayListener, Paper, Butt
 import './Header.css'
 import {useCookies} from "react-cookie";
 
+
 const Header = (props) => {
     const [open, setOpen] = useState(false);
     const anchorRef = useRef(null);
     let history = useHistory();
-    const [cookies] = useCookies(['user']);
+    const [cookies, setCookie] = useCookies(['user']);
 
     const logout = () => {
         fetch(`https://task--it.herokuapp.com/authLogin/logout`, {credentials: 'include'})
-            .then(result => history.push('/'))
+            .then(result => {
+                setCookie('user', null)
+                history.push('/')
+            })
             .catch(err => console.log(err))
     }
 
     return (
         <div className={"header"}>
             <div className={'header-content'}>
-                {cookies.user ? (cookies.user.admin ?
+                {cookies.user.googleID ? (cookies.user.admin ?
                     <NavLink exact to="/admin" className={'logo'}/>:<NavLink exact to="/dashboard" className={'logo'}/>)
                     : <NavLink exact to="/" className={'logo'}/>
                 }
-                {cookies.user ? (
+                {cookies.user.googleID ? (
                     <div>
                         <Avatar className={'user-avatar'}
                                 ref={anchorRef} aria-controls={open ? 'menu-list' : undefined}
