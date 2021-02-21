@@ -23,11 +23,11 @@ const Header = (props) => {
     return (
         <div className={"header"}>
             <div className={'header-content'}>
-                {cookies.user.googleID ? (cookies.user.admin ?
+                {cookies.user && cookies.user.googleID ? (cookies.user.admin ?
                     <NavLink exact to="/admin" className={'logo'}/>:<NavLink exact to="/dashboard" className={'logo'}/>)
                     : <NavLink exact to="/" className={'logo'}/>
                 }
-                {cookies.user.googleID ? (
+                {cookies.user && cookies.user.googleID ? (
                     <div>
                         <Avatar className={'user-avatar'}
                                 ref={anchorRef} aria-controls={open ? 'menu-list' : undefined}
