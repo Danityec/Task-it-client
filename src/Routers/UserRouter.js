@@ -7,7 +7,7 @@ const UserRouter = ({component: Component, ...rest}) => {
 
     return (
         <Route {...rest} render={props => (
-            cookies.user.googleID ? <Component {...props} /> : <Redirect to="/"/>
+            cookies.user ? <Component {...props} /> : <Redirect to="/"/>
         )}/>
     )
 }
