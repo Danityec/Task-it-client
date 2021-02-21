@@ -17,6 +17,7 @@ const HomePage = (props) => {
         fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
+                console.log(result)
                 tasks = tasks.concat(result)
                 fetch(`https://task--it.herokuapp.com/api/tasks?email=${cookies.user.email}`, {credentials: 'include'})
                     .then(response => response.json())

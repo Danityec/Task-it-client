@@ -19,7 +19,6 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 const cookiePromise = new Promise((resolve, reject) => {
                     setCookie('user', result)
                     resolve()
