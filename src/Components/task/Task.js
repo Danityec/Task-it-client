@@ -225,12 +225,12 @@ const Task = (props) => {
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${id}`, {
-            method: 'PUT',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'user': cookies.user.googleID
             },
+            credentials: 'include',
+            method: 'PUT',
             body: JSON.stringify(body)
         })
             .then(response => response.json())
