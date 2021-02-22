@@ -5,17 +5,9 @@ import {useCookies} from 'react-cookie'
 const UserRouter = ({component: Component, ...rest}) => {
     const [cookies] = useCookies(['user']);
 
-    const check = () => {
-        console.log(Component)
-        console.log(this.props)
-        if (cookies.user)
-            return true
-        else
-            return false
-    }
     return (
         <Route {...rest} render={props => (
-            check() ? <Component {...props} /> : <Redirect to="/"/>
+            cookies.user ? <Component {...props} /> : <Redirect to="/"/>
         )}/>
     )
 }
