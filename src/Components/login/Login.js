@@ -20,7 +20,7 @@ const Login = (props) => {
             .then(response => response.json())
             .then(result => {
                 const cookiePromise = new Promise((resolve, reject) => {
-                    setCookie('user', result)
+                    // setCookie('user', result)
                     setCookie('user', result ,{ domain: 'task--it.herokuapp.com' });
 
                     resolve()
