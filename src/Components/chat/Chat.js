@@ -11,16 +11,18 @@ import {useHistory} from "react-router-dom";
 const Chat = (props) => {
     let history = useHistory();
     const [inputMessage, setInputMessage] = useState('');
-    const [chat, setChat] = useState(props.location.data);
+    const [chat, setChat] = useState(null);
     const messagesEndRef = useRef(null)
     const [cookies] = useCookies(['user']);
 
     useEffect(() => {
         if(!props.location.data) {
             history.push('/chats')
+        } else {
+            setChat(props.location.data)
         }
         scrollToBottom()
-    }, []);
+    }, [props.location.data]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"})
