@@ -47,7 +47,7 @@ const TemplateList = (props) => {
             body: JSON.stringify(body),
         })
             .then(response => response.json())
-            .then(result => history.goBack());
+            .then(result => history.goBack())
     }
 
     const eachTemplate = (item, i) => {
@@ -73,7 +73,7 @@ const TemplateList = (props) => {
                            fullWidth value={taskName}/>
                 <TextField required className="task-category-input" label="Category"
                            onChange={e => setTaskCategory(e.target.value)} fullWidth value={taskCategory}/>
-                { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
+                {InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
                 <p>Add subtasks later in the task page</p>
             </Popup>
         </>

@@ -15,12 +15,12 @@ const HomePage = (props) => {
     useEffect(() => {
         let tasks = []
         fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'user': cookies.user.googleID
-                }
-            })
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
             .then(response => response.json())
             .then(result => {
                 tasks = tasks.concat(result)
@@ -43,7 +43,7 @@ const HomePage = (props) => {
         taskList.forEach((task) => {
             setTitleList(prevState => ({
                 ...prevState, [task._id]: `${task.name}`
-            }));
+            }))
         })
     }, [taskList])
 
@@ -59,7 +59,6 @@ const HomePage = (props) => {
             body: JSON.stringify(body)
         })
             .then(response => response.json())
-            .then(result => {})
     }
 
     return (

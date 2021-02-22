@@ -48,11 +48,6 @@ h1, h2, h3 {
     justify-content: space-between;
 }
 
-/*.task-btn-area svg {*/
-/*    width: 90%;*/
-/*    height: 70%;*/
-/*}*/
-
 button:disabled p {
     color: #a9a9a9;
 }

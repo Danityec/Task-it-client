@@ -12,30 +12,25 @@ const ListItem = (props) => {
     const handleChange = (event) => {
         setChecked(event.target.checked);
         props.checkboxToggle(props.item._id, !checked)
-    };
+    }
 
     return (
         <MuiListItem className={'list-item'}>
             <Card elevation={0} className={'list-item card'}>
                 <CardContent className={'card-content'}>
                     {props.checkboxes ? <Checkbox color="primary" checked={checked} onChange={handleChange}/> : null}
-                    <Link
-                        to={{pathname: props.pathName, data: props.item, name: props.itemTitle}}>
+                    <Link to={{pathname: props.pathName, data: props.item, name: props.itemTitle}}>
                         {props.itemTitle}
                     </Link>
                 </CardContent>
                 <CardActions>
                     {props.action ? (
                         <>
-                            <IconButton onClick={() => {
-                                props.action(props.item._id, 2)
-                            }}>
-                                <EditIcon fontSize="large" style={{color: '#FFDD65'}} />
+                            <IconButton onClick={() => {props.action(props.item._id, 2)}}>
+                                <EditIcon fontSize="large" style={{color: '#FFDD65'}}/>
                             </IconButton>
-                            <IconButton onClick={() => {
-                                props.action(props.item._id, 1)
-                            }}>
-                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}} />
+                            <IconButton onClick={() => {props.action(props.item._id, 1)}}>
+                                <DeleteIcon fontSize="large" style={{color: '#FF5C5C'}}/>
                             </IconButton>
                         </>
                     ) : (

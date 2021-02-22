@@ -29,9 +29,7 @@ const Popup = (props) => {
         return (
             <div className={'popup-modal'}>
                 <div className={'modal-title-area'}>
-                    <h1>
-                        {props.title}
-                    </h1>
+                    <h1>{props.title}</h1>
                     <ButtonBase className={'modal-close-btn'} onClick={props.closePopup}>
                         <CloseRoundedIcon/>
                     </ButtonBase>

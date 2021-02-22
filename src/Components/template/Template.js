@@ -6,10 +6,10 @@ import {useCookies} from "react-cookie";
 
 const Template = (props) => {
     let history = useHistory()
-    const [cookies] = useCookies(['user']);
+    const [cookies] = useCookies(['user'])
 
     const addTaskFromTemplate = () => {
-        const body = {userID: cookies.user.googleID};
+        const body = {userID: cookies.user.googleID}
         fetch(`https://task--it.herokuapp.com/api/tasks/${props.item.templateID}`, {
             method: 'POST',
             credentials: 'include',
@@ -19,8 +19,7 @@ const Template = (props) => {
             },
             body: JSON.stringify(body),
         })
-            .then(response => {})
-            .then(result => history.goBack());
+            .then(response => history.goBack())
     }
 
     const eachSubTask = (item, i) => {

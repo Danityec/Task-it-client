@@ -66,7 +66,7 @@ const ChatList = (props) => {
                 .then(result => {
                     setTitleList(prevState => ({
                         ...prevState, [chatList[index]._id]: `${result.firstName} ${result.lastName}`
-                    }));
+                    }))
                 })
         })
     }, [chatList, cookies.user.googleID])
@@ -89,7 +89,7 @@ const ChatList = (props) => {
                     .then(result => {
                         setOpen(false)
                         setChatList(result)
-                    });
+                    })
             })
     }
 

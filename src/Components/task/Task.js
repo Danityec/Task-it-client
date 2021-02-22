@@ -38,24 +38,17 @@ const Task = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
-        if(!props.location.data) {
-            if(!cookies.user.admin)
-                history.push('/dashboard')
-            else
-                history.push('/admin')
-        } else {
-            fetch(`https://task--it.herokuapp.com/api/users`, {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'user': cookies.user.googleID
-                }
+        fetch(`https://task--it.herokuapp.com/api/users`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
+            .then(response => response.json())
+            .then(result => {
+                result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
             })
-                .then(response => response.json())
-                .then(result => {
-                    result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
-                })
-        }
     }, [])
 
     useEffect(() => {
@@ -68,17 +61,16 @@ const Task = (props) => {
                 }
             })
                 .then(response => response.json())
-                .then(result => {
-                    setReviewList(result)
-                })
+                .then(result => setReviewList(result))
         }
 
         task.subTask.forEach((subTask) => {
             setTitleList(prevState => ({
                 ...prevState, [subTask["_id"]]: `${subTask["name"]}`
-            }));
+            }))
         })
-        task.sharedWith.forEach((email, i)=>{
+
+        task.sharedWith.forEach((email, i) => {
             fetch(`https://task--it.herokuapp.com/api/users?email=${email}`, {
                 credentials: 'include',
                 headers: {
@@ -91,9 +83,9 @@ const Task = (props) => {
                     if (!emailNameList.includes(`${result["firstName"]} ${result["lastName"]}`))
                         setEmailNameList(prevState =>
                             [...prevState, `${result["firstName"]} ${result["lastName"]}`]
-                        )})
+                        )
+                })
         })
-
     }, [task])
 
     const addReview = () => {
@@ -101,7 +93,12 @@ const Task = (props) => {
             setInputError(true)
             return
         }
-        const body = {title: nameInput, reviewBody: categoryInput, userID: cookies.user.googleID, templateID: task.templateID};
+        const body = {
+            title: nameInput,
+            reviewBody: categoryInput,
+            userID: cookies.user.googleID,
+            templateID: task.templateID
+        }
         fetch(`https://task--it.herokuapp.com/api/reviews`, {
             method: 'POST',
             credentials: 'include',
@@ -118,7 +115,7 @@ const Task = (props) => {
                 setCategoryInput('')
                 setNameInput('')
                 setInputError(false)
-            });
+            })
     }
     const editTask = () => {
         let shared = []
@@ -138,26 +135,24 @@ const Task = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                setOpenEditTask(false);
-                setTask(result);
+                setOpenEditTask(false)
+                setTask(result)
                 setNameInput('')
                 setEmailNameList([])
                 setCategoryInput('')
                 setEmailInput(null)
-            });
+            })
     }
     const deleteTask = () => {
         fetch(`https://task--it.herokuapp.com/api/tasks/${task._id}`, {
             credentials: 'include',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'user': cookies.user.googleID
-            },
-            method: 'DELETE'
+            }
         })
-            .then(response => {
-            })
-            .then(result => history.goBack());
+            .then(response => history.goBack())
     }
 
     const addNewSubTask = () => {
@@ -165,7 +160,7 @@ const Task = (props) => {
             setInputError(true)
             return
         }
-        const body = {name: nameInput};
+        const body = {name: nameInput}
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}`, {
             method: 'POST',
             credentials: 'include',
@@ -177,18 +172,18 @@ const Task = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                setOpenAddSubTask(false);
-                setTask(result);
+                setOpenAddSubTask(false)
+                setTask(result)
                 setNameInput('')
                 setInputError(false)
-            });
+            })
     }
     const editSubTask = () => {
         if (nameInput === "") {
             setInputError(true)
             return
         }
-        const body = {name: nameInput};
+        const body = {name: nameInput}
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${currentSubTask}`, {
             method: 'PUT',
             credentials: 'include',
@@ -200,8 +195,8 @@ const Task = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                setOpenEditSubTask(false);
-                setTask(result);
+                setOpenEditSubTask(false)
+                setTask(result)
                 setNameInput('')
                 setInputError(false)
             });
@@ -209,17 +204,17 @@ const Task = (props) => {
     const deleteSubTask = () => {
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${currentSubTask}`, {
             credentials: 'include',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'user': cookies.user.googleID
-            },
-            method: 'DELETE'
+            }
         })
             .then(response => response.json())
             .then(result => {
                 setOpenDeleteSubTask(false);
                 setTask(result)
-            });
+            })
     }
 
     const checkboxToggle = (id, completed) => {
@@ -234,8 +229,6 @@ const Task = (props) => {
             body: JSON.stringify(body)
         })
             .then(response => response.json())
-            .then(result => {
-            })
     }
     const getCurrentSubTask = (subTask, num) => {
         setCurrentSubTask(subTask)
@@ -272,7 +265,7 @@ const Task = (props) => {
         <Popup onSubmit={editSubTask} title={"Edit Subtask"} open={openEditSubTask}
                closePopup={() => setOpenEditSubTask(false)} isDelete={false}>
             <TextField label="Name" required value={nameInput} onChange={e => setNameInput(e.target.value)} fullWidth/>
-            { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
+            {InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
         </Popup>
     )
     const deleteSubTaskModal = (
@@ -286,7 +279,7 @@ const Task = (props) => {
         <Popup onSubmit={addNewSubTask} title={"Create Subtask"} open={openAddSubTask}
                closePopup={() => setOpenAddSubTask(false)} isDelete={false}>
             <TextField required label="Name" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
-            { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
+            {InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
         </Popup>
     )
     const editTaskModal = (
@@ -319,16 +312,16 @@ const Task = (props) => {
             <TextField required label="Title" onChange={e => setNameInput(e.target.value)} fullWidth value={nameInput}/>
             <TextField style={{marginTop: '5%'}} required label="Type here..." multiline rows={3} variant="outlined"
                        onChange={e => setCategoryInput(e.target.value)} fullWidth value={categoryInput}/>
-            { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
+            {InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
         </Popup>
     )
 
     const reviewBtn = () => {
-        if(task.userID) {
-            if(task.templateID) {
+        if (task.userID) {
+            if (task.templateID) {
                 return (
                     <ButtonBase style={{backgroundColor: '#2A73CC'}} centerRipple={true}
-                                     onClick={() => setOpenReview(true)}>
+                                onClick={() => setOpenReview(true)}>
                         <p style={{width: '200px'}}>{reviewBtnMessage}</p>
                     </ButtonBase>
                 )
@@ -348,7 +341,7 @@ const Task = (props) => {
     return (
         <>
             <Header/>
-            <Menu goBack={true} reroute={ cookies.user.admin ? ({pathname: '/admin'}) : ({pathname: '/dashboard'}) }>
+            <Menu goBack={true} reroute={cookies.user.admin ? ({pathname: '/admin'}) : ({pathname: '/dashboard'})}>
                 <ButtonBase centerRipple={true} onClick={() => setOpenAddSubTask(true)}>
                     <p style={{width: '200px'}}>Creat New SubTask</p>
                 </ButtonBase>
@@ -378,7 +371,7 @@ const Task = (props) => {
                     ) : null}
                 </div>
                 <div className={'subtask-list'}>
-                    <List checkboxes={ !cookies.user.admin } action={getCurrentSubTask} checkboxToggle={checkboxToggle}
+                    <List checkboxes={!cookies.user.admin} action={getCurrentSubTask} checkboxToggle={checkboxToggle}
                           dataList={task.subTask} titleList={titleList}/>
                 </div>
                 {editSubTaskModal}

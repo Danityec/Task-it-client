@@ -4,7 +4,6 @@ import './Footer.css'
 import Popper from '@material-ui/core/Popper';
 import {ClickAwayListener, Fab} from '@material-ui/core';
 
-
 const Footer = () => {
     const [quote, setQuote] = useState("")
     const [author, setAuthor] = useState("")
@@ -31,8 +30,7 @@ const Footer = () => {
                 <Fab className={'quote-btn'} variant="extended" size="small"
                      style={{backgroundColor: '#84BCFF', color: '#25265E'}} aria-label="add"
                      onClick={(e) => {
-                         setAnchorEl(e.currentTarget);
-                         // if (open) setOpen(false)
+                         setAnchorEl(e.currentTarget)
                          quoteAPI()
                      }}>
                     <p> inspire me ! </p>
