@@ -14,7 +14,7 @@ const Header = (props) => {
     const logout = () => {
         fetch(`https://task--it.herokuapp.com/authLogin/logout`, {
             credentials: 'include',
-            headers: {'user': cookies.user}
+            headers: {'user': cookies.user.googleID}
         })
             .then(result => {
                 setCookie('user', '')
