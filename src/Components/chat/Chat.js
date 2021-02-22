@@ -16,7 +16,7 @@ const Chat = (props) => {
     const [cookies] = useCookies(['user']);
 
     useEffect(() => {
-        if(!props.location.data) {
+        if(!props.location.name || !props.location.messages) {
             history.push('/chats')
         } else {
             setChat(props.location.data)
