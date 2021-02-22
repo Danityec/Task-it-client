@@ -43,18 +43,19 @@ const Task = (props) => {
                 history.push('/dashboard')
             else
                 history.push('/admin')
-        }
-        fetch(`https://task--it.herokuapp.com/api/users`, {
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'user': cookies.user.googleID
-            }
-        })
-            .then(response => response.json())
-            .then(result => {
-                result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
+        } else {
+            fetch(`https://task--it.herokuapp.com/api/users`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user': cookies.user.googleID
+                }
             })
+                .then(response => response.json())
+                .then(result => {
+                    result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
+                })
+        }
     }, [])
 
     useEffect(() => {

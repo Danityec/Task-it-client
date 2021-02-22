@@ -16,10 +16,10 @@ const Chat = (props) => {
     const [cookies] = useCookies(['user']);
 
     useEffect(() => {
-        scrollToBottom()
         if(!props.location.data) {
             history.push('/chats')
         }
+        scrollToBottom()
     }, []);
 
     const scrollToBottom = () => {
