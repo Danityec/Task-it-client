@@ -38,6 +38,12 @@ const Task = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
+        if(!props.location.data) {
+            if(!cookies.user.admin)
+                history.push('/dashboard')
+            else
+                history.push('/admin')
+        }
         fetch(`https://task--it.herokuapp.com/api/users`, {
             credentials: 'include',
             headers: {

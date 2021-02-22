@@ -6,8 +6,10 @@ import Message from "./Message";
 import Menu from "../shared/Menu";
 import Header from "../shared/Header";
 import {useCookies} from "react-cookie";
+import {useHistory} from "react-router-dom";
 
 const Chat = (props) => {
+    let history = useHistory();
     const [inputMessage, setInputMessage] = useState('');
     const [chat, setChat] = useState(props.location.data);
     const messagesEndRef = useRef(null)
@@ -15,6 +17,9 @@ const Chat = (props) => {
 
     useEffect(() => {
         scrollToBottom()
+        if(!props.location.data) {
+            history.push('/chats')
+        }
     }, []);
 
     const scrollToBottom = () => {
