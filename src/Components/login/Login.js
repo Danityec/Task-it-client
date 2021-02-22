@@ -24,7 +24,8 @@ const Login = (props) => {
                     // setCookie('user', result)
                     // setCookie('user', result ,{ domain: '.task--it.herokuapp.com' });
                     // setCookie('user-front', result ,{ domain: '.taskitapp.netlify.app' });
-                    console.log(cookies.toString())
+                    console.log(cookies)
+                    console.log(cookies.user)
                     resolve()
                 });
                 cookiePromise.then(() => {
