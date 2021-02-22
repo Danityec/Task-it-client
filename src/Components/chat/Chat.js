@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 const Chat = (props) => {
     let history = useHistory();
     const [inputMessage, setInputMessage] = useState('');
-    const [chat, setChat] = useState(null);
+    const [chat, setChat] = useState(props.location.data);
     const messagesEndRef = useRef(null)
     const [cookies] = useCookies(['user']);
 
