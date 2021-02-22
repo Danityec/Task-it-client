@@ -378,7 +378,7 @@ const Task = (props) => {
                     ) : null}
                 </div>
                 <div className={'subtask-list'}>
-                    <List checkboxes={ !cookies.user.admin } action={getCurrentSubTask} checkboxeToggle={checkboxToggle}
+                    <List checkboxes={ !cookies.user.admin } action={getCurrentSubTask} checkboxToggle={checkboxToggle}
                           dataList={task.subTask} titleList={titleList}/>
                 </div>
                 {editSubTaskModal}

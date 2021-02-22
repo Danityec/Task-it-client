@@ -11,7 +11,7 @@ const ListItem = (props) => {
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
-        props.checkboxeToggle(props.item._id, !checked)
+        props.checkboxToggle(props.item._id, !checked)
     };
 
     return (
