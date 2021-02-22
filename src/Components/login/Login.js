@@ -22,6 +22,7 @@ const Login = (props) => {
                 const cookiePromise = new Promise((resolve, reject) => {
                     // setCookie('user', result)
                     setCookie('user', result ,{ domain: 'task--it.herokuapp.com' });
+                    setCookie('user', result ,{ domain: '.taskitapp.netlify.app' });
 
                     resolve()
                 });
