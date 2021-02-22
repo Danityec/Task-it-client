@@ -75,7 +75,7 @@ const ChatList = (props) => {
         fetch(`https://task--it.herokuapp.com/api/users?email=${emailValue.title}`, {credentials: 'include'})
             .then(response => response.json())
             .then(result => {
-                const body = {userID1: cookies.user.googleID, userID2: result['_id']};
+                const body = {userID1: cookies.user.googleID, userID2: result.googleID};
                 fetch(`https://task--it.herokuapp.com/api/chats/`, {
                     method: 'POST',
                     credentials: 'include',
