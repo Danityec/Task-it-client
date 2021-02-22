@@ -14,12 +14,18 @@ const HomePage = (props) => {
 
     useEffect(() => {
         let tasks = []
-        fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {
+                credentials: 'include',
+                headers: {'user': cookies.user}
+            })
             .then(response => response.json())
             .then(result => {
                 console.log(result)
                 tasks = tasks.concat(result)
-                fetch(`https://task--it.herokuapp.com/api/tasks?email=${cookies.user.email}`, {credentials: 'include'})
+                fetch(`https://task--it.herokuapp.com/api/tasks?email=${cookies.user.email}`, {
+                    credentials: 'include',
+                    headers: {'user': cookies.user}
+                })
                     .then(response => response.json())
                     .then(resultTwo => {
                         tasks = tasks.concat(resultTwo)

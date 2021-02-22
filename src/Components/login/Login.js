@@ -29,6 +29,7 @@ const Login = (props) => {
                     resolve()
                 });
                 cookiePromise.then(() => {
+                    console.log(cookies.user)
                     if (result)
                         if (result.admin)
                             history.push('/admin')
