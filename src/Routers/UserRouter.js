@@ -6,7 +6,8 @@ const UserRouter = ({component: Component, ...rest}) => {
     const [cookies] = useCookies(['user']);
 
     const check = () => {
-        console.log(rest)
+        console.log(Component)
+        console.log(this.props)
         if (cookies.user)
             return true
         else
