@@ -12,7 +12,10 @@ const Header = (props) => {
     const [cookies, setCookie] = useCookies(['user']);
 
     const logout = () => {
-        fetch(`https://task--it.herokuapp.com/authLogin/logout`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/authLogin/logout`, {
+            credentials: 'include',
+            headers: {'user': cookies.user}
+        })
             .then(result => {
                 setCookie('user', '')
                 history.push('/')
