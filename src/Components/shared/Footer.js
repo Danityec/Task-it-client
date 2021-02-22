@@ -32,8 +32,8 @@ const Footer = () => {
                      style={{backgroundColor: '#84BCFF', color: '#25265E'}} aria-label="add"
                      onClick={(e) => {
                          setAnchorEl(e.currentTarget);
-                         if (open) setOpen(false)
-                         else quoteAPI();
+                         // if (open) setOpen(false)
+                         quoteAPI()
                      }}>
                     <p> inspire me ! </p>
                 </Fab>
