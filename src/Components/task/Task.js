@@ -289,6 +289,7 @@ const Task = (props) => {
                        fullWidth/>
             <TextField label="Category" value={categoryInput}
                        onChange={e => setCategoryInput(e.target.value)} fullWidth/>
+            <p>Share your task with a TaskIt user </p>
             {task.userID ? (
                 <Autocomplete
                     style={{width: '100%', paddingTop: '5%'}}
