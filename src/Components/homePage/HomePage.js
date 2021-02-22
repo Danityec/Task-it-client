@@ -14,9 +14,13 @@ const HomePage = (props) => {
 
     useEffect(() => {
         let tasks = []
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json',
+            'user': cookies.user.googleID
+        });
         fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {
                 credentials: 'include',
-                headers: {'user': cookies.user.googleID}
+                headers: myHeaders
             })
             .then(response => response.json())
             .then(result => {
