@@ -19,17 +19,11 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 const cookiePromise = new Promise((resolve, reject) => {
                     setCookie('user', result)
-                    // setCookie('user', result ,{ domain: '.task--it.herokuapp.com' });
-                    // setCookie('user-front', result ,{ domain: '.taskitapp.netlify.app' });
-                    console.log(cookies)
-                    console.log(cookies.user)
                     resolve()
                 });
                 cookiePromise.then(() => {
-                    console.log(cookies.user)
                     if (result)
                         if (result.admin)
                             history.push('/admin')

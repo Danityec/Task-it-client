@@ -20,7 +20,13 @@ const TemplateList = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
-        fetch(`https://task--it.herokuapp.com/api/tasks?templates=true`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/tasks?templates=true`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
             .then(response => response.json())
             .then(result => setTemplateList(result))
     }, [])
@@ -34,7 +40,10 @@ const TemplateList = (props) => {
         fetch(`https://task--it.herokuapp.com/api/tasks`, {
             method: 'POST',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body),
         })
             .then(response => response.json())

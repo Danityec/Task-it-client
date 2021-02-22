@@ -13,7 +13,10 @@ const Template = (props) => {
         fetch(`https://task--it.herokuapp.com/api/tasks/${props.item.templateID}`, {
             method: 'POST',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body),
         })
             .then(response => {})

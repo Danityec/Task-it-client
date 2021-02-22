@@ -14,21 +14,22 @@ const HomePage = (props) => {
 
     useEffect(() => {
         let tasks = []
-        const myHeaders = new Headers({
-            'Content-Type': 'application/json',
-            'user': cookies.user.googleID
-        });
         fetch(`https://task--it.herokuapp.com/api/tasks?userID=${cookies.user.googleID}`, {
                 credentials: 'include',
-                headers: myHeaders
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user': cookies.user.googleID
+                }
             })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 tasks = tasks.concat(result)
                 fetch(`https://task--it.herokuapp.com/api/tasks?email=${cookies.user.email}`, {
                     credentials: 'include',
-                    headers: {'user': cookies.user}
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user': cookies.user.googleID
+                    }
                 })
                     .then(response => response.json())
                     .then(resultTwo => {
@@ -49,7 +50,10 @@ const HomePage = (props) => {
     const checkboxToggle = (id, completed) => {
         const body = {completed: completed}
         fetch(`https://task--it.herokuapp.com/api/tasks/${id}`, {
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             credentials: 'include',
             method: 'PUT',
             body: JSON.stringify(body)

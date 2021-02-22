@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Popup from "../shared/Popup";
 import Header from "../shared/Header";
+import {useCookies} from "react-cookie";
 
 const AdminHomePage = (props) => {
     const [templateList, setTemplateList] = useState([]);
@@ -16,17 +17,30 @@ const AdminHomePage = (props) => {
     const [templateCategory, setTemplateCategory] = useState("");
     const [InputError, setInputError] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [cookies] = useCookies(['user']);
 
     useEffect(() => {
         setRefresh(false)
-        fetch(`https://task--it.herokuapp.com/api/tasks?templates=true`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/tasks?templates=true`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
             .then(response => response.json())
             .then(result => setTemplateList(result))
     }, [refresh])
 
     useEffect(() => {
         templateList.forEach((template) => {
-            fetch(`https://task--it.herokuapp.com/api/reviews?templateID=${template.templateID}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/reviews?templateID=${template.templateID}`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user': cookies.user.googleID
+                }
+            })
                 .then(response => response.json())
                 .then(result => {
                     setLength(prevState => ({
@@ -45,7 +59,10 @@ const AdminHomePage = (props) => {
         fetch(`https://task--it.herokuapp.com/api/tasks/`, {
             method: 'POST',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(data),
         })
             .then(response => response.json())
@@ -84,11 +101,12 @@ const AdminHomePage = (props) => {
             </Menu>
             <Popup onSubmit={addNewTemplate} title={"New Template"} open={openAddTemplate}
                    closePopup={() => setOpenAddTemplate(false)}>
-                <TextField required className="template-name-input" label="Name" onChange={e => setTemplateName(e.target.value)}
+                <TextField required className="template-name-input" label="Name"
+                           onChange={e => setTemplateName(e.target.value)}
                            fullWidth value={templateName}/>
                 <TextField required className="template-category-input" label="Category"
                            onChange={e => setTemplateCategory(e.target.value)} fullWidth value={templateCategory}/>
-                { InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
+                {InputError ? <p className={'input-error'}>Please fill all required information</p> : null}
             </Popup>
             <div className={'admin-template-page'}>
                 <div className={'admin-template-list'}>

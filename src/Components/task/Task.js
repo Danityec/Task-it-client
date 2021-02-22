@@ -38,7 +38,13 @@ const Task = (props) => {
     const [InputError, setInputError] = useState(false);
 
     useEffect(() => {
-        fetch(`https://task--it.herokuapp.com/api/users`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/users`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
             .then(response => response.json())
             .then(result => {
                 result.forEach(user => setEmailList(prevArray => [...prevArray, {title: user['email']}]))
@@ -47,7 +53,13 @@ const Task = (props) => {
 
     useEffect(() => {
         if (task.userID == null) {
-            fetch(`https://task--it.herokuapp.com/api/reviews?templateID=${task.templateID}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/reviews?templateID=${task.templateID}`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user': cookies.user.googleID
+                }
+            })
                 .then(response => response.json())
                 .then(result => {
                     setReviewList(result)
@@ -60,7 +72,13 @@ const Task = (props) => {
             }));
         })
         task.sharedWith.forEach((email, i)=>{
-            fetch(`https://task--it.herokuapp.com/api/users?email=${email}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/users?email=${email}`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user': cookies.user.googleID
+                }
+            })
                 .then(response => response.json())
                 .then(result => {
                     if (!emailNameList.includes(`${result["firstName"]} ${result["lastName"]}`))
@@ -80,7 +98,10 @@ const Task = (props) => {
         fetch(`https://task--it.herokuapp.com/api/reviews`, {
             method: 'POST',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body),
         })
             .then(response => response.json())
@@ -102,7 +123,10 @@ const Task = (props) => {
         fetch(`https://task--it.herokuapp.com/api/tasks/${task._id}`, {
             method: 'PUT',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body),
         })
             .then(response => response.json())
@@ -116,7 +140,14 @@ const Task = (props) => {
             });
     }
     const deleteTask = () => {
-        fetch(`https://task--it.herokuapp.com/api/tasks/${task._id}`, {credentials: 'include', method: 'DELETE'})
+        fetch(`https://task--it.herokuapp.com/api/tasks/${task._id}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
+            method: 'DELETE'
+        })
             .then(response => {
             })
             .then(result => history.goBack());
@@ -131,7 +162,10 @@ const Task = (props) => {
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}`, {
             method: 'POST',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body),
         })
             .then(response => response.json())
@@ -151,7 +185,10 @@ const Task = (props) => {
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${currentSubTask}`, {
             method: 'PUT',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body),
         })
             .then(response => response.json())
@@ -164,7 +201,12 @@ const Task = (props) => {
     }
     const deleteSubTask = () => {
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${currentSubTask}`, {
-            method: 'DELETE', credentials: 'include'
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
+            method: 'DELETE'
         })
             .then(response => response.json())
             .then(result => {
@@ -178,7 +220,10 @@ const Task = (props) => {
         fetch(`https://task--it.herokuapp.com/api/subtasks/${task._id}/${id}`, {
             method: 'PUT',
             credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            },
             body: JSON.stringify(body)
         })
             .then(response => response.json())

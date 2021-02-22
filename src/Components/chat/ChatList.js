@@ -18,13 +18,25 @@ const ChatList = (props) => {
     const [cookies] = useCookies(['user']);
 
     useEffect(() => {
-        fetch(`https://task--it.herokuapp.com/api/chats?userID=${cookies.user.googleID}`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/chats?userID=${cookies.user.googleID}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
             .then(response => response.json())
             .then(result => setChatList(result))
     }, [cookies.user.googleID])
 
     useEffect(() => {
-        fetch(`https://task--it.herokuapp.com/api/users`, {credentials: 'include'})
+        fetch(`https://task--it.herokuapp.com/api/users`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'user': cookies.user.googleID
+            }
+        })
             .then(response => response.json())
             .then(result => {
                 result.forEach(user => {
@@ -43,7 +55,13 @@ const ChatList = (props) => {
         })
 
         users.forEach((user, index) => {
-            fetch(`https://task--it.herokuapp.com/api/users/${user}`, {credentials: 'include'})
+            fetch(`https://task--it.herokuapp.com/api/users/${user}`, {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user': cookies.user.googleID
+                }
+            })
                 .then(response => response.json())
                 .then(result => {
                     setTitleList(prevState => ({
@@ -61,7 +79,10 @@ const ChatList = (props) => {
                 fetch(`https://task--it.herokuapp.com/api/chats/`, {
                     method: 'POST',
                     credentials: 'include',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user': cookies.user.googleID
+                    },
                     body: JSON.stringify(body),
                 })
                     .then(response => response.json())
